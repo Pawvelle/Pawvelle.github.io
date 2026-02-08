@@ -1,0 +1,2164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pawvelle - AI & LLM Researcher</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-primary: #000000;
+            --bg-secondary: #0a0a0a;
+            --bg-tertiary: rgba(255, 255, 255, 0.03);
+            
+            --text-primary: #f5f5f7;
+            --text-secondary: #a1a1a6;
+            --text-tertiary: #6e6e73;
+            
+            --accent-blue: #0a84ff;
+            --accent-purple: #bf5af2;
+            --accent-pink: #ff375f;
+            --accent-cyan: #64d2ff;
+            --accent-green: #30d158;
+            --accent-gradient: linear-gradient(135deg, #0a84ff 0%, #bf5af2 50%, #ff375f 100%);
+            --accent-gradient-subtle: linear-gradient(135deg, rgba(10, 132, 255, 0.5) 0%, rgba(191, 90, 242, 0.5) 100%);
+            
+            --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+            
+            --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        ::selection {
+            background: #f472b6;
+            color: white;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ================ 页面加载动画 ================ */
+        .page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        .page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-content {
+            text-align: center;
+        }
+
+        .loader-logo {
+            width: 60px;
+            height: 60px;
+            background: var(--accent-gradient);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            animation: pulse-loader 1.5s ease-in-out infinite;
+            position: relative;
+        }
+
+        .loader-logo::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            background: var(--accent-gradient);
+            border-radius: 50%;
+            filter: blur(15px);
+            opacity: 0.5;
+            z-index: -1;
+            animation: pulse-glow 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse-loader {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.2); }
+        }
+
+        .loader-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            letter-spacing: 0.1em;
+        }
+
+        /* ================ 鼠标光晕跟随 ================ */
+        .cursor-glow {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(10, 132, 255, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .cursor-glow.active {
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .cursor-glow {
+                display: none;
+            }
+        }
+
+        /* ================ 返回顶部按钮 ================ */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            color: var(--text-secondary);
+            font-size: 18px;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: var(--transition-smooth);
+            z-index: 999;
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .back-to-top.visible:hover {
+            background: var(--accent-gradient);
+            border-color: transparent;
+            color: white;
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(10, 132, 255, 0.3);
+        }
+
+        /* ================ 粒子背景 ================ */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* 动态背景 */
+        .bg-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-gradient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: float-orb 20s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(10, 132, 255, 0.3) 0%, transparent 70%);
+            top: -200px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(191, 90, 242, 0.25) 0%, transparent 70%);
+            top: 40%;
+            right: -150px;
+            animation-delay: -7s;
+        }
+
+        .orb-3 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(100, 210, 255, 0.2) 0%, transparent 70%);
+            bottom: -100px;
+            left: 30%;
+            animation-delay: -14s;
+        }
+
+        @keyframes float-orb {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(30px, -30px) scale(1.05); }
+            50% { transform: translate(-20px, 20px) scale(0.95); }
+            75% { transform: translate(20px, 30px) scale(1.02); }
+        }
+
+        /* 细网格背景 */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: -1;
+            mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 20%, transparent 100%);
+        }
+
+        /* ================ Header ================ */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            transition: var(--transition-smooth);
+        }
+
+        header.scrolled {
+            background: rgba(0, 0, 0, 0.9);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 56px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .logo-icon {
+            width: 28px;
+            height: 28px;
+            background: var(--accent-gradient);
+            border-radius: 50%;
+            transition: var(--transition-smooth);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-icon::before {
+            content: '✦';
+            font-size: 12px;
+            color: white;
+        }
+
+        .logo-icon::after {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            background: var(--accent-gradient);
+            border-radius: 50%;
+            opacity: 0;
+            filter: blur(10px);
+            transition: var(--transition-smooth);
+            z-index: -1;
+        }
+
+        .logo:hover .logo-icon {
+            transform: rotate(180deg) scale(1.1);
+        }
+
+        .logo:hover .logo-icon::after {
+            opacity: 0.7;
+        }
+
+        .logo-text h1 {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--text-primary);
+            letter-spacing: -0.3px;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+        }
+
+        nav a::before {
+            content: '';
+            position: absolute;
+            bottom: 6px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--accent-gradient);
+            border-radius: 1px;
+            transition: var(--transition-fast);
+            transform: translateX(-50%);
+        }
+
+        nav a:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        nav a:hover::before {
+            width: calc(100% - 24px);
+        }
+
+        nav a.active {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        nav a.active::before {
+            width: calc(100% - 24px);
+        }
+
+        .lang-switch {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            margin-left: 8px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.06);
+            border: none;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .lang-switch:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+        }
+
+        .lang-switch i {
+            font-size: 12px;
+            color: var(--accent-blue);
+        }
+
+        /* 移动端菜单按钮 */
+        .mobile-menu-btn {
+            display: none;
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            cursor: pointer;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: var(--transition-fast);
+        }
+
+        .mobile-menu-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-menu-btn span {
+            display: block;
+            width: 18px;
+            height: 2px;
+            background: var(--text-secondary);
+            border-radius: 1px;
+            transition: var(--transition-fast);
+        }
+
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        /* 移动端菜单面板 */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 56px;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 20px;
+            transform: translateY(-100%);
+            opacity: 0;
+            transition: var(--transition-smooth);
+            z-index: 999;
+        }
+
+        .mobile-menu.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .mobile-menu a {
+            display: block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            transition: var(--transition-fast);
+            background: none;
+            border-radius: 0;
+            overflow: visible;
+        }
+
+        /* 移除移动端菜单链接的下划线效果 */
+        .mobile-menu a::before {
+            display: none;
+        }
+
+        .mobile-menu a:hover,
+        .mobile-menu a.active {
+            color: var(--text-primary);
+            padding-left: 10px;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .mobile-menu .lang-switch {
+            margin: 20px 0 0;
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* ================ Container ================ */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ================ Hero Section ================ */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 140px 24px 100px;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 860px;
+        }
+
+        /* 头像外圈 */
+        .avatar-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 40px;
+        }
+
+        .github-avatar {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            display: block;
+            object-fit: cover;
+            border: 3px solid rgba(255, 255, 255, 0.15);
+            box-sizing: border-box;
+            transition: var(--transition-smooth);
+        }
+
+        .avatar-wrapper:hover .github-avatar {
+            border-color: rgba(10, 132, 255, 0.5);
+            transform: scale(1.03);
+        }
+
+        .hero-eyebrow {
+            font-size: 21px;
+            font-weight: 400;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            letter-spacing: 0.02em;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards;
+            animation-delay: 0.2s;
+        }
+
+        .hero-title {
+            font-size: clamp(52px, 10vw, 88px);
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            line-height: 1.05;
+            background: var(--accent-gradient);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 28px;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards, gradient-shift 8s ease infinite;
+            animation-delay: 0.3s, 0s;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .typing-container {
+            height: 36px;
+            margin-bottom: 28px;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards;
+            animation-delay: 0.4s;
+        }
+
+        .typing-text {
+            font-size: 22px;
+            font-weight: 500;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-family: var(--font-mono);
+        }
+
+        .typing-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 22px;
+            background: var(--accent-cyan);
+            margin-left: 4px;
+            vertical-align: text-bottom;
+            animation: cursor-blink 1s step-end infinite;
+        }
+
+        @keyframes cursor-blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .hero-intro {
+            font-size: 18px;
+            font-weight: 400;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 20px;
+            max-width: 580px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards;
+            animation-delay: 0.5s;
+        }
+
+        .hero-intro strong {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .email-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-tertiary);
+            text-decoration: none;
+            font-size: 14px;
+            font-family: var(--font-mono);
+            margin-bottom: 36px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: var(--transition-fast);
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards;
+            animation-delay: 0.6s;
+        }
+
+        .email-link:hover {
+            color: var(--accent-blue);
+            background: rgba(10, 132, 255, 0.1);
+        }
+
+        /* CTA 按钮带扫光效果 */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--accent-gradient);
+            background-size: 200% 200%;
+            color: white;
+            padding: 16px 32px;
+            text-decoration: none;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: var(--transition-smooth);
+            box-shadow: 0 4px 20px rgba(10, 132, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards, gradient-shift 4s ease infinite;
+            animation-delay: 0.7s, 0s;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: none;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(10, 132, 255, 0.4);
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+            transition: left 0.6s ease;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--text-tertiary);
+            font-size: 20px;
+            animation: scroll-bounce 2.5s ease-in-out infinite;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            opacity: 0.6;
+        }
+
+        .scroll-indicator:hover {
+            color: var(--accent-blue);
+            opacity: 1;
+        }
+
+        @keyframes scroll-bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.6; }
+            50% { transform: translateX(-50%) translateY(10px); opacity: 1; }
+        }
+
+        /* ================ Code Window ================ */
+        .code-window {
+            max-width: 580px;
+            margin: 60px auto 0;
+            background: rgba(20, 20, 22, 0.9);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            overflow: hidden;
+            box-shadow: 
+                0 0 0 1px rgba(255, 255, 255, 0.05),
+                0 20px 50px rgba(0, 0, 0, 0.5),
+                0 0 100px rgba(10, 132, 255, 0.1);
+            transition: var(--transition-smooth);
+            position: relative;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards;
+            animation-delay: 0.9s;
+        }
+
+        .code-window::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            background: var(--accent-gradient);
+            border-radius: 17px;
+            opacity: 0;
+            transition: var(--transition-smooth);
+            z-index: -1;
+            filter: blur(1px);
+        }
+
+        .code-window:hover {
+            border-color: rgba(255, 255, 255, 0.12);
+            box-shadow: 
+                0 0 0 1px rgba(255, 255, 255, 0.08),
+                0 24px 60px rgba(0, 0, 0, 0.6),
+                0 0 120px rgba(10, 132, 255, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .code-window:hover::before {
+            opacity: 0.15;
+        }
+
+        .window-header {
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .window-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .window-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            transition: var(--transition-fast);
+            cursor: pointer;
+        }
+
+        .window-dot:hover {
+            transform: scale(1.15);
+        }
+
+        .dot-red { background: #ff5f57; box-shadow: 0 0 8px rgba(255, 95, 87, 0.4); }
+        .dot-yellow { background: #febc2e; box-shadow: 0 0 8px rgba(254, 188, 46, 0.4); }
+        .dot-green { background: #28c840; box-shadow: 0 0 8px rgba(40, 200, 64, 0.4); }
+
+        .window-title {
+            margin-left: auto;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--text-tertiary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .window-title i {
+            font-size: 14px;
+            color: var(--accent-blue);
+        }
+
+        .code-content-area {
+            padding: 20px 24px;
+        }
+
+        .code-display {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            line-height: 1.8;
+            min-height: 240px;
+            color: var(--text-secondary);
+        }
+
+        .code-line {
+            display: block;
+            opacity: 0;
+            transform: translateX(-8px);
+            transition: all 0.25s ease;
+            position: relative;
+            padding-left: 44px;
+            min-height: 24px;
+        }
+
+        .code-line.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .line-number {
+            position: absolute;
+            left: 0;
+            width: 28px;
+            color: var(--text-tertiary);
+            text-align: right;
+            user-select: none;
+            opacity: 0.4;
+            font-size: 12px;
+        }
+
+        .code-keyword { color: #ff7ab2; font-weight: 500; }
+        .code-function { color: #78dce8; }
+        .code-string { color: #a9dc76; }
+        .code-comment { color: #5c6370; font-style: italic; }
+        .code-variable { color: #c678dd; }
+
+        .code-controls {
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .code-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .code-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-secondary);
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-family: var(--font-mono);
+            cursor: pointer;
+            transition: var(--transition-fast);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .code-btn i {
+            font-size: 11px;
+        }
+
+        .code-btn:hover, .code-btn.active {
+            background: rgba(10, 132, 255, 0.15);
+            border-color: rgba(10, 132, 255, 0.3);
+            color: var(--accent-blue);
+        }
+
+        .code-output {
+            margin-top: 16px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            padding: 14px 18px;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: var(--accent-cyan);
+            display: none;
+            border-left: 3px solid var(--accent-cyan);
+        }
+
+        .code-output.visible {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .output-prompt {
+            color: var(--accent-purple);
+            margin-right: 10px;
+        }
+
+        /* ================ Sections ================ */
+        section {
+            padding: 140px 0;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 72px;
+        }
+
+        .section-eyebrow {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: clamp(40px, 6vw, 64px);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            color: var(--text-primary);
+        }
+
+        /* ================ Cards ================ */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 24px;
+            padding: 40px 32px;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--accent-gradient);
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.01);
+            border-color: rgba(255, 255, 255, 0.12);
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.4),
+                0 0 100px rgba(10, 132, 255, 0.12);
+        }
+
+        .card:hover::before {
+            opacity: 0.04;
+        }
+
+        .card:hover::after {
+            opacity: 1;
+        }
+
+        .card-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-icon {
+            font-size: 28px;
+            margin-bottom: 24px;
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(10, 132, 255, 0.15) 0%, rgba(191, 90, 242, 0.1) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-blue);
+            transition: var(--transition-smooth);
+            border: 1px solid rgba(10, 132, 255, 0.2);
+        }
+
+        .card:hover .card-icon {
+            background: var(--accent-gradient);
+            color: white;
+            transform: scale(1.08) rotate(5deg);
+            border-color: transparent;
+            box-shadow: 0 8px 20px rgba(10, 132, 255, 0.3);
+        }
+
+        .card h4 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .card p strong {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* ================ Skills ================ */
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 64px;
+        }
+
+        .skill-tag {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 14px 26px;
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-secondary);
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-tag::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: none;
+        }
+
+        .skill-tag:hover {
+            background: rgba(10, 132, 255, 0.1);
+            border-color: rgba(10, 132, 255, 0.3);
+            color: var(--text-primary);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(10, 132, 255, 0.2);
+        }
+
+        .skill-tag:hover::before {
+            left: 100%;
+            transition: left 0.5s ease;
+        }
+
+        .skill-tag.highlight {
+            border-color: rgba(10, 132, 255, 0.3);
+            background: linear-gradient(135deg, rgba(10, 132, 255, 0.1) 0%, rgba(191, 90, 242, 0.05) 100%);
+            color: var(--text-primary);
+        }
+
+        .skill-icon {
+            color: var(--accent-blue);
+            font-size: 18px;
+            transition: var(--transition-fast);
+        }
+
+        .skill-tag:hover .skill-icon {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        /* Skill Bars */
+        .skill-bars {
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        .skill-item {
+            margin-bottom: 32px;
+        }
+
+        .skill-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .skill-name {
+            font-weight: 500;
+            color: var(--text-primary);
+            font-size: 15px;
+        }
+
+        .skill-percent {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            color: var(--accent-blue);
+        }
+
+        .skill-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: var(--accent-gradient);
+            border-radius: 4px;
+            width: 0;
+            transition: width 1.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .skill-progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* ================ Contact ================ */
+        .contact-section {
+            text-align: center;
+            padding-bottom: 100px;
+        }
+
+        .contact-title {
+            font-size: clamp(36px, 6vw, 56px);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 20px;
+            background: var(--accent-gradient);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: gradient-shift 6s ease infinite;
+        }
+
+        .contact-desc {
+            color: var(--text-secondary);
+            max-width: 520px;
+            margin: 0 auto 56px;
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+        .social-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .social-button {
+            padding: 16px 32px;
+            border-radius: 14px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: var(--transition-smooth);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-button::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--accent-gradient);
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+
+        .social-button span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .social-button i {
+            position: relative;
+            z-index: 1;
+            font-size: 18px;
+        }
+
+        .social-button:hover {
+            transform: translateY(-6px) scale(1.02);
+            border-color: transparent;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 0 0 30px rgba(10, 132, 255, 0.2);
+        }
+
+        .social-button:hover::before {
+            opacity: 1;
+        }
+
+        .social-button:hover i {
+            animation: bounce-icon 0.5s ease;
+        }
+
+        @keyframes bounce-icon {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+
+        /* ================ Footer ================ */
+        footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 40px 0 30px;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.6) 100%);
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 1px;
+            background: var(--accent-gradient);
+        }
+
+        .footer-text {
+            color: var(--text-tertiary);
+            font-size: 13px;
+        }
+
+        .footer-subtext {
+            color: var(--text-tertiary);
+            font-size: 12px;
+            margin-top: 8px;
+            opacity: 0.6;
+        }
+
+        .footer-heart {
+            color: var(--accent-pink);
+            display: inline-block;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* ================ Responsive ================ */
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 0 16px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .hero {
+                padding: 120px 16px 80px;
+            }
+
+            .github-avatar {
+                width: 110px;
+                height: 110px;
+            }
+
+            .hero-title {
+                font-size: 44px;
+            }
+
+            .typing-text {
+                font-size: 18px;
+            }
+
+            .code-window {
+                margin: 40px -8px 0;
+                border-radius: 12px;
+            }
+
+            section {
+                padding: 100px 0;
+            }
+
+            .cards-container {
+                gap: 16px;
+            }
+
+            .card {
+                padding: 32px 24px;
+                border-radius: 20px;
+            }
+
+            .social-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .social-button {
+                width: 100%;
+                max-width: 280px;
+                justify-content: center;
+            }
+
+            .back-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 44px;
+                height: 44px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-text h1 {
+                font-size: 15px;
+            }
+
+            .hero-eyebrow {
+                font-size: 18px;
+            }
+
+            .hero-intro {
+                font-size: 16px;
+            }
+
+            .section-title {
+                font-size: 36px;
+            }
+
+            .skill-tag {
+                padding: 12px 20px;
+                font-size: 13px;
+            }
+
+            .card-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 22px;
+            }
+
+            .contact-title {
+                font-size: 32px;
+            }
+        }
+
+        /* 文字高亮动画 */
+        .text-highlight {
+            position: relative;
+            display: inline-block;
+        }
+
+        .text-highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30%;
+            background: linear-gradient(90deg, rgba(10, 132, 255, 0.3), rgba(191, 90, 242, 0.3));
+            z-index: -1;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.6s ease;
+        }
+
+        .text-highlight:hover::after {
+            transform: scaleX(1);
+        }
+    </style>
+</head>
+<body>
+    <!-- 页面加载动画 -->
+    <div class="page-loader" id="pageLoader">
+        <div class="loader-content">
+            <div class="loader-logo"></div>
+            <p class="loader-text">LOADING</p>
+        </div>
+    </div>
+
+    <!-- 鼠标光晕跟随 -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+
+    <!-- 粒子背景 -->
+    <canvas id="particles-canvas"></canvas>
+
+    <div class="bg-wrapper">
+        <div class="bg-gradient-orb orb-1"></div>
+        <div class="bg-gradient-orb orb-2"></div>
+        <div class="bg-gradient-orb orb-3"></div>
+    </div>
+    <div class="bg-grid"></div>
+
+    <!-- 返回顶部按钮 -->
+    <button class="back-to-top" id="backToTop" title="返回顶部">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">
+                <div class="logo-icon"></div>
+                <div class="logo-text">
+                    <h1>Pawvelle</h1>
+                </div>
+            </a>
+            <nav>
+                <div class="nav-links">
+                    <a href="#about" id="nav-about">About</a>
+                    <a href="#skills" id="nav-skills">Skills</a>
+                    <a href="#contact" id="nav-contact">Contact</a>
+                    <button class="lang-switch" id="lang-switch">
+                        <i class="fas fa-globe"></i>
+                        <span id="lang-text">中文</span>
+                    </button>
+                </div>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 移动端菜单 -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#about" id="mobile-nav-about">About</a>
+        <a href="#skills" id="mobile-nav-skills">Skills</a>
+        <a href="#contact" id="mobile-nav-contact">Contact</a>
+        <button class="lang-switch" id="mobile-lang-switch">
+            <i class="fas fa-globe"></i>
+            <span id="mobile-lang-text">中文</span>
+        </button>
+    </div>
+
+    <div class="container">
+        <section class="hero visible">
+            <div class="hero-content">
+                <div class="avatar-wrapper">
+                    <img src="https://github.com/Pawvelle.png" alt="Avatar" class="github-avatar">
+                </div>
+                
+                <p class="hero-eyebrow" id="greeting">Hello, I'm</p>
+                <h1 class="hero-title" id="name-title">Pawvelle</h1>
+                
+                <div class="typing-container">
+                    <span class="typing-text"></span><span class="typing-cursor"></span>
+                </div>
+                
+                <p class="hero-intro" id="hero-intro">
+                    Computer Science Student at <strong>HUE (2025)</strong>.<br>
+                    Exploring <strong>Large Language Models</strong> & <strong>Artificial Intelligence</strong>.
+                </p>
+                
+                <a href="mailto:joey_0421@qq.com" class="email-link">
+                    <i class="fas fa-envelope"></i> joey_0421@qq.com
+                </a>
+                
+                <div>
+                    <a href="https://github.com/Pawvelle" target="_blank" class="cta-button">
+                        <i class="fab fa-github"></i> <span id="github-btn">Explore My GitHub</span>
+                    </a>
+                </div>
+
+                <div class="code-window">
+                    <div class="window-header">
+                        <div class="window-dots">
+                            <div class="window-dot dot-red"></div>
+                            <div class="window-dot dot-yellow"></div>
+                            <div class="window-dot dot-green"></div>
+                        </div>
+                        <span class="window-title"><i class="fab fa-python"></i> profile.py</span>
+                    </div>
+                    <div class="code-content-area">
+                        <div class="code-display" id="codeDisplay"></div>
+                        <div class="code-output" id="codeOutput"></div>
+                        <div class="code-controls">
+                            <div class="code-buttons">
+                                <button class="code-btn" id="runBtn">
+                                    <i class="fas fa-play"></i> <span id="run-code">Run</span>
+                                </button>
+                                <button class="code-btn" id="resetBtn">
+                                    <i class="fas fa-rotate-right"></i> <span id="reset-code">Reset</span>
+                                </button>
+                            </div>
+                            <span style="font-family: var(--font-mono); font-size: 12px; color: var(--text-tertiary);" id="codeStatus">Ready</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scroll-indicator" onclick="document.getElementById('about').scrollIntoView({behavior: 'smooth'})">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </section>
+
+        <section id="about">
+            <div class="section-header">
+                <p class="section-eyebrow">Get to know</p>
+                <h2 class="section-title" id="about-title">About Me</h2>
+            </div>
+            <div class="cards-container">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-icon"><i class="fas fa-graduation-cap"></i></div>
+                        <h4 id="card1-title">Education</h4>
+                        <p id="card1-desc">Pursuing <strong>Computer Science</strong> at <strong>HUE</strong> since 2025. Building foundations in algorithms, data structures, and system architecture.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-icon"><i class="fas fa-brain"></i></div>
+                        <h4 id="card2-title">AI Focus</h4>
+                        <p id="card2-desc">Specializing in <strong>Large Language Models</strong>, exploring architecture design, fine-tuning, and real-world applications.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-icon"><i class="fas fa-code"></i></div>
+                        <h4 id="card3-title">Development</h4>
+                        <p id="card3-desc">Proficient in <strong>Python</strong> for AI/ML and <strong>C/C++</strong> for performance-critical systems programming.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills">
+            <div class="section-header">
+                <p class="section-eyebrow">What I work with</p>
+                <h2 class="section-title" id="skills-title">Skills</h2>
+            </div>
+            
+            <div class="skills-grid">
+                <div class="skill-tag highlight"><i class="fab fa-python skill-icon"></i> Python</div>
+                <div class="skill-tag highlight"><i class="fas fa-cogs skill-icon"></i> C/C++</div>
+                <div class="skill-tag"><i class="fab fa-java skill-icon"></i> Java</div>
+                <div class="skill-tag"><i class="fas fa-microchip skill-icon"></i> LLM</div>
+                <div class="skill-tag"><i class="fas fa-robot skill-icon"></i> AI/ML</div>
+                <div class="skill-tag"><i class="fab fa-git-alt skill-icon"></i> Git</div>
+            </div>
+            
+            <div class="skill-bars">
+                <div class="skill-item">
+                    <div class="skill-info">
+                        <span class="skill-name" id="skill1-name">Python (AI/ML)</span>
+                        <span class="skill-percent">90%</span>
+                    </div>
+                    <div class="skill-bar"><div class="skill-progress" data-width="90"></div></div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-info">
+                        <span class="skill-name" id="skill2-name">C/C++</span>
+                        <span class="skill-percent">85%</span>
+                    </div>
+                    <div class="skill-bar"><div class="skill-progress" data-width="85"></div></div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-info">
+                        <span class="skill-name" id="skill3-name">LLM & AI</span>
+                        <span class="skill-percent">80%</span>
+                    </div>
+                    <div class="skill-bar"><div class="skill-progress" data-width="80"></div></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact-section">
+            <h2 class="contact-title" id="contact-title">Let's Connect</h2>
+            <p class="contact-desc" id="contact-desc">
+                Open to collaborations, research discussions, and meaningful projects in AI/LLM.
+            </p>
+            
+            <div class="social-buttons">
+                <a href="https://github.com/Pawvelle" target="_blank" class="social-button">
+                    <i class="fab fa-github"></i> <span>GitHub</span>
+                </a>
+                <a href="https://space.bilibili.com/1768745957" target="_blank" class="social-button">
+                    <i class="fab fa-bilibili"></i> <span>Bilibili</span>
+                </a>
+                <a href="mailto:joey_0421@qq.com" class="social-button">
+                    <i class="fas fa-envelope"></i> <span id="email-btn">Email</span>
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p class="footer-text" id="footer-text">© 2026 Pawvelle</p>
+        <p class="footer-subtext" id="footer-subtext">AI & LLM Researcher</p>
+        <p class="footer-subtext" style="margin-top: 12px;">Made with <span class="footer-heart">♥</span></p>
+    </footer>
+
+    <script>
+        // ================ 页面加载动画 ================
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('pageLoader').classList.add('hidden');
+            }, 800);
+        });
+
+        // ================ 粒子背景效果 ================
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let animationId;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = (Math.random() - 0.5) * 0.5;
+                this.opacity = Math.random() * 0.5 + 0.2;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(10, 132, 255, ${this.opacity})`;
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            const particleCount = Math.min(80, Math.floor((canvas.width * canvas.height) / 15000));
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function connectParticles() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 150) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(10, 132, 255, ${0.1 * (1 - distance / 150)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+            connectParticles();
+            animationId = requestAnimationFrame(animateParticles);
+        }
+
+        resizeCanvas();
+        initParticles();
+        animateParticles();
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            initParticles();
+        });
+
+        // ================ 鼠标光晕跟随 ================
+        const cursorGlow = document.getElementById('cursorGlow');
+        let mouseX = 0, mouseY = 0;
+        let glowX = 0, glowY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursorGlow.classList.add('active');
+        });
+
+        document.addEventListener('mouseleave', () => {
+            cursorGlow.classList.remove('active');
+        });
+
+        function updateCursorGlow() {
+            glowX += (mouseX - glowX) * 0.1;
+            glowY += (mouseY - glowY) * 0.1;
+            cursorGlow.style.left = glowX + 'px';
+            cursorGlow.style.top = glowY + 'px';
+            requestAnimationFrame(updateCursorGlow);
+        }
+        updateCursorGlow();
+
+        // ================ 返回顶部按钮 ================
+        const backToTop = document.getElementById('backToTop');
+
+        function updateBackToTop() {
+            if (window.scrollY > 400) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        }
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // ================ 滚动节流优化 ================
+        let ticking = false;
+        const header = document.querySelector('header');
+        
+        function onScroll() {
+            header.classList.toggle('scrolled', window.scrollY > 50);
+            updateBackToTop();
+            ticking = false;
+        }
+        
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(onScroll);
+                ticking = true;
+            }
+        });
+
+        // ================ 移动端菜单 ================
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenuBtn.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+
+        // 点击菜单项后关闭菜单
+        document.querySelectorAll('.mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenuBtn.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // ================ Language Configuration ================
+        let currentLang = 'en';
+        
+        const translations = {
+            en: {
+                navAbout: "About",
+                navSkills: "Skills",
+                navContact: "Contact",
+                langText: "中文",
+                greeting: "Hello, I'm",
+                nameTitle: "Pawvelle",
+                heroIntro: "Computer Science Student at <strong>HUE (2025)</strong>.<br>Exploring <strong>Large Language Models</strong> & <strong>Artificial Intelligence</strong>.",
+                githubBtn: "Explore My GitHub",
+                runCode: "Run",
+                resetCode: "Reset",
+                aboutTitle: "About Me",
+                card1Title: "Education",
+                card1Desc: "Pursuing <strong>Computer Science</strong> at <strong>HUE</strong> since 2025. Building foundations in algorithms, data structures, and system architecture.",
+                card2Title: "AI Focus",
+                card2Desc: "Specializing in <strong>Large Language Models</strong>, exploring architecture design, fine-tuning, and real-world applications.",
+                card3Title: "Development",
+                card3Desc: "Proficient in <strong>Python</strong> for AI/ML and <strong>C/C++</strong> for performance-critical systems programming.",
+                skillsTitle: "Skills",
+                skill1Name: "Python (AI/ML)",
+                skill2Name: "C/C++",
+                skill3Name: "LLM & AI",
+                contactTitle: "Let's Connect",
+                contactDesc: "Open to collaborations, research discussions, and meaningful projects in AI/LLM.",
+                emailBtn: "Email",
+                footerText: "© 2026 Pawvelle",
+                footerSubtext: "AI & LLM Researcher"
+            },
+            zh: {
+                navAbout: "关于",
+                navSkills: "技能",
+                navContact: "联系",
+                langText: "English",
+                greeting: "你好，我是",
+                nameTitle: "Pawvelle",
+                heroIntro: "湖北第二师范学院<strong>计算机科学与技术专业 (2025级)</strong>。<br>探索<strong>大语言模型</strong>与<strong>人工智能</strong>领域。",
+                githubBtn: "访问 GitHub",
+                runCode: "运行",
+                resetCode: "重置",
+                aboutTitle: "关于我",
+                card1Title: "教育背景",
+                card1Desc: "自2025年起就读于<strong>湖北第二师范学院</strong><strong>计算机科学</strong>专业。学习算法、数据结构和系统架构。",
+                card2Title: "AI 方向",
+                card2Desc: "专注于<strong>大语言模型</strong>研究，探索模型架构、微调技术和实际应用。",
+                card3Title: "技术开发",
+                card3Desc: "熟练掌握 <strong>Python</strong>（AI/ML）和 <strong>C/C++</strong>（高性能系统编程）。",
+                skillsTitle: "技能",
+                skill1Name: "Python (AI/ML)",
+                skill2Name: "C/C++",
+                skill3Name: "LLM & AI",
+                contactTitle: "联系我",
+                contactDesc: "欢迎合作、研究讨论以及 AI/LLM 领域的项目交流。",
+                emailBtn: "邮件",
+                footerText: "© 2026 Pawvelle",
+                footerSubtext: "AI 与 LLM 研究者"
+            }
+        };
+        
+        const typingTexts = {
+            en: ["Large Language Models", "AI Research", "Python & C++", "Machine Learning", "Deep Learning"],
+            zh: ["大语言模型", "人工智能研究", "Python 与 C++", "机器学习", "深度学习"]
+        };
+        
+        function updatePageText(lang) {
+            const t = translations[lang];
+            document.getElementById('nav-about').textContent = t.navAbout;
+            document.getElementById('nav-skills').textContent = t.navSkills;
+            document.getElementById('nav-contact').textContent = t.navContact;
+            document.getElementById('lang-text').textContent = t.langText;
+            document.getElementById('greeting').textContent = t.greeting;
+            document.getElementById('name-title').textContent = t.nameTitle;
+            document.getElementById('hero-intro').innerHTML = t.heroIntro;
+            document.getElementById('github-btn').textContent = t.githubBtn;
+            document.getElementById('run-code').textContent = t.runCode;
+            document.getElementById('reset-code').textContent = t.resetCode;
+            document.getElementById('about-title').textContent = t.aboutTitle;
+            document.getElementById('card1-title').textContent = t.card1Title;
+            document.getElementById('card1-desc').innerHTML = t.card1Desc;
+            document.getElementById('card2-title').textContent = t.card2Title;
+            document.getElementById('card2-desc').innerHTML = t.card2Desc;
+            document.getElementById('card3-title').textContent = t.card3Title;
+            document.getElementById('card3-desc').innerHTML = t.card3Desc;
+            document.getElementById('skills-title').textContent = t.skillsTitle;
+            document.getElementById('skill1-name').textContent = t.skill1Name;
+            document.getElementById('skill2-name').textContent = t.skill2Name;
+            document.getElementById('skill3-name').textContent = t.skill3Name;
+            document.getElementById('contact-title').textContent = t.contactTitle;
+            document.getElementById('contact-desc').textContent = t.contactDesc;
+            document.getElementById('email-btn').textContent = t.emailBtn;
+            document.getElementById('footer-text').textContent = t.footerText;
+            document.getElementById('footer-subtext').textContent = t.footerSubtext;
+            
+            // 移动端菜单也要更新
+            document.getElementById('mobile-nav-about').textContent = t.navAbout;
+            document.getElementById('mobile-nav-skills').textContent = t.navSkills;
+            document.getElementById('mobile-nav-contact').textContent = t.navContact;
+            document.getElementById('mobile-lang-text').textContent = t.langText;
+            
+            document.documentElement.lang = lang;
+            texts = typingTexts[lang];
+        }
+        
+        function switchLanguage() {
+            currentLang = currentLang === 'en' ? 'zh' : 'en';
+            updatePageText(currentLang);
+            count = 0;
+            index = 0;
+            isDeleting = false;
+            clearTimeout(typeTimeout);
+            document.querySelector(".typing-text").textContent = "";
+            setTimeout(type, 300);
+        }
+        
+        document.getElementById('lang-switch').addEventListener('click', switchLanguage);
+        document.getElementById('mobile-lang-switch').addEventListener('click', switchLanguage);
+        
+        // Typing Effect
+        let texts = typingTexts.en;
+        let count = 0;
+        let index = 0;
+        let isDeleting = false;
+        let typeTimeout;
+        
+        function type() {
+            const currentText = texts[count];
+            const letter = isDeleting 
+                ? currentText.slice(0, --index) 
+                : currentText.slice(0, ++index);
+            
+            document.querySelector(".typing-text").textContent = letter;
+            
+            let typeSpeed = isDeleting ? 35 : 70;
+            
+            if (!isDeleting && index === currentText.length) {
+                typeSpeed = 2500;
+                isDeleting = true;
+            } else if (isDeleting && index === 0) {
+                isDeleting = false;
+                count = (count + 1) % texts.length;
+                typeSpeed = 500;
+            }
+            
+            typeTimeout = setTimeout(type, typeSpeed);
+        }
+        setTimeout(type, 1000);
+
+        // Interactive Code Display
+        class InteractiveCodeDisplay {
+            constructor() {
+                this.codeLines = [
+                    { line: 1, code: '<span class="code-comment"># Pawvelle Profile</span>' },
+                    { line: 2, code: '<span class="code-keyword">class</span> <span class="code-function">Researcher</span>:' },
+                    { line: 3, code: '    <span class="code-keyword">def</span> <span class="code-function">__init__</span>(self):' },
+                    { line: 4, code: '        self.name = <span class="code-string">"Pawvelle"</span>' },
+                    { line: 5, code: '        self.focus = [<span class="code-string">"LLM"</span>, <span class="code-string">"AI"</span>]' },
+                    { line: 6, code: '' },
+                    { line: 7, code: '    <span class="code-keyword">def</span> <span class="code-function">hello</span>(self):' },
+                    { line: 8, code: '        <span class="code-keyword">return</span> <span class="code-string">"Hello, World!"</span>' },
+                    { line: 9, code: '' },
+                    { line: 10, code: '<span class="code-variable">me</span> = <span class="code-function">Researcher</span>()' },
+                    { line: 11, code: '<span class="code-keyword">print</span>(me.hello())' }
+                ];
+                
+                this.currentLine = 0;
+                this.isRunning = false;
+                this.codeDisplay = document.getElementById('codeDisplay');
+                this.codeOutput = document.getElementById('codeOutput');
+                this.runBtn = document.getElementById('runBtn');
+                this.resetBtn = document.getElementById('resetBtn');
+                this.codeStatus = document.getElementById('codeStatus');
+                
+                this.init();
+            }
+            
+            init() {
+                this.runBtn.addEventListener('click', () => this.runCode());
+                this.resetBtn.addEventListener('click', () => this.resetCode());
+                setTimeout(() => this.animateCodeTyping(), 1500);
+            }
+            
+            animateCodeTyping() {
+                if (this.currentLine >= this.codeLines.length) {
+                    setTimeout(() => {
+                        this.codeStatus.textContent = 'Ready';
+                        this.codeStatus.style.color = 'var(--accent-blue)';
+                        this.runBtn.classList.add('active');
+                    }, 300);
+                    return;
+                }
+                
+                const line = this.codeLines[this.currentLine];
+                const lineElement = document.createElement('div');
+                lineElement.className = 'code-line';
+                lineElement.innerHTML = `<span class="line-number">${line.line}</span>${line.code}`;
+                this.codeDisplay.appendChild(lineElement);
+                
+                requestAnimationFrame(() => {
+                    lineElement.classList.add('visible');
+                    this.currentLine++;
+                    setTimeout(() => this.animateCodeTyping(), line.code.trim() === '' ? 50 : 90);
+                });
+            }
+            
+            runCode() {
+                if (this.isRunning) return;
+                this.isRunning = true;
+                this.runBtn.classList.remove('active');
+                this.codeStatus.textContent = 'Running...';
+                this.codeStatus.style.color = '#febc2e';
+                this.codeOutput.innerHTML = '';
+                this.codeOutput.classList.remove('visible');
+                
+                setTimeout(() => {
+                    const outputElement = document.createElement('div');
+                    outputElement.innerHTML = '<span class="output-prompt">>>></span> Hello, World!';
+                    this.codeOutput.appendChild(outputElement);
+                    this.codeOutput.classList.add('visible');
+                    this.codeStatus.textContent = 'Done';
+                    this.codeStatus.style.color = '#28c840';
+                    this.isRunning = false;
+                    this.runBtn.classList.add('active');
+                }, 700);
+            }
+            
+            resetCode() {
+                this.currentLine = 0;
+                this.isRunning = false;
+                this.codeDisplay.innerHTML = '';
+                this.codeOutput.innerHTML = '';
+                this.codeOutput.classList.remove('visible');
+                this.codeStatus.textContent = 'Ready';
+                this.codeStatus.style.color = 'var(--text-tertiary)';
+                setTimeout(() => this.animateCodeTyping(), 400);
+            }
+        }
+        
+        new InteractiveCodeDisplay();
+
+        // Scroll Animations
+        const observerOptions = { threshold: 0.15, rootMargin: '0px 0px -50px 0px' };
+        
+        const skillObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.width = entry.target.dataset.width + '%';
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.skill-progress').forEach(bar => skillObserver.observe(bar));
+
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.08 });
+        
+        document.querySelectorAll('section').forEach(sec => sectionObserver.observe(sec));
+
+        // Navigation Highlight
+        let navTicking = false;
+        
+        function updateNavHighlight() {
+            const sections = ['about', 'skills', 'contact'];
+            const scrollPos = window.scrollY + 150;
+            let currentSection = '';
+            
+            sections.forEach(id => {
+                const section = document.getElementById(id);
+                if (section && scrollPos >= section.offsetTop && scrollPos < section.offsetTop + section.offsetHeight) {
+                    currentSection = id;
+                }
+            });
+            
+            // 更新桌面端导航
+            document.querySelectorAll('.nav-links a').forEach(link => link.classList.remove('active'));
+            // 更新移动端导航
+            document.querySelectorAll('.mobile-menu a').forEach(link => link.classList.remove('active'));
+            
+            if (currentSection) {
+                document.getElementById('nav-' + currentSection)?.classList.add('active');
+                document.getElementById('mobile-nav-' + currentSection)?.classList.add('active');
+            }
+            
+            navTicking = false;
+        }
+        
+        window.addEventListener('scroll', () => {
+            if (!navTicking) {
+                requestAnimationFrame(updateNavHighlight);
+                navTicking = true;
+            }
+        });
+        window.addEventListener('load', updateNavHighlight);
+    </script>
+</body>
+</html>
