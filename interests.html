@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interests - Pawvelle</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=Plus+Jakarta+Sans:wght@600;700;800;900&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="stage">
+    <main class="window">
+        <div class="browser-bar">
+            <div class="traffic" aria-hidden="true"><span></span><span></span><span></span></div>
+            <div class="address" aria-hidden="true">pawvelle.design/interests</div>
+            <a class="back-chip" href="index.html" aria-label="Back to home">&larr; Home</a>
+        </div>
+
+        <article class="detail">
+            <div class="crumbs"><a href="index.html">Home</a> / Interests</div>
+
+            <header class="detail-header reveal">
+                <span class="eyebrow">Soft corner</span>
+                <h1>Interests</h1>
+                <p class="lede">A small archive for the visual worlds, games, character design, and playful details that influence the feel of this site.</p>
+            </header>
+
+            <section class="panel-grid">
+                <section class="panel reveal">
+                    <div class="panel-head">
+                        <h2>Browse</h2>
+                        <span class="note">Categories</span>
+                    </div>
+                    <div class="mini-cards">
+                        <a class="mini pink" href="#anime">
+                            <span class="mini-label">Anime</span>
+                            <span class="mini-title">Illustrated worlds</span>
+                            <span class="mini-sub">Soft character design and visual rhythm.</span>
+                        </a>
+                        <a class="mini peach" href="#games">
+                            <span class="mini-label">Games</span>
+                            <span class="mini-title">Story-rich games</span>
+                            <span class="mini-sub">Cozy systems and memorable moods.</span>
+                        </a>
+                        <a class="mini purple" href="#cosplay">
+                            <span class="mini-label">Cosplay</span>
+                            <span class="mini-title">Character styling</span>
+                            <span class="mini-sub">Costume details, silhouettes, and texture.</span>
+                        </a>
+                        <a class="mini mint" href="#visuals">
+                            <span class="mini-label">Visuals</span>
+                            <span class="mini-title">Pastel UI details</span>
+                            <span class="mini-sub">Palettes, cards, icons, and tiny motion.</span>
+                        </a>
+                    </div>
+                </section>
+
+                <section class="panel reveal" id="anime">
+                    <div class="panel-head">
+                        <h2>Anime</h2>
+                        <span class="note">Watching</span>
+                    </div>
+                    <p>Illustrated worlds, soft character design, emotional pacing, and frames that feel carefully composed.</p>
+                </section>
+
+                <section class="panel reveal" id="games">
+                    <div class="panel-head">
+                        <h2>Games</h2>
+                        <span class="note">Playing</span>
+                    </div>
+                    <p>Story-rich and cozy games with expressive interfaces, gentle progression, and small systems that are satisfying to return to.</p>
+                </section>
+
+                <section class="panel reveal" id="cosplay">
+                    <div class="panel-head">
+                        <h2>Cosplay</h2>
+                        <span class="note">Styling</span>
+                    </div>
+                    <p>Character styling, costume aesthetics, materials, makeup, and the visual translation from illustration to real-world presence.</p>
+                </section>
+
+                <section class="panel reveal" id="visuals">
+                    <div class="panel-head">
+                        <h2>Visuals</h2>
+                        <span class="note">Palette</span>
+                    </div>
+                    <p>Pastel palettes, cute UI details, soft spacing, and visual systems that make digital spaces feel calm without becoming empty.</p>
+                </section>
+            </section>
+
+            <a class="back-home reveal" href="index.html">&larr; Back home</a>
+        </article>
+    </main>
+</div>
+
+<script>
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in');
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach((el, index) => {
+        el.style.transitionDelay = `${Math.min(index * 60, 220)}ms`;
+        revealObserver.observe(el);
+    });
+</script>
+</body>
+</html>

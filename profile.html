@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Pawvelle</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=Plus+Jakarta+Sans:wght@600;700;800;900&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="stage">
+    <main class="window">
+        <div class="browser-bar">
+            <div class="traffic" aria-hidden="true"><span></span><span></span><span></span></div>
+            <div class="address" aria-hidden="true">pawvelle.design/profile</div>
+            <a class="back-chip" href="index.html" aria-label="Back to home">&larr; Home</a>
+        </div>
+
+        <article class="detail">
+            <div class="crumbs"><a href="index.html">Home</a> / Profile</div>
+
+            <header class="detail-header reveal">
+                <span class="eyebrow">About</span>
+                <h1>Pawvelle</h1>
+                <p class="lede">A personal space for code, language, small tools, and soft visual systems. The site is intentionally simple so each page can grow over time.</p>
+            </header>
+
+            <section class="panel-grid">
+                <section class="panel reveal">
+                    <div class="panel-head">
+                        <h2>What this place is</h2>
+                        <span class="note">Intro</span>
+                    </div>
+                    <p>This site collects experiments around programming, machine learning, writing, and visual taste. It is less of a portfolio wall and more of a living index.</p>
+                </section>
+
+                <section class="panel reveal">
+                    <div class="panel-head">
+                        <h2>Current focus</h2>
+                        <span class="note">Now</span>
+                    </div>
+                    <div class="item-list">
+                        <div class="item-row">
+                            <span class="idx">01</span>
+                            <span class="title">Practical Python <small>Small automation patterns, tools, and everyday scripts.</small></span>
+                            <span class="meta">Code</span>
+                        </div>
+                        <div class="item-row">
+                            <span class="idx">02</span>
+                            <span class="title">Language models <small>Fine-tuning, evaluation, and note-taking around experiments.</small></span>
+                            <span class="meta">Study</span>
+                        </div>
+                        <div class="item-row">
+                            <span class="idx">03</span>
+                            <span class="title">Visual systems <small>Soft interfaces, calm spacing, and tiny interaction details.</small></span>
+                            <span class="meta">Design</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="panel reveal">
+                    <div class="panel-head">
+                        <h2>Site paths</h2>
+                        <span class="note">Links</span>
+                    </div>
+                    <div class="inline-row">
+                        <a class="inline-link" href="projects.html">
+                            <span class="il-label">Projects</span>
+                            <span class="il-value">Tools and systems</span>
+                            <span class="chev">&rsaquo;</span>
+                        </a>
+                        <a class="inline-link" href="notes.html">
+                            <span class="il-label">Notes</span>
+                            <span class="il-value">Learning and writing</span>
+                            <span class="chev">&rsaquo;</span>
+                        </a>
+                        <a class="inline-link" href="interests.html">
+                            <span class="il-label">Interests</span>
+                            <span class="il-value">Soft visual corner</span>
+                            <span class="chev">&rsaquo;</span>
+                        </a>
+                    </div>
+                </section>
+            </section>
+
+            <a class="back-home reveal" href="index.html">&larr; Back home</a>
+        </article>
+    </main>
+</div>
+
+<script>
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in');
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach((el, index) => {
+        el.style.transitionDelay = `${Math.min(index * 60, 220)}ms`;
+        revealObserver.observe(el);
+    });
+</script>
+</body>
+</html>
