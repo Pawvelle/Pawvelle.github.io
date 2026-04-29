@@ -1,20 +1,19 @@
 # Pawvelle
 
-a tiny pink world built with code, language, and small ideas.
+一个由代码、语言和小想法搭起来的粉色小世界。
 
-## About
+## 关于
 
-This is my personal website.
+这是我的个人网站。
 
-A quiet space where I experiment with  
-interfaces, structure, and soft visual systems.
+一个安静的小空间，用来实验界面、结构和柔软的视觉系统。
 
-Still incomplete, still growing.
+还不完整，也还在慢慢长大。
 
-## Tech
+## 技术
 
 - HTML / CSS / JavaScript  
 
-## Status
+## 状态
 
-building… slowly.
+缓慢施工中。
