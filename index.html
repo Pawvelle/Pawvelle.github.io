@@ -803,9 +803,9 @@
 <body>
 <div class="stage">
     <main class="window">
-        <div class="browser-bar" aria-hidden="true">
-            <div class="traffic"><span></span><span></span><span></span></div>
-            <div class="address">
+        <div class="browser-bar">
+            <div class="traffic" aria-hidden="true"><span></span><span></span><span></span></div>
+            <div class="address" aria-hidden="true">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                 pawvelle.github.io
             </div>
@@ -1083,6 +1083,7 @@
 
 </div>
 
+<script src="i18n.js"></script>
 <script>
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
