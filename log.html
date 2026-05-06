@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人更新日志 - Pawvelle</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=Plus+Jakarta+Sans:wght@600;700;800;900&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="stage">
+    <main class="window">
+        <div class="browser-bar">
+            <div class="traffic" aria-hidden="true"><span></span><span></span><span></span></div>
+            <div class="address" aria-hidden="true">pawvelle.github.io/log</div>
+            <a class="back-chip" href="index.html" aria-label="返回首页">&larr; 首页</a>
+        </div>
+
+        <article class="detail">
+            <div class="crumbs"><a href="index.html">首页</a> / 日志</div>
+
+            <header class="detail-header reveal">
+                <span class="eyebrow">时间线</span>
+                <h1>个人更新日志</h1>
+                <p class="lede">按时间倒序记录最近做过的事：网站改动、工具实验、阅读推进和一些想法的落点。它不是长文章，只保留方便回看进度的短记录。</p>
+            </header>
+
+            <section class="timeline reveal">
+                <div class="tl-entry">
+                    <time class="tl-date" datetime="2026-05-06">05.06</time>
+                    <div class="tl-dot" style="background: var(--mint-deep)"></div>
+                    <div class="tl-card">
+                        <div class="tl-head">
+                            <span class="tl-title">给 Python 工具箱加了 Markdown 转图片 CLI</span>
+                            <span class="tag mint">工具</span>
+                        </div>
+                        <p class="tl-desc">用 Pillow 把 Markdown 文本渲染成粉彩 PNG，方便把阶段性记录快速分享出去。</p>
+                    </div>
+                </div>
+
+                <div class="tl-entry">
+                    <time class="tl-date" datetime="2026-04-28">04.28</time>
+                    <div class="tl-dot" style="background: var(--peach)"></div>
+                    <div class="tl-card">
+                        <div class="tl-head">
+                            <span class="tl-title">读完了《Building LLMs from Scratch》前两章</span>
+                            <span class="tag peach">阅读</span>
+                        </div>
+                        <p class="tl-desc">对 tokenization 和 attention 的实现细节有了更扎实的理解，顺手整理成一段本地记录。</p>
+                    </div>
+                </div>
+
+                <div class="tl-entry">
+                    <time class="tl-date" datetime="2026-04-15">04.15</time>
+                    <div class="tl-dot" style="background: var(--purple)"></div>
+                    <div class="tl-card">
+                        <div class="tl-head">
+                            <span class="tl-title">重构了首页的响应式布局</span>
+                            <span class="tag purple">设计</span>
+                        </div>
+                        <p class="tl-desc">移动端现在舒服多了：rail 横过来滚、卡片自动堆叠、字号和留白都更适配小屏幕。</p>
+                    </div>
+                </div>
+
+                <div class="tl-entry">
+                    <time class="tl-date" datetime="2026-03-30">03.30</time>
+                    <div class="tl-dot" style="background: var(--pink)"></div>
+                    <div class="tl-card">
+                        <div class="tl-head">
+                            <span class="tl-title">开始用 Ray 做分布式微调实验</span>
+                            <span class="tag pink">实验</span>
+                        </div>
+                        <p class="tl-desc">把之前单机跑的 LoRA 微调脚本搬到了 Ray 上，初步验证了小模型在多 GPU 下的吞吐提升。</p>
+                    </div>
+                </div>
+
+                <div class="tl-entry">
+                    <time class="tl-date" datetime="2026-03-12">03.12</time>
+                    <div class="tl-dot" style="background: var(--mint)"></div>
+                    <div class="tl-card">
+                        <div class="tl-head">
+                            <span class="tl-title">搭了一个小型的提示词版本管理工具</span>
+                            <span class="tag mint">工具</span>
+                        </div>
+                        <p class="tl-desc">用 JSON 存 prompt 模板 + 版本号，配上简单的 diff 对比。再也不用在聊天记录里翻旧版本了。</p>
+                    </div>
+                </div>
+
+                <div class="tl-entry">
+                    <time class="tl-date" datetime="2026-02-20">02.20</time>
+                    <div class="tl-dot" style="background: var(--pink)"></div>
+                    <div class="tl-card">
+                        <div class="tl-head">
+                            <span class="tl-title">把个人网站从零搭起来了</span>
+                            <span class="tag pink">网站</span>
+                        </div>
+                        <p class="tl-desc">确定了粉彩 + 暖白的设计方向，用纯 HTML/CSS/JS 搭了首页和几个子页面。浏览器窗口隐喻是当时最喜欢的想法。</p>
+                    </div>
+                </div>
+
+                <div class="tl-entry">
+                    <time class="tl-date" datetime="2026-01-08">01.08</time>
+                    <div class="tl-dot" style="background: var(--purple)"></div>
+                    <div class="tl-card">
+                        <div class="tl-head">
+                            <span class="tl-title">整理了 2025 年年度学习总结</span>
+                            <span class="tag purple">回顾</span>
+                        </div>
+                        <p class="tl-desc">把 2025 年读过的论文、写过的代码和踩过的坑做了一次梳理。发现注意力最集中的方向是自动化工具链和小模型实用化。</p>
+                    </div>
+                </div>
+            </section>
+
+            <a class="back-home reveal" href="index.html">&larr; 回到首页</a>
+        </article>
+    </main>
+</div>
+
+<script src="i18n.js"></script>
+<script>
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in');
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach((el, index) => {
+        el.style.transitionDelay = `${Math.min(index * 60, 220)}ms`;
+        revealObserver.observe(el);
+    });
+</script>
+</body>
+</html>
