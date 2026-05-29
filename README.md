@@ -1,6 +1,6 @@
-Pawvelle
+# Pawvelle
 
-A quiet personal index for code, AI, and learning.
+**A quiet personal index for code, AI, and learning.**
 
 A simple single-page site for small projects, experiments, and notes.
 
