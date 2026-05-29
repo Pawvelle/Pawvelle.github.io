@@ -25,6 +25,7 @@
         '/ 日志': '/ Log',
         '/ 兴趣': '/ Interests',
         '你好鸭，我是': "Hello, I'm",
+        '代码、语言模型、小工具，和一点温柔的视觉系统。': 'Code, language models, small tools, and a gentle visual system.',
         '全部': 'All',
         '编程': 'Programming',
         '最近常驻的小星球': 'Current Little Worlds',

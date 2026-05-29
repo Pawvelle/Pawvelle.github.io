@@ -1,19 +1,57 @@
 # Pawvelle
 
-一个由代码、语言和小想法搭起来的粉色小世界。
+A quiet personal site for code, AI, and learning.
 
-## 关于
+A calm, single-page index that keeps small projects, notes, and experiments
+in one place — built with restraint, space, and thin lines instead of cards,
+shadows, and icons.
 
-这是我的个人网站。
+## Structure
 
-一个安静的小空间，用来实验界面、结构和柔软的视觉系统。
+The whole site lives in one page, organized with anchor sections:
 
-还不完整，也还在慢慢长大。
+- **Header** — wordmark + light anchor navigation
+- **Intro** — a short, left-aligned introduction
+- **Projects** — a minimal list
+- **Notes** — a minimal list
+- **About** — one quiet paragraph
+- **Footer** — copyright + links
 
-## 技术
+## Files
 
-- HTML / CSS / JavaScript  
+Actively maintained:
 
-## 状态
+- `index.html` — all page content
+- `styles.css` — all styling
+- `README.md` — this file
 
-缓慢施工中。
+Legacy (kept for reference, not used by the site):
+
+- `legacy/profile.html`
+- `legacy/projects.html`
+- `legacy/log.html`
+- `legacy/interests.html`
+- `legacy/i18n.js`
+
+## Tech
+
+- Plain HTML and CSS, no build step, no framework
+- One tiny inline script at the bottom of `index.html` for the EN / 中文 toggle
+- Inter (via Google Fonts) with a system sans-serif fallback stack
+
+## Language toggle
+
+- Text strings are marked with `data-i18n` attributes
+- The dictionary lives inline in `index.html` (`I18N.en` / `I18N.zh`)
+- Choice is stored in `localStorage`; first visit falls back to the browser
+  language, otherwise English
+- Toggling also updates `document.title` context, the meta description, and
+  the `<html lang>` attribute
+
+## Local preview
+
+```bash
+python3 -m http.server
+```
+
+Then open http://localhost:8000.

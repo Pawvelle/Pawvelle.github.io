@@ -1,1104 +1,331 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pawvelle</title>
+    <meta name="description" content="Pawvelle — a quiet personal site for code, AI, and learning." data-i18n-meta="desc">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=Plus+Jakarta+Sans:wght@600;700;800;900&amp;display=swap" rel="stylesheet">
-
-    <style>
-        :root {
-            --bg: #cfe9dc;
-            --panel: #fdf9f1;
-            --ink: #1d211d;
-            --muted: #77807a;
-            --quiet: #aab2a8;
-            --line: rgba(34, 46, 38, 0.08);
-            --chip: #f3ede2;
-            --mint: #c9eadc;
-            --mint-deep: #76b99a;
-            --pink: #f4c6cc;
-            --peach: #f5dfaa;
-            --purple: #d9d2f1;
-            --green: #c9e6b8;
-            --radius-xl: 40px;
-            --radius-lg: 28px;
-            --radius-md: 22px;
-            --shadow: 0 40px 90px rgba(36, 66, 50, 0.14);
-            --shadow-soft: 0 16px 36px rgba(42, 64, 52, 0.09);
-            --font: 'Inter', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            --display: 'Plus Jakarta Sans', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', var(--font);
-            --ease: cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            html { scroll-behavior: auto; }
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                transition-duration: 0.01ms !important;
-            }
-        }
-
-        body {
-            min-height: 100vh;
-            background: var(--bg);
-            color: var(--ink);
-            font-family: var(--font);
-            font-size: 15px;
-            line-height: 1.55;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        a { color: inherit; text-decoration: none; }
-        a:focus-visible { outline: 2px solid rgba(119, 185, 155, 0.72); outline-offset: 4px; }
-        button { border: 0; background: none; color: inherit; font: inherit; cursor: pointer; }
-        ::selection { background: rgba(201, 234, 220, 0.9); color: var(--ink); }
-
-        .stage {
-            position: relative;
-            min-height: 100vh;
-            padding: clamp(18px, 3vw, 40px) clamp(18px, 6vw, 80px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .window {
-            position: relative;
-            width: 100%;
-            max-width: 1280px;
-            border-radius: var(--radius-xl);
-            background: var(--panel);
-            box-shadow: var(--shadow);
-            border: 1px solid rgba(255, 255, 255, 0.7);
-            overflow: hidden;
-        }
-
-        .browser-bar {
-            height: 54px;
-            display: grid;
-            grid-template-columns: auto 1fr;
-            align-items: center;
-            gap: 18px;
-            padding: 0 24px;
-            border-bottom: 1px solid var(--line);
-        }
-
-        .traffic { display: flex; gap: 7px; }
-        .traffic span { width: 11px; height: 11px; border-radius: 50%; }
-        .traffic span:nth-child(1) { background: #ee8f84; }
-        .traffic span:nth-child(2) { background: #efcc73; }
-        .traffic span:nth-child(3) { background: #8ac9a9; }
-
-        .address {
-            justify-self: center;
-            width: 100%;
-            max-width: 300px;
-            height: 30px;
-            border-radius: 999px;
-            background: rgba(241, 236, 226, 0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            color: #7b8379;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .address svg { opacity: 0.7; }
-
-        .content {
-            display: grid;
-            grid-template-columns: 88px minmax(0, 1fr) 300px;
-            gap: clamp(26px, 3vw, 44px);
-            padding: clamp(26px, 3.4vw, 44px) clamp(26px, 3.4vw, 44px) clamp(30px, 3.6vw, 48px);
-        }
-
-        /* ---------- Rail ---------- */
-        .rail {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 14px;
-            padding-top: 4px;
-        }
-
-        .rail-btn {
-            position: relative;
-            width: 46px;
-            height: 46px;
-            border-radius: 50%;
-            background: #fffdf7;
-            border: 1px solid rgba(35, 46, 39, 0.05);
-            display: grid;
-            place-items: center;
-            color: #4c564d;
-            box-shadow: 0 6px 14px rgba(36, 58, 46, 0.05);
-            transition: transform 0.22s var(--ease), background 0.22s var(--ease), color 0.22s var(--ease);
-        }
-
-        a.rail-btn:hover { transform: translateY(-2px); color: var(--ink); }
-        .rail-btn.active { background: #171a17; color: #fffdf7; box-shadow: 0 14px 28px rgba(24, 36, 28, 0.22); }
-        .rail-btn .dot {
-            position: absolute; top: 6px; right: 6px;
-            width: 9px; height: 9px; border-radius: 50%;
-            background: #ee8f84; border: 2px solid #fffdf7;
-        }
-
-        .rail-spacer { flex: 1; min-height: 16px; }
-
-        .rail-avatar {
-            width: 42px; height: 42px; border-radius: 50%;
-            overflow: hidden;
-            background: var(--purple);
-            border: 2px solid #fffdf7;
-            box-shadow: 0 6px 14px rgba(36, 58, 46, 0.12);
-        }
-        .rail-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-        /* ---------- Main column ---------- */
-        .main-column {
-            min-width: 0;
-            display: flex;
-            flex-direction: column;
-            gap: clamp(22px, 2.4vw, 32px);
-        }
-
-        h1.display {
-            font-family: var(--display);
-            font-weight: 800;
-            font-size: clamp(48px, 6.4vw, 88px);
-            line-height: 1.02;
-            letter-spacing: -0.01em;
-            color: var(--ink);
-        }
-
-        .pills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            height: 42px;
-            padding: 0 16px 0 6px;
-            border-radius: 999px;
-            background: #fffdf7;
-            border: 1px solid rgba(35, 46, 39, 0.05);
-            color: #4a524b;
-            font-size: 13px;
-            font-weight: 700;
-            transition: transform 0.22s var(--ease), background 0.22s var(--ease), color 0.22s var(--ease);
-        }
-
-        a.pill:hover { transform: translateY(-1px); }
-
-        .pill .pill-icon {
-            width: 32px; height: 32px;
-            border-radius: 999px;
-            display: grid; place-items: center;
-            background: rgba(241, 236, 226, 0.8);
-            color: #4c564d;
-        }
-
-        .pill.active {
-            background: #171a17;
-            color: #fffdf7;
-            padding-left: 4px;
-        }
-        .pill.active .pill-icon { background: #fffdf7; color: #171a17; }
-
-        .section-label {
-            color: #6a736b;
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        /* ---------- Card grid ---------- */
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 16px;
-        }
-
-        .course-card {
-            position: relative;
-            min-height: 168px;
-            border-radius: 24px;
-            padding: 18px 20px 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            overflow: hidden;
-            color: inherit;
-            transition: transform 0.24s var(--ease), box-shadow 0.24s var(--ease);
-        }
-        a.course-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 18px 36px rgba(42, 64, 52, 0.12);
-        }
-
-        .course-card.pink   { background: var(--pink); }
-        .course-card.peach  { background: var(--peach); }
-        .course-card.purple { background: var(--purple); }
-        .course-card.mint   { background: var(--mint); }
-
-        .course-head {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-        }
-
-        .chip {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            height: 30px;
-            padding: 0 12px 0 6px;
-            border-radius: 999px;
-            background: rgba(255, 253, 247, 0.72);
-            color: #2a302a;
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-        .chip .chip-icon {
-            width: 22px; height: 22px;
-            border-radius: 999px;
-            background: #fffdf7;
-            display: grid; place-items: center;
-            color: #3a433c;
-        }
-
-        .badge-group {
-            display: inline-flex;
-            gap: 6px;
-            align-items: center;
-        }
-
-        .rating,
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            height: 28px;
-            padding: 0 10px;
-            border-radius: 999px;
-            background: rgba(255, 253, 247, 0.8);
-            color: #2a302a;
-            font-size: 12px;
-            font-weight: 800;
-        }
-        .rating .star { color: #e0a93c; }
-
-        .course-card h3 {
-            font-family: var(--display);
-            font-weight: 700;
-            font-size: clamp(17px, 1.7vw, 20px);
-            line-height: 1.22;
-            color: #1d211d;
-            max-width: 22ch;
-            margin-top: 10px;
-        }
-
-        .course-foot {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            margin-top: 14px;
-        }
-
-        .students {
-            color: rgba(29, 33, 29, 0.66);
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .avatars {
-            display: flex;
-        }
-        .avatars span {
-            width: 24px; height: 24px;
-            border-radius: 50%;
-            background: #fffdf7 center/cover no-repeat;
-            border: 2px solid var(--panel);
-            margin-left: -8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-        }
-        .avatars span:first-child { margin-left: 0; }
-        .avatars span:nth-child(1) { background-color: #f0b9b9; }
-        .avatars span:nth-child(2) { background-color: #cfb7a0; }
-        .avatars span:nth-child(3) { background-color: #a2b7cf; }
-
-        /* ---------- Side column ---------- */
-        .side-column {
-            min-width: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-        }
-
-        .profile-hero {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-            padding: 8px 0 4px;
-        }
-
-        .profile-avatar {
-            width: 88px; height: 88px;
-            border-radius: 50%;
-            overflow: hidden;
-            background: var(--purple);
-            box-shadow: 0 16px 30px rgba(39, 57, 47, 0.14);
-        }
-        .profile-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-        .profile-hero h2 {
-            font-family: var(--display);
-            font-weight: 800;
-            font-size: 22px;
-            line-height: 1.1;
-        }
-
-        .friends-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 14px;
-            border-radius: 999px;
-            background: #fffdf7;
-            border: 1px solid rgba(35, 46, 39, 0.05);
-        }
-
-        .friends-row .fr-icon {
-            width: 34px; height: 34px;
-            border-radius: 50%;
-            background: rgba(241, 236, 226, 0.8);
-            display: grid; place-items: center;
-            color: #3a433c;
-            flex-shrink: 0;
-        }
-
-        .friends-row .fr-count {
-            flex: 1;
-            font-size: 13px;
-            color: #4a524b;
-        }
-        .friends-row .fr-count strong {
-            font-family: var(--display);
-            font-weight: 800;
-            color: var(--ink);
-            margin-right: 4px;
-        }
-
-        .friends-row .mini-avatars {
-            display: flex;
-        }
-        .friends-row .mini-avatars span {
-            width: 22px; height: 22px;
-            border-radius: 50%;
-            background: #f0b9b9;
-            border: 2px solid #fffdf7;
-            margin-left: -6px;
-        }
-        .friends-row .mini-avatars span:first-child { margin-left: 0; }
-        .friends-row .mini-avatars span:nth-child(2) { background: #cfb7a0; }
-        .friends-row .chev { color: #8a918a; font-size: 16px; }
-
-        .activity-card {
-            border-radius: var(--radius-md);
-            background: #fffdf7;
-            border: 1px solid rgba(35, 46, 39, 0.05);
-            padding: 18px;
-            box-shadow: 0 4px 14px rgba(36, 58, 46, 0.04);
-        }
-
-        .activity-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 14px;
-        }
-
-        .activity-top .label {
-            color: var(--quiet);
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-        }
-
-        .year-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 4px 10px;
-            border-radius: 999px;
-            background: rgba(241, 236, 226, 0.7);
-            color: #4c564d;
-            font-size: 11.5px;
-            font-weight: 700;
-        }
-
-        .activity-stat {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 14px;
-        }
-
-        .activity-stat strong {
-            font-family: var(--display);
-            font-weight: 800;
-            font-size: 32px;
-            line-height: 1;
-            color: var(--ink);
-        }
-
-        .activity-stat .result {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 5px 10px;
-            border-radius: 999px;
-            background: rgba(241, 236, 226, 0.8);
-            color: #4c564d;
-            font-size: 11.5px;
-            font-weight: 700;
-        }
-
-        .bars {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 6px;
-            align-items: end;
-            height: 92px;
-        }
-
-        .bar {
-            position: relative;
-            border-radius: 18px 18px 8px 8px;
-            min-height: 26px;
-            background: var(--pink);
-        }
-        .bar.b1 { height: 46%; background: var(--pink); }
-        .bar.b2 { height: 62%; background: var(--peach); }
-        .bar.b3 { height: 54%; background: var(--purple); }
-        .bar.b4 { height: 70%; background: var(--mint); }
-        .bar.b5 { height: 48%; background: #c8dfea; }
-        .bar.b6 {
-            height: 96%;
-            background: linear-gradient(to top, var(--mint-deep), var(--mint));
-            color: #fffdf7;
-        }
-
-        .bar .bar-label {
-            position: absolute;
-            bottom: 6px;
-            left: 0; right: 0;
-            text-align: center;
-            color: rgba(29, 33, 29, 0.58);
-            font-size: 10px;
-            font-weight: 700;
-        }
-        .bar.b6 .bar-label {
-            background: #171a17;
-            color: #fffdf7;
-            border-radius: 999px;
-            margin: 0 4px;
-            padding: 3px 0;
-        }
-
-        .my-courses {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .mc-label {
-            color: #6a736b;
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .mini-course {
-            position: relative;
-            border-radius: 20px;
-            padding: 14px 16px 16px;
-            overflow: hidden;
-            color: inherit;
-            transition: transform 0.24s var(--ease), box-shadow 0.24s var(--ease);
-        }
-        a.mini-course:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 14px 28px rgba(42, 64, 52, 0.1);
-        }
-        .mini-course.pink  { background: var(--pink); }
-        .mini-course.peach { background: var(--peach); }
-
-        .mini-course .mc-head {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .mini-course h4 {
-            font-family: var(--display);
-            font-weight: 700;
-            font-size: 14.5px;
-            line-height: 1.28;
-            color: #1d211d;
-            max-width: 22ch;
-        }
-
-        .mini-course .mc-foot {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .mini-course .mc-foot .students { font-size: 11.5px; }
-
-        .mini-course .mc-foot .avatars span {
-            width: 20px; height: 20px;
-            border: 2px solid var(--panel);
-            margin-left: -6px;
-        }
-
-        .reveal {
-            opacity: 0;
-            transform: translateY(14px);
-            transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
-        }
-        .reveal.in { opacity: 1; transform: none; }
-
-        /* ---------- 喜欢的小角落 ---------- */
-        .likes-section {
-            border-top: 1px solid var(--line);
-            padding-top: clamp(22px, 2.4vw, 30px);
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .likes-head {
-            display: flex;
-            align-items: baseline;
-            justify-content: space-between;
-            gap: 18px;
-        }
-
-        .likes-head h3 {
-            font-family: var(--display);
-            font-weight: 800;
-            font-size: 20px;
-            line-height: 1.1;
-        }
-
-        .likes-head .likes-sub {
-            color: var(--quiet);
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-        }
-
-        .like-rows {
-            display: grid;
-            gap: 10px;
-        }
-
-        .like-row {
-            display: grid;
-            grid-template-columns: 96px minmax(0, 1fr);
-            align-items: center;
-            gap: 14px;
-            padding: 6px 8px;
-            border-radius: 14px;
-            color: inherit;
-            transition: background 0.22s var(--ease);
-        }
-        a.like-row:hover { background: rgba(255, 253, 247, 0.6); }
-        a.like-row:hover .like-tag { background: #fffdf7; }
-
-        .like-cat {
-            display: inline-flex;
-            align-items: center;
-            gap: 9px;
-            font-family: var(--display);
-            font-weight: 700;
-            font-size: 13.5px;
-            color: var(--ink);
-        }
-
-        .cat-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: var(--pink);
-        }
-
-        .like-row.anime   .cat-dot { background: var(--pink); }
-        .like-row.games   .cat-dot { background: var(--peach); }
-        .like-row.cosplay .cat-dot { background: var(--purple); }
-        .like-row.visual  .cat-dot { background: var(--mint); }
-
-        .like-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .like-tag {
-            display: inline-flex;
-            align-items: center;
-            padding: 6px 12px;
-            border-radius: 999px;
-            background: rgba(255, 253, 247, 0.85);
-            border: 1px solid var(--line);
-            color: #3e463f;
-            font-size: 12.5px;
-            font-weight: 600;
-            transition: transform 0.22s var(--ease), background 0.22s var(--ease);
-        }
-        /* ---------- 最近沉迷 ---------- */
-        .currently {
-            margin-top: clamp(14px, 1.6vw, 22px);
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 10px;
-        }
-
-        .currently-head {
-            grid-column: 1 / -1;
-            color: #6a736b;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 2px;
-        }
-
-        .current-card {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 14px;
-            border-radius: 18px;
-            background: #fffdf7;
-            border: 1px solid var(--line);
-        }
-
-        .current-card .cc-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 12px;
-            display: grid;
-            place-items: center;
-            flex-shrink: 0;
-        }
-        .current-card.watching .cc-icon { background: var(--pink); color: #6d2f36; }
-        .current-card.playing  .cc-icon { background: var(--peach); color: #6d5126; }
-        .current-card.loving   .cc-icon { background: var(--mint); color: #2a5546; }
-
-        .current-card .cc-text {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-            min-width: 0;
-        }
-
-        .current-card .cc-label {
-            font-size: 10.5px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--quiet);
-        }
-
-        .current-card .cc-value {
-            font-family: var(--display);
-            font-weight: 700;
-            font-size: 13.5px;
-            color: var(--ink);
-        }
-
-        /* ---------- Responsive ---------- */
-        @media (max-width: 1160px) {
-            .content {
-                grid-template-columns: 72px minmax(0, 1fr) 280px;
-                gap: 26px;
-            }
-            h1.display { font-size: clamp(44px, 6vw, 72px); }
-        }
-
-        @media (max-width: 960px) {
-            .stage { padding: 16px; }
-            .content {
-                grid-template-columns: 1fr;
-                padding: 22px;
-                gap: 22px;
-            }
-            .rail {
-                flex-direction: row;
-                justify-content: flex-start;
-                gap: 10px;
-                overflow-x: auto;
-                padding-bottom: 4px;
-            }
-            .rail-spacer { display: none; }
-            .rail-btn, .rail-avatar { flex-shrink: 0; }
-
-            .side-column {
-                display: grid;
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-                gap: 14px;
-            }
-            .profile-hero { grid-column: span 2; }
-            .friends-row { grid-column: span 2; }
-            .activity-card { grid-column: span 2; }
-            .my-courses { grid-column: span 2; }
-        }
-
-        @media (max-width: 620px) {
-            .browser-bar { grid-template-columns: auto 1fr; padding: 0 16px; }
-            .address { max-width: none; }
-            .card-grid { grid-template-columns: 1fr; }
-            .side-column { grid-template-columns: 1fr; }
-            .profile-hero, .friends-row, .activity-card, .my-courses { grid-column: auto; }
-            h1.display { font-size: clamp(40px, 12vw, 58px); }
-            .pills { gap: 8px; }
-            .pill { height: 38px; font-size: 12.5px; }
-            .pill .pill-icon { width: 28px; height: 28px; }
-            .like-row { grid-template-columns: 1fr; gap: 6px; }
-            .currently { grid-template-columns: 1fr; }
-        }
-    </style>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
+    <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-<div class="stage">
-    <main class="window">
-        <div class="browser-bar">
-            <div class="traffic" aria-hidden="true"><span></span><span></span><span></span></div>
-            <div class="address" aria-hidden="true">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                pawvelle.github.io
+    <header class="site-header" id="top">
+        <div class="container header-inner">
+            <a class="wordmark" href="#top" aria-label="Pawvelle home">Pawvelle<span class="dot" aria-hidden="true"></span></a>
+            <nav class="nav" aria-label="Primary">
+                <a href="#projects" data-i18n="nav.projects">Projects</a>
+                <a href="#lab" data-i18n="nav.lab">Lab</a>
+                <a href="#about" data-i18n="nav.about">About</a>
+                <a href="https://github.com/Pawvelle" target="_blank" rel="noopener">GitHub</a>
+                <button class="locale-toggle" type="button" id="langToggle" aria-label="Switch language">
+                    <svg class="locale-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="12" cy="12" r="9"/>
+                        <path d="M3 12h18"/>
+                        <path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18"/>
+                    </svg>
+                    <span data-lang-label>中文</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="intro" id="intro">
+            <div class="intro-grid">
+                <div class="intro-main">
+                    <h1 class="intro-title">Pawvelle</h1>
+                    <p class="intro-lead" data-i18n="intro.lead">A quiet personal site for code, AI, and learning.</p>
+                    <p class="intro-text" data-i18n="intro.text">I’m a CS undergraduate learning how language models, developer tools, and small systems can make messy tasks clearer. This site is a quiet index for projects, experiments, learning notes, and ideas slowly taking shape.</p>
+                    <nav class="intro-links" aria-label="Quick links">
+                        <a href="#projects" data-i18n="intro.link.projects">Projects</a>
+                        <a href="#lab" data-i18n="intro.link.lab">Lab</a>
+                        <a href="https://github.com/Pawvelle" target="_blank" rel="noopener">GitHub</a>
+                        <a href="mailto:hello@pawvelle.dev" data-i18n="intro.link.email">Email</a>
+                    </nav>
+                </div>
+
+                <aside class="status-panel" aria-label="Current status">
+                    <div class="status-id">
+                        <a class="status-avatar-link" href="https://github.com/Pawvelle" target="_blank" rel="noopener" aria-label="Pawvelle on GitHub">
+                            <img class="status-avatar" src="https://github.com/Pawvelle.png" alt="Pawvelle on GitHub" width="52" height="52" loading="lazy">
+                        </a>
+                        <div class="status-id-text">
+                            <span class="status-id-name">Pawvelle</span>
+                            <span class="status-id-role" data-i18n="status.role">CS Undergraduate · AI / LLM</span>
+                        </div>
+                    </div>
+                    <div class="status-block">
+                        <span class="status-h" data-i18n="status.now">Now</span>
+                        <ul class="status-list">
+                            <li data-i18n="status.now.1">Learning Java and data structures</li>
+                            <li data-i18n="status.now.2">Exploring LLM tools and coding agents</li>
+                            <li data-i18n="status.now.3">Building small, useful systems</li>
+                        </ul>
+                    </div>
+                    <div class="status-block">
+                        <span class="status-h" data-i18n="status.focus">Focus</span>
+                        <p class="status-focus">AI · Java · Python · CLI</p>
+                    </div>
+                </aside>
             </div>
-        </div>
+        </section>
 
-        <div class="content">
-            <aside class="rail" aria-label="主导航">
-                <a class="rail-btn active" href="index.html" aria-label="首页" aria-current="page">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
-                </a>
-                <a class="rail-btn" href="projects.html" aria-label="项目">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2l1.5 3h9L18 2"/><path d="M3 7h18l-1.5 13a2 2 0 0 1-2 1.8H6.5a2 2 0 0 1-2-1.8L3 7z"/><path d="M9 11a3 3 0 0 0 6 0"/></svg>
-                    <span class="dot"></span>
-                </a>
-                <a class="rail-btn" href="log.html" aria-label="日志">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg>
-                </a>
-                <a class="rail-btn" href="interests.html" aria-label="兴趣">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
-                </a>
-                <div class="rail-spacer"></div>
-                <a class="rail-avatar" href="profile.html" aria-label="关于 Pawvelle">
-                    <img src="https://github.com/Pawvelle.png" alt="" onerror="this.style.display='none'">
-                </a>
-            </aside>
+        <section class="section" id="about">
+            <h2 class="section-title" data-i18n="about.title">About</h2>
+            <ul class="list">
+                <li class="row">
+                    <span class="row-name" data-i18n="about.1.name">CS Undergraduate</span>
+                    <span class="row-desc" data-i18n="about.1.desc">Building foundations in programming, data structures, and software development.</span>
+                </li>
+                <li class="row">
+                    <span class="row-name" data-i18n="about.2.name">AI / LLM</span>
+                    <span class="row-desc" data-i18n="about.2.desc">Interested in language models, model applications, and AI-assisted development workflows.</span>
+                </li>
+                <li class="row">
+                    <span class="row-name" data-i18n="about.3.name">Agent Tools</span>
+                    <span class="row-desc" data-i18n="about.3.desc">Exploring how Codex, Claude Code, and Cursor plan tasks, complete workflows, and assist with coding.</span>
+                </li>
+                <li class="row">
+                    <span class="row-name" data-i18n="about.4.name">Developer Tools</span>
+                    <span class="row-desc" data-i18n="about.4.desc">Studying how CLI tools, automation scripts, and coding assistants make daily development clearer.</span>
+                </li>
+            </ul>
+        </section>
 
-            <section class="main-column">
-                <h1 class="display reveal" id="overview">你好鸭，我是<br>Pawvelle</h1>
-
-                <div class="pills reveal" aria-label="主题标签">
-                    <span class="pill">
-                        <span class="pill-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></span>
-                        全部
+        <section class="section" id="projects">
+            <h2 class="section-title" data-i18n="projects.title">Projects</h2>
+            <p class="section-desc" data-i18n="projects.desc">Small systems, experiments, and tools I’m building while learning.</p>
+            <div class="project-rows">
+                <a class="project-row" href="https://github.com/Pawvelle/java-final-project-news-radar" target="_blank" rel="noopener">
+                    <h3 data-i18n="project.1.title">News Radar</h3>
+                    <p data-i18n="project.1.desc">A Java crawler for collecting and organizing campus notices.</p>
+                    <span class="project-meta">
+                        <span data-i18n="project.1.meta">Java · Crawler · Course Project</span>
+                        <span class="arrow" aria-hidden="true">↗</span>
                     </span>
-                    <span class="pill">
-                        <span class="pill-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span>
-                        编程
-                    </span>
-                    <span class="pill">
-                        <span class="pill-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 4 20 12 6 20 6 4"/></svg></span>
-                        LLM
-                    </span>
-                    <span class="pill">
-                        <span class="pill-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7l8-4 8 4-8 4z"/><path d="M4 12l8 4 8-4"/><path d="M4 17l8 4 8-4"/></svg></span>
-                        项目
-                    </span>
-                    <span class="pill">
-                        <span class="pill-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg></span>
-                        日志
-                    </span>
-                </div>
-
-                <div class="section-label reveal">最近常驻的小星球</div>
-
-                <div class="card-grid reveal">
-                    <a class="course-card pink" href="projects.html#python-tools">
-                        <div class="course-head">
-                            <span class="chip">
-                                <span class="chip-icon">
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/></svg>
-                                </span>
-                                编程
-                            </span>
-                            <span class="rating"><span class="star">★</span> 4.8</span>
-                        </div>
-                        <h3>给日常自动化准备的 Python 小工具</h3>
-                        <div class="course-foot">
-                            <span class="students">日常使用</span>
-                            <div class="avatars"><span></span><span></span></div>
-                        </div>
-                    </a>
-
-                    <a class="course-card peach" href="log.html">
-                        <div class="course-head">
-                            <span class="chip">
-                                <span class="chip-icon">
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg>
-                                </span>
-                                更新
-                            </span>
-                            <span class="rating"><span class="star">★</span> 4.9</span>
-                        </div>
-                        <h3>站点、项目和实验的更新记录</h3>
-                        <div class="course-foot">
-                            <span class="students">按日期归档</span>
-                            <div class="avatars"><span></span><span></span></div>
-                        </div>
-                    </a>
-
-                    <a class="course-card purple" href="projects.html#systems">
-                        <div class="course-head">
-                            <span class="chip">
-                                <span class="chip-icon">
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 4 20 12 6 20 6 4"/></svg>
-                                </span>
-                                系统
-                            </span>
-                            <span class="rating"><span class="star">★</span> 4.9</span>
-                        </div>
-                        <h3>把想法变成清爽可用的小系统</h3>
-                        <div class="course-foot">
-                            <span class="students">施工中</span>
-                            <div class="avatars"><span></span><span></span></div>
-                        </div>
-                    </a>
-
-                    <a class="course-card mint" href="interests.html#notes">
-                        <div class="course-head">
-                            <span class="chip">
-                                <span class="chip-icon">
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a15 15 0 0 1 0 18"/><path d="M12 3a15 15 0 0 0 0 18"/></svg>
-                                </span>
-                                灵感库
-                            </span>
-                            <div class="badge-group">
-                                <span class="rating"><span class="star">★</span> 5.0</span>
-                                <span class="badge">🏷 阅读笔记</span>
-                            </div>
-                        </div>
-                        <h3>最近常看的工具、文章和灵感</h3>
-                        <div class="course-foot">
-                            <span class="students">阅读笔记</span>
-                            <div class="avatars"><span></span></div>
-                        </div>
-                    </a>
-                </div>
-
-                <section class="likes-section reveal" aria-label="喜欢的东西">
-                    <div class="likes-head">
-                        <h3>喜欢的小角落</h3>
-                        <span class="likes-sub">软软收藏</span>
-                    </div>
-
-                    <div class="like-rows">
-                        <a class="like-row anime" href="interests.html#anime">
-                            <span class="like-cat"><span class="cat-dot"></span> 动画</span>
-                            <div class="like-tags">
-                                <span class="like-tag">乐队番</span>
-                                <span class="like-tag">舞台与日常</span>
-                            </div>
-                        </a>
-                        <a class="like-row games" href="interests.html#games">
-                            <span class="like-cat"><span class="cat-dot"></span> 游戏</span>
-                            <div class="like-tags">
-                                <span class="like-tag">二次元游戏</span>
-                                <span class="like-tag">崩坏：星穹铁道</span>
-                            </div>
-                        </a>
-                        <a class="like-row cosplay" href="interests.html#cosplay">
-                            <span class="like-cat"><span class="cat-dot"></span> COSPLAY</span>
-                            <div class="like-tags">
-                                <span class="like-tag">角色造型</span>
-                                <span class="like-tag">服装美学</span>
-                            </div>
-                        </a>
-                        <a class="like-row visual" href="interests.html#visuals">
-                            <span class="like-cat"><span class="cat-dot"></span> 视觉</span>
-                            <div class="like-tags">
-                                <span class="like-tag">粉彩配色</span>
-                                <span class="like-tag">可爱 UI 细节</span>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="currently">
-                        <div class="currently-head">最近沉迷中</div>
-                        <div class="current-card watching">
-                            <span class="cc-icon">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 4 20 12 6 20 6 4"/></svg>
-                            </span>
-                            <div class="cc-text">
-                                <span class="cc-label">在看</span>
-                                <span class="cc-value">乐队番</span>
-                            </div>
-                        </div>
-                        <div class="current-card playing">
-                            <span class="cc-icon">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="8" width="19" height="10" rx="5"/><line x1="7" y1="13" x2="10" y2="13"/><line x1="8.5" y1="11.5" x2="8.5" y2="14.5"/><circle cx="15.5" cy="12" r="1" fill="currentColor"/><circle cx="17.5" cy="14" r="1" fill="currentColor"/></svg>
-                            </span>
-                            <div class="cc-text">
-                                <span class="cc-label">在玩</span>
-                                <span class="cc-value">星穹铁道</span>
-                            </div>
-                        </div>
-                        <div class="current-card loving">
-                            <span class="cc-icon">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 3C21 12.5 19 16 12 21z"/></svg>
-                            </span>
-                            <div class="cc-text">
-                                <span class="cc-label">喜欢</span>
-                                <span class="cc-value">粉彩 UI</span>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-            </section>
-
-            <aside class="side-column">
-                <div class="profile-hero reveal">
-                    <div class="profile-avatar">
-                        <img src="https://github.com/Pawvelle.png" alt="Pawvelle 头像" onerror="this.style.display='none'">
-                    </div>
-                    <h2>Pawvelle</h2>
-                </div>
-
-                <a class="friends-row reveal" href="profile.html" aria-label="关于与站内入口">
-                    <span class="fr-icon">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9"/><path d="M16 3.1A4 4 0 0 1 16 11"/></svg>
-                    </span>
-                    <span class="fr-count"><strong>3</strong> 个入口</span>
-                    <span class="mini-avatars"><span></span><span></span></span>
-                    <span class="chev">›</span>
                 </a>
+                <a class="project-row" href="https://github.com/Pawvelle/jump-game" target="_blank" rel="noopener">
+                    <h3 data-i18n="project.2.title">Web Jump Game</h3>
+                    <p data-i18n="project.2.desc">A browser game experiment in timing, motion, and interaction.</p>
+                    <span class="project-meta">
+                        <span data-i18n="project.2.meta">JavaScript · Game · Experiment</span>
+                        <span class="arrow" aria-hidden="true">↗</span>
+                    </span>
+                </a>
+                <a class="project-row" href="https://github.com/Pawvelle/Pawvelle.github.io" target="_blank" rel="noopener">
+                    <h3 data-i18n="project.3.title">Personal Website</h3>
+                    <p data-i18n="project.3.desc">A quiet visual system built with plain HTML and CSS.</p>
+                    <span class="project-meta">
+                        <span data-i18n="project.3.meta">HTML · CSS · Design</span>
+                        <span class="arrow" aria-hidden="true">↗</span>
+                    </span>
+                </a>
+                <!-- TODO: replace with actual repository for Python Utilities -->
+                <a class="project-row" href="https://github.com/Pawvelle" target="_blank" rel="noopener">
+                    <h3 data-i18n="project.4.title">Python Utilities</h3>
+                    <p data-i18n="project.4.desc">Small scripts for automation, APIs, and daily workflows.</p>
+                    <span class="project-meta">
+                        <span data-i18n="project.4.meta">Python · CLI · Automation</span>
+                        <span class="arrow" aria-hidden="true">↗</span>
+                    </span>
+                </a>
+            </div>
+        </section>
 
-                <div class="activity-card reveal" aria-label="专注概览">
-                    <div class="activity-top">
-                        <span class="label">专注</span>
-                        <span class="year-pill">今年</span>
-                    </div>
-                    <div class="activity-stat">
-                        <strong>3.5h</strong>
-                        <span class="result">👋 状态不错</span>
-                    </div>
-                    <div class="bars" aria-hidden="true">
-                        <span class="bar b1"><span class="bar-label">Py</span></span>
-                        <span class="bar b2"><span class="bar-label">JS</span></span>
-                        <span class="bar b3"><span class="bar-label">LLM</span></span>
-                        <span class="bar b4"><span class="bar-label">系统</span></span>
-                        <span class="bar b5"><span class="bar-label">CLI</span></span>
-                        <span class="bar b6"><span class="bar-label">现在</span></span>
-                    </div>
-                </div>
-
-                <div class="my-courses reveal">
-                    <div class="mc-label">当前主线</div>
-
-                    <a class="mini-course pink" href="projects.html#python-tools">
-                        <div class="mc-head">
-                            <span class="chip">
-                                <span class="chip-icon">
-                                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/></svg>
-                                </span>
-                                编程
-                            </span>
-                            <span class="rating"><span class="star">★</span> 4.8</span>
-                        </div>
-                        <h4>实用 Python 模式和小 API</h4>
-                        <div class="mc-foot">
-                            <span class="students">核心学习</span>
-                            <div class="avatars"><span></span><span></span></div>
-                        </div>
-                    </a>
-
-                    <a class="mini-course peach" href="log.html">
-                        <div class="mc-head">
-                            <span class="chip">
-                                <span class="chip-icon">
-                                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 4 20 12 6 20 6 4"/></svg>
-                                </span>
-                                LLM
-                            </span>
-                            <span class="rating"><span class="star">★</span> 4.9</span>
-                        </div>
-                        <h4>最近更新和小实验</h4>
-                        <div class="mc-foot">
-                            <span class="students">时间线</span>
-                            <div class="avatars"><span></span></div>
-                        </div>
-                    </a>
-                </div>
-            </aside>
-        </div>
+        <section class="section" id="lab">
+            <h2 class="section-title" data-i18n="lab.title">Lab</h2>
+            <p class="section-desc" data-i18n="lab.desc">Small experiments, learning tracks, and tool workflows still in progress.</p>
+            <ul class="list">
+                <li class="row">
+                    <span class="row-name" data-i18n="lab.1.name">Language Models</span>
+                    <span class="row-desc" data-i18n="lab.1.desc">Reading model concepts and turning ideas into small runnable experiments.</span>
+                </li>
+                <li class="row">
+                    <span class="row-name" data-i18n="lab.2.name">Developer Tools</span>
+                    <span class="row-desc" data-i18n="lab.2.desc">Exploring Codex, Claude Code, Cursor, and smoother workflows with coding assistants.</span>
+                </li>
+                <li class="row">
+                    <span class="row-name" data-i18n="lab.3.name">Java Practice</span>
+                    <span class="row-desc" data-i18n="lab.3.desc">Practicing collections, IO, threads, OOP, and course projects.</span>
+                </li>
+            </ul>
+        </section>
     </main>
 
-</div>
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-col footer-brand">
+                <span class="wordmark">Pawvelle<span class="dot" aria-hidden="true"></span></span>
+                <p data-i18n="footer.brand.desc">A quiet index for code, AI, and learning.</p>
+            </div>
+            <div class="footer-col">
+                <span class="footer-h" data-i18n="footer.explore">Explore</span>
+                <a href="#projects" data-i18n="footer.link.projects">Projects</a>
+                <a href="#lab" data-i18n="footer.link.lab">Lab</a>
+                <a href="#about" data-i18n="footer.link.about">About</a>
+            </div>
+            <div class="footer-col">
+                <span class="footer-h" data-i18n="footer.links">Links</span>
+                <a href="https://github.com/Pawvelle" target="_blank" rel="noopener">GitHub</a>
+                <a href="mailto:hello@pawvelle.dev" data-i18n="footer.link.email">Email</a>
+            </div>
+        </div>
+        <div class="container footer-base">
+            <span>© 2026 Pawvelle</span>
+        </div>
+    </footer>
 
-<script src="i18n.js"></script>
-<script>
-    const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('in');
-                revealObserver.unobserve(entry.target);
+    <script>
+        const I18N = {
+            en: {
+                "meta.desc": "Pawvelle — a quiet personal site for code, AI, and learning.",
+                "nav.projects": "Projects",
+                "nav.lab": "Lab",
+                "nav.about": "About",
+                "intro.lead": "A quiet personal site for code, AI, and learning.",
+                "intro.text": "I’m a CS undergraduate learning how language models, developer tools, and small systems can make messy tasks clearer. This site is a quiet index for projects, experiments, learning notes, and ideas slowly taking shape.",
+                "intro.link.projects": "Projects",
+                "intro.link.lab": "Lab",
+                "intro.link.email": "Email",
+                "status.role": "CS Undergraduate · AI / LLM",
+                "status.now": "Now",
+                "status.now.1": "Learning Java and data structures",
+                "status.now.2": "Exploring LLM tools and coding agents",
+                "status.now.3": "Building small, useful systems",
+                "status.focus": "Focus",
+                "projects.title": "Projects",
+                "projects.desc": "Small systems, experiments, and tools I’m building while learning.",
+                "project.1.title": "News Radar",
+                "project.1.desc": "A Java crawler for collecting and organizing campus notices.",
+                "project.1.meta": "Java · Crawler · Course Project",
+                "project.2.title": "Web Jump Game",
+                "project.2.desc": "A browser game experiment in timing, motion, and interaction.",
+                "project.2.meta": "JavaScript · Game · Experiment",
+                "project.3.title": "Personal Website",
+                "project.3.desc": "A quiet visual system built with plain HTML and CSS.",
+                "project.3.meta": "HTML · CSS · Design",
+                "project.4.title": "Python Utilities",
+                "project.4.desc": "Small scripts for automation, APIs, and daily workflows.",
+                "project.4.meta": "Python · CLI · Automation",
+                "lab.title": "Lab",
+                "lab.desc": "Small experiments, learning tracks, and tool workflows still in progress.",
+                "lab.1.name": "Language Models",
+                "lab.1.desc": "Reading model concepts and turning ideas into small runnable experiments.",
+                "lab.2.name": "Developer Tools",
+                "lab.2.desc": "Exploring Codex, Claude Code, Cursor, and smoother workflows with coding assistants.",
+                "lab.3.name": "Java Practice",
+                "lab.3.desc": "Practicing collections, IO, threads, OOP, and course projects.",
+                "about.title": "About",
+                "about.1.name": "CS Undergraduate",
+                "about.1.desc": "Building foundations in programming, data structures, and software development.",
+                "about.2.name": "AI / LLM",
+                "about.2.desc": "Interested in language models, model applications, and AI-assisted development workflows.",
+                "about.3.name": "Agent Tools",
+                "about.3.desc": "Exploring how Codex, Claude Code, and Cursor plan tasks, complete workflows, and assist with coding.",
+                "about.4.name": "Developer Tools",
+                "about.4.desc": "Studying how CLI tools, automation scripts, and coding assistants make daily development clearer.",
+                "footer.brand.desc": "A quiet index for code, AI, and learning.",
+                "footer.explore": "Explore",
+                "footer.link.projects": "Projects",
+                "footer.link.lab": "Lab",
+                "footer.link.about": "About",
+                "footer.links": "Links",
+                "footer.link.email": "Email"
+            },
+            zh: {
+                "meta.desc": "Pawvelle — 一个关于代码、AI 与学习的安静个人站。",
+                "nav.projects": "项目",
+                "nav.lab": "实验",
+                "nav.about": "关于",
+                "intro.lead": "一个关于代码、AI 与学习的安静个人站。",
+                "intro.text": "我是一名计算机专业本科生，正在学习如何用语言模型、开发者工具和小型系统，把零散复杂的任务整理得更清楚。这个网站是一个安静的索引，用来放项目、实验、学习记录，以及一些慢慢成形的想法。",
+                "intro.link.projects": "项目",
+                "intro.link.lab": "实验",
+                "intro.link.email": "邮箱",
+                "status.role": "计算机专业本科 · AI / LLM",
+                "status.now": "现在",
+                "status.now.1": "学习 Java 与数据结构",
+                "status.now.2": "探索 LLM 工具和编程智能体",
+                "status.now.3": "构建小而实用的系统",
+                "status.focus": "关注",
+                "projects.title": "项目",
+                "projects.desc": "一些在学习过程中慢慢搭起来的小系统、实验和工具。",
+                "project.1.title": "校园信息雷达",
+                "project.1.desc": "用于采集和整理校园通知的 Java 爬虫项目。",
+                "project.1.meta": "Java · 爬虫 · 课程项目",
+                "project.2.title": "网页跳一跳",
+                "project.2.desc": "关于时机、运动和交互手感的浏览器小游戏实验。",
+                "project.2.meta": "JavaScript · 游戏 · 实验",
+                "project.3.title": "个人网站",
+                "project.3.desc": "用纯 HTML 和 CSS 搭建的安静视觉系统。",
+                "project.3.meta": "HTML · CSS · 设计",
+                "project.4.title": "Python 小工具",
+                "project.4.desc": "用于自动化、API 和日常流程的小脚本。",
+                "project.4.meta": "Python · CLI · 自动化",
+                "lab.title": "实验",
+                "lab.desc": "一些还在尝试中的学习方向、工具流程和小实验。",
+                "lab.1.name": "语言模型",
+                "lab.1.desc": "阅读模型原理，并尝试把概念写成可运行的小实验。",
+                "lab.2.name": "开发者工具",
+                "lab.2.desc": "尝试 Codex、Claude Code、Cursor 等编程助手，整理更顺手的开发流程。",
+                "lab.3.name": "Java 课程练习",
+                "lab.3.desc": "围绕集合、IO、线程、面向对象和课程项目做阶段性练习。",
+                "about.title": "关于",
+                "about.1.name": "计算机专业本科生",
+                "about.1.desc": "正在系统学习编程、数据结构和软件开发基础。",
+                "about.2.name": "AI / LLM",
+                "about.2.desc": "关注语言模型、模型应用和 AI 辅助开发流程。",
+                "about.3.name": "智能体工具",
+                "about.3.desc": "探索 Codex、Claude Code、Cursor 等智能体工具如何规划任务、完成流程并辅助代码开发。",
+                "about.4.name": "开发者工具",
+                "about.4.desc": "研究 CLI、自动化脚本和编程助手如何让日常开发流程更清晰。",
+                "footer.brand.desc": "一个关于代码、AI 与学习的安静索引。",
+                "footer.explore": "探索",
+                "footer.link.projects": "项目",
+                "footer.link.lab": "实验",
+                "footer.link.about": "关于",
+                "footer.links": "链接",
+                "footer.link.email": "邮箱"
             }
+        };
+
+        const STORAGE_KEY = "pawvelle-lang";
+
+        function detectLang() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved === "en" || saved === "zh") return saved;
+            const browser = (navigator.language || "").toLowerCase();
+            return browser.startsWith("zh") ? "zh" : "en";
+        }
+
+        function applyLang(lang) {
+            const dict = I18N[lang] || I18N.en;
+
+            document.querySelectorAll("[data-i18n]").forEach((el) => {
+                const key = el.getAttribute("data-i18n");
+                if (dict[key] !== undefined) el.textContent = dict[key];
+            });
+
+            const meta = document.querySelector("[data-i18n-meta='desc']");
+            if (meta && dict["meta.desc"]) meta.setAttribute("content", dict["meta.desc"]);
+
+            document.documentElement.lang = lang === "zh" ? "zh-Hans" : "en";
+
+            const label = document.querySelector("[data-lang-label]");
+            if (label) label.textContent = lang === "zh" ? "EN" : "中文";
+
+            localStorage.setItem(STORAGE_KEY, lang);
+        }
+
+        let currentLang = detectLang();
+        applyLang(currentLang);
+
+        document.getElementById("langToggle").addEventListener("click", () => {
+            currentLang = currentLang === "zh" ? "en" : "zh";
+            applyLang(currentLang);
         });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.reveal').forEach((el, index) => {
-        el.style.transitionDelay = `${Math.min(index * 60, 260)}ms`;
-        revealObserver.observe(el);
-    });
-
-</script>
+    </script>
 </body>
 </html>
