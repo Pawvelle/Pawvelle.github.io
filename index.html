@@ -7,7 +7,7 @@
     <meta name="description" content="Pawvelle — a quiet personal site for code, AI, and learning." data-i18n-meta="desc">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -34,7 +34,7 @@
     <main class="container">
         <section class="intro" id="intro">
             <div class="intro-grid">
-                <div class="intro-main">
+                <div class="intro-main" data-reveal>
                     <h1 class="intro-title">Pawvelle</h1>
                     <p class="intro-lead" data-i18n="intro.lead">A quiet personal site for code, AI, and learning.</p>
                     <p class="intro-text" data-i18n="intro.text">I’m a CS undergraduate learning how language models, developer tools, and small systems can make messy tasks clearer. This site is a quiet index for projects, experiments, learning notes, and ideas slowly taking shape.</p>
@@ -46,7 +46,7 @@
                     </nav>
                 </div>
 
-                <aside class="status-panel" aria-label="Current status">
+                <aside class="status-panel" aria-label="Current status" data-reveal>
                     <div class="status-id">
                         <a class="status-avatar-link" href="https://github.com/Pawvelle" target="_blank" rel="noopener" aria-label="Pawvelle on GitHub">
                             <img class="status-avatar" src="https://github.com/Pawvelle.png" alt="Pawvelle on GitHub" width="52" height="52" loading="lazy">
@@ -73,21 +73,21 @@
         </section>
 
         <section class="section" id="about">
-            <h2 class="section-title" data-i18n="about.title">About</h2>
+            <h2 class="section-title" data-i18n="about.title" data-reveal>About</h2>
             <ul class="list">
-                <li class="row">
+                <li class="row" data-reveal>
                     <span class="row-name" data-i18n="about.1.name">CS Undergraduate</span>
                     <span class="row-desc" data-i18n="about.1.desc">Building foundations in programming, data structures, and software development.</span>
                 </li>
-                <li class="row">
+                <li class="row" data-reveal>
                     <span class="row-name" data-i18n="about.2.name">AI / LLM</span>
                     <span class="row-desc" data-i18n="about.2.desc">Interested in language models, model applications, and AI-assisted development workflows.</span>
                 </li>
-                <li class="row">
+                <li class="row" data-reveal>
                     <span class="row-name" data-i18n="about.3.name">Agent Tools</span>
                     <span class="row-desc" data-i18n="about.3.desc">Exploring how Codex, Claude Code, and Cursor plan tasks, complete workflows, and assist with coding.</span>
                 </li>
-                <li class="row">
+                <li class="row" data-reveal>
                     <span class="row-name" data-i18n="about.4.name">Developer Tools</span>
                     <span class="row-desc" data-i18n="about.4.desc">Studying how CLI tools, automation scripts, and coding assistants make daily development clearer.</span>
                 </li>
@@ -95,62 +95,54 @@
         </section>
 
         <section class="section" id="projects">
-            <h2 class="section-title" data-i18n="projects.title">Projects</h2>
-            <p class="section-desc" data-i18n="projects.desc">Small systems, experiments, and tools I’m building while learning.</p>
-            <div class="project-rows">
-                <a class="project-row" href="https://github.com/Pawvelle/java-final-project-news-radar" target="_blank" rel="noopener">
-                    <h3 data-i18n="project.1.title">News Radar</h3>
-                    <p data-i18n="project.1.desc">A Java crawler for collecting and organizing campus notices.</p>
-                    <span class="project-meta">
-                        <span data-i18n="project.1.meta">Java · Crawler · Course Project</span>
-                        <span class="arrow" aria-hidden="true">↗</span>
-                    </span>
+            <h2 class="section-title" data-i18n="projects.title" data-reveal>Projects</h2>
+            <p class="section-desc" data-i18n="projects.desc" data-reveal>Small systems, experiments, and tools I’m building while learning.</p>
+            <div class="card-grid">
+                <a class="card project-card" href="https://github.com/Pawvelle/java-final-project-news-radar" target="_blank" rel="noopener" data-reveal>
+                    <span class="card-arrow" aria-hidden="true">↗</span>
+                    <h3 class="card-title" data-i18n="project.1.title">News Radar</h3>
+                    <p class="card-desc" data-i18n="project.1.desc">A Java crawler for collecting and organizing campus notices.</p>
+                    <span class="card-meta" data-i18n="project.1.meta">Java · Crawler · Course Project</span>
                 </a>
-                <a class="project-row" href="https://github.com/Pawvelle/jump-game" target="_blank" rel="noopener">
-                    <h3 data-i18n="project.2.title">Web Jump Game</h3>
-                    <p data-i18n="project.2.desc">A browser game experiment in timing, motion, and interaction.</p>
-                    <span class="project-meta">
-                        <span data-i18n="project.2.meta">JavaScript · Game · Experiment</span>
-                        <span class="arrow" aria-hidden="true">↗</span>
-                    </span>
+                <a class="card project-card" href="https://github.com/Pawvelle/jump-game" target="_blank" rel="noopener" data-reveal>
+                    <span class="card-arrow" aria-hidden="true">↗</span>
+                    <h3 class="card-title" data-i18n="project.2.title">Web Jump Game</h3>
+                    <p class="card-desc" data-i18n="project.2.desc">A browser game experiment in timing, motion, and interaction.</p>
+                    <span class="card-meta" data-i18n="project.2.meta">JavaScript · Game · Experiment</span>
                 </a>
-                <a class="project-row" href="https://github.com/Pawvelle/Pawvelle.github.io" target="_blank" rel="noopener">
-                    <h3 data-i18n="project.3.title">Personal Website</h3>
-                    <p data-i18n="project.3.desc">A quiet visual system built with plain HTML and CSS.</p>
-                    <span class="project-meta">
-                        <span data-i18n="project.3.meta">HTML · CSS · Design</span>
-                        <span class="arrow" aria-hidden="true">↗</span>
-                    </span>
+                <a class="card project-card" href="https://github.com/Pawvelle/Pawvelle.github.io" target="_blank" rel="noopener" data-reveal>
+                    <span class="card-arrow" aria-hidden="true">↗</span>
+                    <h3 class="card-title" data-i18n="project.3.title">Personal Website</h3>
+                    <p class="card-desc" data-i18n="project.3.desc">A quiet visual system built with plain HTML and CSS.</p>
+                    <span class="card-meta" data-i18n="project.3.meta">HTML · CSS · Design</span>
                 </a>
                 <!-- TODO: replace with actual repository for Python Utilities -->
-                <a class="project-row" href="https://github.com/Pawvelle" target="_blank" rel="noopener">
-                    <h3 data-i18n="project.4.title">Python Utilities</h3>
-                    <p data-i18n="project.4.desc">Small scripts for automation, APIs, and daily workflows.</p>
-                    <span class="project-meta">
-                        <span data-i18n="project.4.meta">Python · CLI · Automation</span>
-                        <span class="arrow" aria-hidden="true">↗</span>
-                    </span>
+                <a class="card project-card" href="https://github.com/Pawvelle" target="_blank" rel="noopener" data-reveal>
+                    <span class="card-arrow" aria-hidden="true">↗</span>
+                    <h3 class="card-title" data-i18n="project.4.title">Python Utilities</h3>
+                    <p class="card-desc" data-i18n="project.4.desc">Small scripts for automation, APIs, and daily workflows.</p>
+                    <span class="card-meta" data-i18n="project.4.meta">Python · CLI · Automation</span>
                 </a>
             </div>
         </section>
 
         <section class="section" id="lab">
-            <h2 class="section-title" data-i18n="lab.title">Lab</h2>
-            <p class="section-desc" data-i18n="lab.desc">Small experiments, learning tracks, and tool workflows still in progress.</p>
-            <ul class="list">
-                <li class="row">
-                    <span class="row-name" data-i18n="lab.1.name">Language Models</span>
-                    <span class="row-desc" data-i18n="lab.1.desc">Reading model concepts and turning ideas into small runnable experiments.</span>
-                </li>
-                <li class="row">
-                    <span class="row-name" data-i18n="lab.2.name">Developer Tools</span>
-                    <span class="row-desc" data-i18n="lab.2.desc">Exploring Codex, Claude Code, Cursor, and smoother workflows with coding assistants.</span>
-                </li>
-                <li class="row">
-                    <span class="row-name" data-i18n="lab.3.name">Java Practice</span>
-                    <span class="row-desc" data-i18n="lab.3.desc">Practicing collections, IO, threads, OOP, and course projects.</span>
-                </li>
-            </ul>
+            <h2 class="section-title" data-i18n="lab.title" data-reveal>Lab</h2>
+            <p class="section-desc" data-i18n="lab.desc" data-reveal>Small experiments, learning tracks, and tool workflows still in progress.</p>
+            <div class="card-grid card-grid-lab">
+                <div class="card lab-card" data-reveal>
+                    <h3 class="card-title" data-i18n="lab.1.name">Language Models</h3>
+                    <p class="card-desc" data-i18n="lab.1.desc">Reading model concepts and turning ideas into small runnable experiments.</p>
+                </div>
+                <div class="card lab-card" data-reveal>
+                    <h3 class="card-title" data-i18n="lab.2.name">Developer Tools</h3>
+                    <p class="card-desc" data-i18n="lab.2.desc">Exploring Codex, Claude Code, Cursor, and smoother workflows with coding assistants.</p>
+                </div>
+                <div class="card lab-card" data-reveal>
+                    <h3 class="card-title" data-i18n="lab.3.name">Java Practice</h3>
+                    <p class="card-desc" data-i18n="lab.3.desc">Practicing collections, IO, threads, OOP, and course projects.</p>
+                </div>
+            </div>
         </section>
     </main>
 
@@ -326,6 +318,28 @@
             currentLang = currentLang === "zh" ? "en" : "zh";
             applyLang(currentLang);
         });
+
+        /* ---- Subtle fade-in-up reveal on scroll ---- */
+        (function () {
+            const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            const targets = document.querySelectorAll("[data-reveal]");
+
+            if (prefersReduced || !("IntersectionObserver" in window)) {
+                targets.forEach((el) => el.classList.add("is-visible"));
+                return;
+            }
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("is-visible");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+
+            targets.forEach((el) => observer.observe(el));
+        })();
     </script>
 </body>
 </html>
