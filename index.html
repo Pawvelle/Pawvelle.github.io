@@ -5,6 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pawvelle</title>
     <meta name="description" content="Pawvelle — a quiet personal site for code, AI, and learning." data-i18n-meta="desc">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#ffffff" data-theme-color>
+    <script>
+        (function () {
+            const root = document.documentElement;
+            const storageKey = "pawvelle-theme";
+            const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+            let savedTheme = null;
+
+            try {
+                savedTheme = localStorage.getItem(storageKey);
+            } catch (error) {
+                savedTheme = null;
+            }
+
+            const theme = savedTheme === "dark" || savedTheme === "light"
+                ? savedTheme
+                : systemDark
+                    ? "dark"
+                    : "light";
+
+            root.dataset.theme = theme;
+            root.style.colorScheme = theme;
+
+            const themeColor = document.querySelector("[data-theme-color]");
+            if (themeColor) themeColor.setAttribute("content", theme === "dark" ? "#0f0f0f" : "#ffffff");
+        })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap">
@@ -19,6 +47,22 @@
                 <a href="#lab" data-i18n="nav.lab">Lab</a>
                 <a href="#about" data-i18n="nav.about">About</a>
                 <a href="https://github.com/Pawvelle" target="_blank" rel="noopener">GitHub</a>
+                <button class="theme-toggle" type="button" id="themeToggle" aria-label="Switch theme" title="Switch theme">
+                    <svg class="theme-icon theme-icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M20.5 14.5A8.6 8.6 0 0 1 9.5 3.5A8.6 8.6 0 1 0 20.5 14.5Z"/>
+                    </svg>
+                    <svg class="theme-icon theme-icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="12" cy="12" r="4"/>
+                        <path d="M12 2v2"/>
+                        <path d="M12 20v2"/>
+                        <path d="m4.93 4.93 1.41 1.41"/>
+                        <path d="m17.66 17.66 1.41 1.41"/>
+                        <path d="M2 12h2"/>
+                        <path d="M20 12h2"/>
+                        <path d="m6.34 17.66-1.41 1.41"/>
+                        <path d="m19.07 4.93-1.41 1.41"/>
+                    </svg>
+                </button>
                 <button class="locale-toggle" type="button" id="langToggle" aria-label="Switch language">
                     <svg class="locale-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <circle cx="12" cy="12" r="9"/>
@@ -224,7 +268,9 @@
                 "footer.link.lab": "Lab",
                 "footer.link.about": "About",
                 "footer.links": "Links",
-                "footer.link.email": "Email"
+                "footer.link.email": "Email",
+                "theme.to.dark": "Switch to dark mode",
+                "theme.to.light": "Switch to light mode"
             },
             zh: {
                 "meta.desc": "Pawvelle — 一个关于代码、AI 与学习的安静个人站。",
@@ -279,14 +325,71 @@
                 "footer.link.lab": "实验",
                 "footer.link.about": "关于",
                 "footer.links": "链接",
-                "footer.link.email": "邮箱"
+                "footer.link.email": "邮箱",
+                "theme.to.dark": "切换到深色模式",
+                "theme.to.light": "切换到浅色模式"
             }
         };
 
-        const STORAGE_KEY = "pawvelle-lang";
+        const LANG_STORAGE_KEY = "pawvelle-lang";
+        const THEME_STORAGE_KEY = "pawvelle-theme";
+        const themeToggle = document.getElementById("themeToggle");
+        const themeColorMeta = document.querySelector("[data-theme-color]");
+        const systemThemeQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+        function storedTheme() {
+            try {
+                const saved = localStorage.getItem(THEME_STORAGE_KEY);
+                return saved === "dark" || saved === "light" ? saved : null;
+            } catch (error) {
+                return null;
+            }
+        }
+
+        function detectTheme() {
+            return storedTheme() || (systemThemeQuery.matches ? "dark" : "light");
+        }
+
+        function activeTheme() {
+            return document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+        }
+
+        function updateThemeToggle(theme) {
+            if (!themeToggle) return;
+
+            const nextTheme = theme === "dark" ? "light" : "dark";
+            const dict = I18N[currentLang] || I18N.en;
+            const label = dict[nextTheme === "dark" ? "theme.to.dark" : "theme.to.light"];
+
+            themeToggle.setAttribute("aria-label", label);
+            themeToggle.setAttribute("title", label);
+        }
+
+        function applyTheme(theme, shouldSave = false) {
+            document.documentElement.dataset.theme = theme;
+            document.documentElement.style.colorScheme = theme;
+
+            if (themeColorMeta) {
+                themeColorMeta.setAttribute("content", theme === "dark" ? "#0f0f0f" : "#ffffff");
+            }
+
+            if (shouldSave) {
+                try {
+                    localStorage.setItem(THEME_STORAGE_KEY, theme);
+                } catch (error) {}
+            }
+
+            updateThemeToggle(theme);
+        }
 
         function detectLang() {
-            const saved = localStorage.getItem(STORAGE_KEY);
+            let saved = null;
+            try {
+                saved = localStorage.getItem(LANG_STORAGE_KEY);
+            } catch (error) {
+                saved = null;
+            }
+
             if (saved === "en" || saved === "zh") return saved;
             const browser = (navigator.language || "").toLowerCase();
             return browser.startsWith("zh") ? "zh" : "en";
@@ -308,16 +411,38 @@
             const label = document.querySelector("[data-lang-label]");
             if (label) label.textContent = lang === "zh" ? "EN" : "中文";
 
-            localStorage.setItem(STORAGE_KEY, lang);
+            try {
+                localStorage.setItem(LANG_STORAGE_KEY, lang);
+            } catch (error) {}
+
+            updateThemeToggle(activeTheme());
         }
 
         let currentLang = detectLang();
+        applyTheme(detectTheme());
         applyLang(currentLang);
 
         document.getElementById("langToggle").addEventListener("click", () => {
             currentLang = currentLang === "zh" ? "en" : "zh";
             applyLang(currentLang);
         });
+
+        if (themeToggle) {
+            themeToggle.addEventListener("click", () => {
+                const nextTheme = activeTheme() === "dark" ? "light" : "dark";
+                applyTheme(nextTheme, true);
+            });
+        }
+
+        const syncSystemTheme = () => {
+            if (!storedTheme()) applyTheme(detectTheme());
+        };
+
+        if (systemThemeQuery.addEventListener) {
+            systemThemeQuery.addEventListener("change", syncSystemTheme);
+        } else if (systemThemeQuery.addListener) {
+            systemThemeQuery.addListener(syncSystemTheme);
+        }
 
         /* ---- Subtle fade-in-up reveal on scroll ---- */
         (function () {
