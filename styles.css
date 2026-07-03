@@ -121,6 +121,232 @@ button { font: inherit; }
     vertical-align: 2px;
 }
 
+/* ---------- Film grain texture ---------- */
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.018;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+}
+html[data-theme="dark"] body::after {
+    opacity: 0.03;
+    mix-blend-mode: soft-light;
+}
+
+/* ---------- Scroll progress ---------- */
+.scroll-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 0%;
+    background: var(--accent);
+    opacity: 0;
+    z-index: 11;
+    transition: opacity 0.3s var(--ease);
+}
+
+/* ---------- Opening animation — geometric construction ---------- */
+.intro-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    background: var(--bg);
+    display: grid;
+    place-items: center;
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), visibility 1s;
+}
+.intro-overlay.is-leaving {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.intro-stage {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* Hairline axes — draw outward from center, retract on resolve */
+.intro-line {
+    position: absolute;
+    background: var(--ink);
+    opacity: 0.14;
+    transition: transform 0.7s cubic-bezier(0.7, 0, 0.3, 1), opacity 0.5s ease;
+}
+.intro-line-h {
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    transform-origin: center;
+    animation: intro-line-x 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.intro-line-v {
+    left: 50%;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    transform-origin: center;
+    animation: intro-line-y 1s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
+}
+@keyframes intro-line-x { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes intro-line-y { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+
+.intro-stage.is-resolved .intro-line-h { transform: scaleX(0); opacity: 0; }
+.intro-stage.is-resolved .intro-line-v { transform: scaleY(0); opacity: 0; }
+
+/* Geometric construction — circle, square, triangle, line */
+.intro-geo {
+    grid-area: 1 / 1;
+    width: min(320px, 72vmin);
+    height: min(320px, 72vmin);
+    fill: none;
+    stroke: var(--ink);
+    overflow: visible;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+}
+.intro-stage.is-resolved .intro-geo {
+    transform: scale(0.82);
+    opacity: 0;
+}
+
+/* The diagonal — a string the main forms are threaded on */
+.geo-diag {
+    stroke-width: 1;
+    stroke-dasharray: 396;
+    stroke-dashoffset: 396;
+    opacity: 0.12;
+    animation: intro-path-draw 1.2s cubic-bezier(0.65, 0, 0.35, 1) 0.1s forwards;
+}
+
+/* Circle — the dominant form, its center sitting exactly on the diagonal */
+.geo-circle {
+    stroke-width: 1;
+    stroke-dasharray: 552.9;
+    stroke-dashoffset: 552.9;
+    transform: rotate(-90deg);
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: intro-path-draw 1.5s cubic-bezier(0.65, 0, 0.35, 1) 0.25s forwards;
+}
+
+/* Square — upper-right counterweight, its corner touching the diagonal */
+.geo-square {
+    stroke-width: 1;
+    stroke-dasharray: 384;
+    stroke-dashoffset: 384;
+    opacity: 0.4;
+    animation: intro-path-draw 1.4s cubic-bezier(0.65, 0, 0.35, 1) 0.5s forwards;
+}
+
+/* Triangle — small anchor in the lower right, centered under the square */
+.geo-triangle {
+    stroke-width: 1;
+    stroke-linejoin: round;
+    stroke-dasharray: 144;
+    stroke-dashoffset: 144;
+    opacity: 0.25;
+    animation: intro-path-draw 1s cubic-bezier(0.65, 0, 0.35, 1) 0.85s forwards;
+}
+
+@keyframes intro-path-draw {
+    to { stroke-dashoffset: 0; }
+}
+
+/* Small dashed circle — a quiet satellite in the upper left, revolving */
+.geo-dashed {
+    stroke-width: 1;
+    stroke-dasharray: 2 9;
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation:
+        intro-dashed-in 0.8s ease 0.9s forwards,
+        intro-dashed-spin 24s linear 0.9s infinite;
+}
+@keyframes intro-dashed-in {
+    to { opacity: 0.22; }
+}
+@keyframes intro-dashed-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Arc — an inner echo of the circle, settling in its upper-right quadrant */
+.geo-arc {
+    stroke-width: 1;
+    stroke-linecap: round;
+    stroke-dasharray: 88 263.9;
+    opacity: 0;
+    transform: rotate(130deg);
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: intro-arc-settle 1.6s cubic-bezier(0.22, 1, 0.36, 1) 0.6s forwards;
+}
+@keyframes intro-arc-settle {
+    0% { opacity: 0; transform: rotate(130deg); }
+    18% { opacity: 0.5; }
+    100% { opacity: 0.5; transform: rotate(-90deg); }
+}
+
+/* Accent dot — resting on the diagonal, in the gap between circle and square */
+.geo-dot {
+    stroke: none;
+    fill: var(--accent);
+    transform: scale(0);
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.intro-stage.is-focused .geo-dot {
+    transform: scale(1);
+}
+.intro-stage.is-resolved .geo-dot {
+    transform: scale(0);
+}
+
+.intro-wordmark-container {
+    grid-area: 1 / 1;
+    position: relative;
+    z-index: 2;
+}
+.intro-overlay-mark {
+    font-family: var(--font);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: 0.04em;
+    opacity: 0;
+    transform: scale(0.9);
+    filter: blur(12px);
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+                filter 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.intro-overlay-mark.is-visible {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+}
+.accent-dot {
+    transition: color 0.3s var(--ease), text-shadow 0.3s var(--ease);
+}
+.accent-dot.is-lit {
+    color: var(--accent);
+    text-shadow: 0 0 8px rgba(216, 167, 177, 0.6);
+}
+html[data-theme="dark"] .accent-dot.is-lit {
+    text-shadow: 0 0 10px rgba(138, 107, 115, 0.8);
+}
+
 /* ---------- Header ---------- */
 .site-header {
     position: sticky;
@@ -160,6 +386,9 @@ button { font: inherit; }
     white-space: nowrap;
 }
 .nav a:hover { color: var(--ink); }
+.nav a.is-active {
+    color: var(--ink);
+}
 
 /* quiet monochrome controls */
 .locale-toggle,
@@ -268,14 +497,14 @@ html[data-theme="dark"] .theme-icon-sun { display: block; }
     right: 0;
     bottom: -6px;
     height: 1px;
-    background: currentColor;
+    background: var(--accent);
     opacity: 0;
-    transform: scaleX(0.45);
+    transform: scaleX(0);
     transform-origin: left;
-    transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
+    transition: opacity 0.35s var(--ease), transform 0.35s var(--ease);
 }
 .intro-links a:hover::after {
-    opacity: 0.45;
+    opacity: 0.7;
     transform: scaleX(1);
 }
 
@@ -389,6 +618,7 @@ html[data-theme="dark"] .theme-icon-sun { display: block; }
     letter-spacing: 0.01em;
 }
 
+
 /* ---------- Sections ---------- */
 .section {
     scroll-margin-top: 92px;
@@ -441,7 +671,7 @@ html[data-theme="dark"] .theme-icon-sun { display: block; }
 .project-card:hover {
     background: var(--card-hover-bg);
     box-shadow: var(--shadow-card-hover);
-    transform: scale(1.02);
+    transform: translateY(-4px);
 }
 .project-card .card-title { padding-right: 38px; }
 .card-title {
@@ -527,9 +757,21 @@ html[data-theme="dark"] .theme-icon-sun { display: block; }
 
 /* ---------- Footer ---------- */
 .site-footer {
-    border-top: 1px solid var(--line-soft);
+    position: relative;
+    border-top: none;
     margin-top: clamp(16px, 3vw, 40px);
     padding: clamp(64px, 8vw, 96px) 0 56px;
+}
+.site-footer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: var(--max);
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--line) 15%, var(--line) 85%, transparent);
 }
 .footer-grid {
     display: grid;
@@ -567,28 +809,101 @@ html[data-theme="dark"] .theme-icon-sun { display: block; }
     color: var(--quiet);
 }
 
-/* ---------- Reveal animation (subtle fade-in-up) ---------- */
+/* ---------- Reveal animation (blur-up focus) ---------- */
 [data-reveal] {
     opacity: 0;
     transform: translateY(20px);
-    transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
-    will-change: opacity, transform;
+    filter: blur(6px);
+    transition: opacity 0.8s var(--ease), transform 0.8s var(--ease), filter 0.8s var(--ease);
+    will-change: opacity, transform, filter;
 }
 [data-reveal].is-visible {
     opacity: 1;
     transform: none;
+    filter: blur(0);
 }
 /* gentle stagger inside each card grid */
 .card-grid [data-reveal]:nth-child(2) { transition-delay: 0.06s; }
 .card-grid [data-reveal]:nth-child(3) { transition-delay: 0.12s; }
 .card-grid [data-reveal]:nth-child(4) { transition-delay: 0.18s; }
 
+/* ---------- Hero staggered cascade ---------- */
+.intro-main[data-reveal] {
+    transform: none;
+    filter: none;
+    transition: opacity 0.5s var(--ease);
+}
+.intro-main .intro-title,
+.intro-main .intro-lead,
+.intro-main .intro-text,
+.intro-main .intro-links {
+    opacity: 0;
+    transform: translateY(28px);
+    filter: blur(8px);
+    transition: opacity 0.9s var(--ease), transform 0.9s var(--ease), filter 0.9s var(--ease);
+}
+.intro-main.is-visible .intro-title {
+    opacity: 1; transform: none; filter: blur(0);
+}
+.intro-main.is-visible .intro-lead {
+    opacity: 1; transform: none; filter: blur(0);
+    transition-delay: 0.15s;
+}
+.intro-main.is-visible .intro-text {
+    opacity: 1; transform: none; filter: blur(0);
+    transition-delay: 0.3s;
+}
+.intro-main.is-visible .intro-links {
+    opacity: 1; transform: none; filter: blur(0);
+    transition-delay: 0.45s;
+}
+
 @media (prefers-reduced-motion: reduce) {
     [data-reveal] {
         opacity: 1;
         transform: none;
+        filter: none;
         transition: none;
     }
+    .intro-main .intro-title,
+    .intro-main .intro-lead,
+    .intro-main .intro-text,
+    .intro-main .intro-links {
+        opacity: 1;
+        transform: none;
+        filter: none;
+        transition: none;
+    }
+    .scroll-progress { display: none; }
+    ::view-transition-old(root),
+    ::view-transition-new(root) { animation-duration: 0s; }
+}
+
+/* ---------- View Transition (theme toggle) ---------- */
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation-duration: 0.5s;
+    animation-timing-function: var(--ease);
+}
+::view-transition-new(root) {
+    animation-name: circle-reveal;
+}
+::view-transition-old(root) {
+    animation: none;
+    z-index: -1;
+}
+@keyframes circle-reveal {
+    from { clip-path: circle(0% at var(--toggle-x, 50%) var(--toggle-y, 50%)); }
+    to { clip-path: circle(150% at var(--toggle-x, 50%) var(--toggle-y, 50%)); }
+}
+
+/* ---------- Section flash on nav click ---------- */
+@keyframes section-flash {
+    0% { color: var(--accent); }
+    100% { color: var(--quiet); }
+}
+.section-title.flash {
+    animation: section-flash 1.5s ease-out;
 }
 
 /* ---------- Chinese typography (roomier, neutral tracking) ---------- */
