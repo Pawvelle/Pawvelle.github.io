@@ -41,7 +41,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap">
-    <link rel="stylesheet" href="assets/css/styles.css?v=20260723-hero-balance-gap">
+    <link rel="stylesheet" href="assets/css/styles.css?v=20260723-geometry-cross-weight">
 </head>
 <body>
     <header class="site-header" id="top">
@@ -141,11 +141,39 @@
                             </span>
                         </li>
                     </ol>
-                </div>
 
-                <div class="balance-geometry" aria-hidden="true" data-reveal>
-                    <span class="balance-rect"></span>
-                    <span class="balance-accent"></span>
+                    <div class="balance-geometry" aria-hidden="true">
+                        <svg class="balance-composition" viewBox="0 0 720 400" xmlns="http://www.w3.org/2000/svg" focusable="false" preserveAspectRatio="xMidYMid meet">
+                            <defs>
+                                <clipPath id="balance-accent-clip" clipPathUnits="userSpaceOnUse">
+                                    <rect x="120" y="240" width="275" height="104"/>
+                                </clipPath>
+                            </defs>
+
+                            <!-- Open construction grid -->
+                            <g class="bc-grid">
+                                <line x1="57" y1="211" x2="720" y2="211"/>
+                                <line x1="0" y1="344" x2="720" y2="344"/>
+                                <line x1="262" y1="112" x2="262" y2="400"/>
+                            </g>
+
+                            <!-- Faint registration cross echoing the left-side geometry -->
+                            <g class="bc-cross">
+                                <line x1="76" y1="134" x2="190" y2="134"/>
+                                <line x1="133" y1="76" x2="133" y2="192"/>
+                            </g>
+
+                            <!-- Asymmetric color and structural masses -->
+                            <rect class="bc-accent bc-accent-main" x="120" y="240" width="275" height="104"/>
+                            <rect class="bc-light-bar" x="434" y="189" width="25" height="211"/>
+                            <rect class="bc-accent bc-accent-point" x="576" y="99" width="50" height="50"/>
+
+                            <!-- Circular counterweight and diagonal tension -->
+                            <path class="bc-arc" d="M470 344 A106 106 0 0 1 682 344"/>
+                            <path class="bc-diag" d="M720 0 L88 400 L88 344"/>
+                            <path class="bc-diag-contrast" d="M720 0 L88 400 L88 344" clip-path="url(#balance-accent-clip)"/>
+                        </svg>
+                    </div>
                 </div>
             </aside>
         </section>
