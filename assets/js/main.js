@@ -1,55 +1,86 @@
 const I18N = {
     en: {
-        "meta.desc": "Pawvelle — a quiet personal site for code, AI, and learning.",
-        "nav.projects": "Projects",
-        "nav.lab": "Lab",
+        "meta.desc": "Pawvelle — a personal site for code, AI, and learning.",
+        "aria.primary": "Primary navigation",
+        "aria.quick": "Quick links",
+        "aria.current": "Current focus",
+        "nav.work": "Work",
+        "nav.log": "Log",
         "nav.about": "About",
-        "intro.lead": "A quiet corner for programming, AI, and learning.",
-        "intro.text": "I’m a CS undergraduate learning how language models, developer tools, and small systems can make messy tasks clearer. Here, I slowly collect my projects, experiments, learning notes, and ideas that are still taking shape.",
-        "intro.link.projects": "Projects",
-        "intro.link.lab": "Lab",
+        "intro.copy": "Computer science undergraduate exploring language models,\nagents, and developer tools.\n\nA record of the projects I build and how they grow\nfrom ideas into working systems.",
+        "intro.link.work": "View work",
         "intro.link.email": "Email",
-        "status.role": "CS Undergraduate · AI / LLM",
-        "status.now": "Now",
-        "status.now.1": "Learning Python and data structures",
-        "status.now.2": "Exploring LLM tools and coding agents",
-        "status.now.3": "Exploring the capabilities of different AI models",
-        "status.focus": "Focus",
-        "projects.title": "Projects",
-        "projects.desc": "Small systems, experiments, and tools I’m building while learning.",
-        "project.1.title": "RolyPunch Arena",
-        "project.1.desc": "A 3D roly-poly boxing interaction scene system built with C++ and OpenGL.",
-        "project.1.meta": "C++ · OpenGL · 3D Interaction",
-        "project.2.title": "News Radar",
-        "project.2.desc": "A Java crawler for collecting and organizing campus notices.",
-        "project.2.meta": "Java · Crawler · Course Project",
-        "project.3.title": "Web Jump Game",
-        "project.3.desc": "A browser game experiment in timing, motion, and interaction.",
-        "project.3.meta": "JavaScript · Game · Experiment",
-        "project.4.title": "Personal Website",
-        "project.4.desc": "A quiet visual system built with plain HTML and CSS.",
-        "project.4.meta": "HTML · CSS · Design",
-        "lab.title": "Lab",
-        "lab.desc": "Small experiments, learning tracks, and tool workflows still in progress.",
-        "lab.1.name": "Minecraft Agent",
-        "lab.1.desc": "Exploring a vision-language agent that can understand game scenes, follow tasks, and perform basic actions in Minecraft.",
-        "lab.2.name": "Developer Tools",
-        "lab.2.desc": "Exploring Codex, Antigravity, Cursor, and smoother workflows with coding assistants.",
-        "lab.3.name": "Java Practice",
-        "lab.3.desc": "Practicing collections, IO, threads, OOP, and course projects.",
+        "status.now.1.name": "Minecraft Agent",
+        "status.now.1.desc": "Building an agent that can perceive, reason, and act in a game environment.",
+        "status.now.2.name": "Data Structures in C",
+        "status.now.2.desc": "Building foundations in data structures and algorithms with C.",
+        "status.now.3.name": "Coding Agents",
+        "status.now.3.desc": "Exploring how coding agents plan tasks, use tools, and complete workflows.",
+        "selected.title": "SELECTED WORK",
+        "selected.1.title": "Minecraft Agent",
+        "selected.1.desc": "A locally running vision-language agent that explores perception, task planning, and action execution in Minecraft.",
+        "selected.1.stack": "Python · MineRL · Vision-Language Model",
+        "selected.1.meta": "In Progress · 2026",
+        "selected.2.title": "RolyPunch Arena",
+        "selected.2.desc": "A 3D interactive scene built with C++ and OpenGL, featuring impact feedback, physical motion, and camera control.",
+        "selected.2.stack": "C++ · OpenGL · Interactive Graphics",
+        "selected.3.title": "News Radar",
+        "selected.3.desc": "A command-line tool for collecting, filtering, and archiving campus information.",
+        "selected.3.stack": "Java · Crawler · CLI",
+        "selected.4.title": "Jump Game",
+        "selected.4.desc": "A browser game built around charging, motion, and landing-point calculation.",
+        "selected.4.stack": "JavaScript · Web Game",
+        "more.title": "MORE WORK",
+        "more.intro": "Additional projects and collaborations.",
+        "more.1.title": "Personal Website",
+        "more.1.desc": "A personal website built with plain HTML, CSS, and JavaScript, exploring constructivist design, responsive layouts, and bilingual interaction.",
+        "more.1.stack": "HTML · CSS · JavaScript",
+        "more.1.meta": "Maintained · 2026",
+        "more.2.title": "Tianyuan Water Monitoring",
+        "more.2.desc": "A collaborative drone-based water-monitoring project. I worked on the interface, information presentation, and project demonstration.",
+        "more.2.stack": "Frontend · Data Visualization · Team Project",
+        "more.2.meta": "2026",
+        "more.3.title": "OpenGL Punching Bag",
+        "more.3.desc": "A 3D interaction experiment featuring mouse-controlled punches, physical swinging, particle feedback, and basic lighting.",
+        "more.3.stack": "C++ · OpenGL · Interactive Graphics",
+        "more.3.meta": "2026",
+        "learning.title": "LEARNING LOG",
+        "learning.intro": "Notes from an ongoing learning process.",
+        "learning.1.title": "Running MineRL on Apple Silicon",
+        "learning.1.desc": "Notes on installing MineRL, Minecraft, JDK, and Python, including compatibility problems encountered on Apple Silicon.",
+        "learning.1.stack": "Environment · MineRL · macOS",
+        "learning.1.status": "In Progress",
+        "learning.2.title": "Data Structures in C",
+        "learning.2.desc": "Rebuilding my understanding of lists, stacks, queues, trees, graphs, and common algorithms through C implementations.",
+        "learning.2.stack": "C · Data Structures · Algorithms",
+        "learning.2.status": "Learning",
+        "learning.3.title": "How Coding Agents Use Tools",
+        "learning.3.desc": "Observing how coding agents inspect projects, plan tasks, use terminals, and modify code across multiple steps.",
+        "learning.3.stack": "Coding Agents · Tool Use · Workflow",
+        "learning.3.status": "Documenting",
+        "learning.4.title": "Local Vision-Language Models",
+        "learning.4.desc": "Experiments with running vision-language models locally, focusing on model loading, image input, inference speed, and hardware limits.",
+        "learning.4.stack": "Vision-Language Model · Local Inference",
+        "learning.4.status": "Experimenting",
         "about.title": "About",
-        "about.1.name": "CS Undergraduate",
-        "about.1.desc": "Building foundations in programming, data structures, and software development.",
-        "about.2.name": "AI / LLM",
-        "about.2.desc": "Interested in language models, model applications, and AI-assisted development workflows.",
-        "about.3.name": "Agent Tools",
-        "about.3.desc": "Exploring how Codex, Antigravity, and Cursor plan tasks, complete workflows, and assist with coding.",
-        "about.4.name": "Developer Tools",
-        "about.4.desc": "Studying how CLI tools, automation scripts, and coding assistants make daily development clearer.",
-        "footer.brand.desc": "A quiet index for code, AI, and learning.",
+        "about.p1": "I’m Pawvelle, a computer science undergraduate interested in language models and autonomous agents.",
+        "about.p2": "I’m currently building foundations in data structures, systems, and machine learning. I enjoy turning complex ideas into small systems that can be tested, understood, and improved.",
+        "about.p3": "This site is both a project archive and a record of that process.",
+        "about.focus.label": "Focus",
+        "about.focus.value": "Language Models / Agents",
+        "about.foundation.label": "Foundation",
+        "about.foundation.value": "Data Structures / Systems",
+        "about.workflow.label": "Workflow",
+        "about.workflow.value": "Python / C / Git / CLI",
+        "about.direction.label": "Direction",
+        "about.direction.value": "LLM Engineering / Agent Systems",
+        "contact.title": "LET’S CONNECT",
+        "contact.copy": "Building things that are not quite finished yet,\nbut worth continuing.",
+        "contact.email": "Email",
+        "footer.brand.desc": "An archive of code, agents, and continuous learning.",
         "footer.explore": "Explore",
-        "footer.link.projects": "Projects",
-        "footer.link.lab": "Lab",
+        "footer.link.work": "Work",
+        "footer.link.log": "Log",
         "footer.link.about": "About",
         "footer.links": "Links",
         "footer.link.email": "Email",
@@ -57,56 +88,87 @@ const I18N = {
         "theme.to.light": "Switch to light mode"
     },
     zh: {
-        "meta.desc": "Pawvelle — 一个关于代码、AI 与学习的安静个人站。",
-        "nav.projects": "项目",
-        "nav.lab": "实验",
+        "meta.desc": "Pawvelle — 一个关于代码、AI 与学习的个人网站。",
+        "aria.primary": "主导航",
+        "aria.quick": "快捷链接",
+        "aria.current": "当前重点",
+        "nav.work": "项目",
+        "nav.log": "记录",
         "nav.about": "关于",
-        "intro.lead": "一个记录编程、AI 与学习的安静角落。",
-        "intro.text": "我是一名计算机专业本科生，正在学习如何用语言模型、开发者工具和小型系统，把零散复杂的任务整理得更清楚。这里会慢慢收集我的项目、实验、学习笔记，以及一些还在成形的想法。",
-        "intro.link.projects": "项目",
-        "intro.link.lab": "实验",
+        "intro.copy": "计算机科学本科生，关注大语言模型、智能体与开发者工具。\n这里记录我正在构建的项目，以及它们从想法走向系统的过程。",
+        "intro.link.work": "查看项目",
         "intro.link.email": "邮箱",
-        "status.role": "计算机专业本科 · AI / LLM",
-        "status.now": "现在",
-        "status.now.1": "学习 Python 与数据结构",
-        "status.now.2": "探索 LLM 工具和编程智能体",
-        "status.now.3": "探索各种 AI 模型的能力",
-        "status.focus": "关注",
-        "projects.title": "项目",
-        "projects.desc": "一些在学习过程中慢慢搭起来的小系统、实验和工具。",
-        "project.1.title": "RolyPunch Arena",
-        "project.1.desc": "基于 C++ 与 OpenGL 的 3D 不倒翁拳击交互场景系统。",
-        "project.1.meta": "C++ · OpenGL · 3D 交互",
-        "project.2.title": "校园信息雷达",
-        "project.2.desc": "用于采集和整理校园通知的 Java 爬虫项目。",
-        "project.2.meta": "Java · 爬虫 · 课程项目",
-        "project.3.title": "网页跳一跳",
-        "project.3.desc": "关于时机、运动和交互手感的浏览器小游戏实验。",
-        "project.3.meta": "JavaScript · 游戏 · 实验",
-        "project.4.title": "个人网站",
-        "project.4.desc": "用纯 HTML 和 CSS 搭建的安静视觉系统。",
-        "project.4.meta": "HTML · CSS · 设计",
-        "lab.title": "实验",
-        "lab.desc": "一些还在尝试中的学习方向、工具流程和小实验。",
-        "lab.1.name": "Minecraft Agent",
-        "lab.1.desc": "基于视觉语言模型，尝试让 AI 感知游戏画面、理解任务并完成 Minecraft 中的基础操作。",
-        "lab.2.name": "开发者工具",
-        "lab.2.desc": "尝试 Codex、Antigravity、Cursor 等编程助手，整理更顺手的开发流程。",
-        "lab.3.name": "Java 课程练习",
-        "lab.3.desc": "围绕集合、IO、线程、面向对象和课程项目做阶段性练习。",
+        "status.now.1.name": "Minecraft Agent",
+        "status.now.1.desc": "构建能够在游戏环境中感知、决策与行动的智能体",
+        "status.now.2.name": "Data Structures in C",
+        "status.now.2.desc": "使用 C 语言建立数据结构与算法基础",
+        "status.now.3.name": "Coding Agents",
+        "status.now.3.desc": "研究编码智能体如何规划任务、调用工具并完成工作流",
+        "selected.title": "精选项目",
+        "selected.1.title": "Minecraft Agent",
+        "selected.1.desc": "一个在本地运行的视觉语言智能体，尝试在 Minecraft 中完成环境感知、任务规划与动作执行。",
+        "selected.1.stack": "Python · MineRL · Vision-Language Model",
+        "selected.1.meta": "开发中 · 2026",
+        "selected.2.title": "RolyPunch Arena",
+        "selected.2.desc": "一个使用 C++ 与 OpenGL 构建的三维交互场景，包含受击反馈、物理摆动与视角控制。",
+        "selected.2.stack": "C++ · OpenGL · Interactive Graphics",
+        "selected.3.title": "News Radar",
+        "selected.3.desc": "一个用于收集、筛选和归档校园资讯的命令行工具。",
+        "selected.3.stack": "Java · Crawler · CLI",
+        "selected.4.title": "Jump Game",
+        "selected.4.desc": "一个围绕蓄力、运动轨迹和落点判断构建的浏览器小游戏。",
+        "selected.4.stack": "JavaScript · Web Game",
+        "more.title": "更多项目",
+        "more.intro": "其他项目与协作实践。",
+        "more.1.title": "个人网站",
+        "more.1.desc": "使用原生 HTML、CSS 和 JavaScript 构建的个人网站，围绕极简构造主义、响应式排版与中英文切换持续迭代。",
+        "more.1.stack": "HTML · CSS · JavaScript",
+        "more.1.meta": "持续维护 · 2026",
+        "more.2.title": "天元水质监测",
+        "more.2.desc": "参与无人机水质监测项目，负责前端界面、信息展示和项目演示材料的设计与实现。",
+        "more.2.stack": "Frontend · Data Visualization · Team Project",
+        "more.2.meta": "2026",
+        "more.3.title": "OpenGL 拳击沙袋",
+        "more.3.desc": "一个三维拳击沙袋交互实验，包含鼠标出拳、受力摆动、粒子反馈与基础光照。",
+        "more.3.stack": "C++ · OpenGL · Interactive Graphics",
+        "more.3.meta": "2026",
+        "learning.title": "学习记录",
+        "learning.intro": "正在进行的学习过程笔记。",
+        "learning.1.title": "在 Apple Silicon 上运行 MineRL",
+        "learning.1.desc": "记录 MineRL、Minecraft、JDK 和 Python 环境在 Apple Silicon 上的安装、兼容性问题与解决过程。",
+        "learning.1.stack": "环境配置 · MineRL · macOS",
+        "learning.1.status": "进行中",
+        "learning.2.title": "C 语言数据结构",
+        "learning.2.desc": "使用 C 语言重新理解线性表、栈、队列、树、图以及常见算法的实现方式。",
+        "learning.2.stack": "C · Data Structures · Algorithms",
+        "learning.2.status": "学习中",
+        "learning.3.title": "编码智能体如何使用工具",
+        "learning.3.desc": "观察编码智能体如何读取项目、规划任务、调用终端并在多轮执行中修改代码。",
+        "learning.3.stack": "Coding Agents · Tool Use · Workflow",
+        "learning.3.status": "记录中",
+        "learning.4.title": "本地视觉语言模型",
+        "learning.4.desc": "尝试在本地运行视觉语言模型，理解模型加载、图像输入、推理速度与硬件限制。",
+        "learning.4.stack": "Vision-Language Model · Local Inference",
+        "learning.4.status": "实验中",
         "about.title": "关于",
-        "about.1.name": "计算机专业本科生",
-        "about.1.desc": "正在系统学习编程、数据结构和软件开发基础。",
-        "about.2.name": "AI / LLM",
-        "about.2.desc": "关注语言模型、模型应用和 AI 辅助开发流程。",
-        "about.3.name": "智能体工具",
-        "about.3.desc": "探索 Codex、Antigravity、Cursor 等智能体工具如何规划任务、完成流程并辅助代码开发。",
-        "about.4.name": "开发者工具",
-        "about.4.desc": "研究 CLI、自动化脚本和编程助手如何让日常开发流程更清晰。",
-        "footer.brand.desc": "一个关于代码、AI 与学习的安静索引。",
+        "about.p1": "我是 Pawvelle，一名计算机科学本科生。",
+        "about.p2": "我长期关注大语言模型与智能体，目前正在补充数据结构、系统开发和机器学习方面的基础。我喜欢把复杂的问题拆成能够运行、验证和不断迭代的小系统。",
+        "about.p3": "这个网站是我的项目档案，也是学习过程留下的一份记录。",
+        "about.focus.label": "关注方向",
+        "about.focus.value": "Language Models / Agents",
+        "about.foundation.label": "基础",
+        "about.foundation.value": "Data Structures / Systems",
+        "about.workflow.label": "工作流",
+        "about.workflow.value": "Python / C / Git / CLI",
+        "about.direction.label": "目标方向",
+        "about.direction.value": "LLM Engineering / Agent Systems",
+        "contact.title": "保持联系",
+        "contact.copy": "正在构建一些还不够成熟，\n但值得继续完成的东西。",
+        "contact.email": "邮箱",
+        "footer.brand.desc": "代码、智能体与持续学习的项目档案。",
         "footer.explore": "探索",
-        "footer.link.projects": "项目",
-        "footer.link.lab": "实验",
+        "footer.link.work": "项目",
+        "footer.link.log": "记录",
         "footer.link.about": "关于",
         "footer.links": "链接",
         "footer.link.email": "邮箱",
@@ -118,6 +180,7 @@ const I18N = {
 const LANG_STORAGE_KEY = "pawvelle-lang";
 const THEME_STORAGE_KEY = "pawvelle-theme";
 const themeToggle = document.getElementById("themeToggle");
+const langToggle = document.getElementById("langToggle");
 const themeColorMeta = document.querySelector("[data-theme-color]");
 const systemThemeQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
@@ -154,7 +217,7 @@ function applyTheme(theme, shouldSave = false) {
     document.documentElement.style.colorScheme = theme;
 
     if (themeColorMeta) {
-        themeColorMeta.setAttribute("content", theme === "dark" ? "#000000" : "#ffffff");
+        themeColorMeta.setAttribute("content", theme === "dark" ? "#111111" : "#F7F6F2");
     }
 
     if (shouldSave) {
@@ -168,6 +231,7 @@ function applyTheme(theme, shouldSave = false) {
 
 function detectLang() {
     let saved = null;
+
     try {
         saved = localStorage.getItem(LANG_STORAGE_KEY);
     } catch (error) {
@@ -175,6 +239,7 @@ function detectLang() {
     }
 
     if (saved === "en" || saved === "zh") return saved;
+
     const browser = (navigator.language || "").toLowerCase();
     return browser.startsWith("zh") ? "zh" : "en";
 }
@@ -182,9 +247,14 @@ function detectLang() {
 function applyLang(lang) {
     const dict = I18N[lang] || I18N.en;
 
-    document.querySelectorAll("[data-i18n]").forEach((el) => {
-        const key = el.getAttribute("data-i18n");
-        if (dict[key] !== undefined) el.textContent = dict[key];
+    document.querySelectorAll("[data-i18n]").forEach((element) => {
+        const key = element.getAttribute("data-i18n");
+        if (dict[key] !== undefined) element.textContent = dict[key];
+    });
+
+    document.querySelectorAll("[data-i18n-aria]").forEach((element) => {
+        const key = element.getAttribute("data-i18n-aria");
+        if (dict[key] !== undefined) element.setAttribute("aria-label", dict[key]);
     });
 
     const meta = document.querySelector("[data-i18n-meta='desc']");
@@ -206,43 +276,19 @@ let currentLang = detectLang();
 applyTheme(detectTheme());
 applyLang(currentLang);
 
-document.getElementById("langToggle").addEventListener("click", () => {
-    currentLang = currentLang === "zh" ? "en" : "zh";
-    applyLang(currentLang);
-});
+if (langToggle) {
+    langToggle.addEventListener("click", () => {
+        currentLang = currentLang === "zh" ? "en" : "zh";
+        applyLang(currentLang);
+    });
+}
 
 if (themeToggle) {
     themeToggle.addEventListener("click", () => {
         const nextTheme = activeTheme() === "dark" ? "light" : "dark";
-
-        if (document.startViewTransition) {
-            const rect = themeToggle.getBoundingClientRect();
-            const x = rect.left + rect.width / 2;
-            const y = rect.top + rect.height / 2;
-            document.documentElement.style.setProperty("--toggle-x", x + "px");
-            document.documentElement.style.setProperty("--toggle-y", y + "px");
-
-            document.startViewTransition(() => {
-                applyTheme(nextTheme, true);
-            });
-        } else {
-            applyTheme(nextTheme, true);
-        }
+        applyTheme(nextTheme, true);
     });
 }
-
-document.querySelectorAll(".status-avatar").forEach((avatar) => {
-    const showFallback = () => {
-        const avatarLink = avatar.closest(".status-avatar-link");
-        if (avatarLink) avatarLink.classList.add("avatar-failed");
-    };
-
-    avatar.addEventListener("error", showFallback, { once: true });
-
-    if (avatar.complete && avatar.naturalWidth === 0) {
-        showFallback();
-    }
-});
 
 const syncSystemTheme = () => {
     if (!storedTheme()) applyTheme(detectTheme());
@@ -254,107 +300,49 @@ if (systemThemeQuery.addEventListener) {
     systemThemeQuery.addListener(syncSystemTheme);
 }
 
-/* ---- Opening animation ---- */
-var _introDelay = 0;
+/* Restrained fade-and-rise reveal. */
 (function () {
-    var overlay = document.getElementById("introOverlay");
-    if (!overlay) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { overlay.remove(); return; }
-
-    _introDelay = 3200;
-    var stage = overlay.querySelector(".intro-stage");
-    var mark = document.getElementById("introMark");
-    var dot = document.getElementById("introDot");
-
-    document.body.style.overflow = "hidden";
-
-    /* Focus: center dot snaps in once the dial settles */
-    setTimeout(function () {
-        stage.classList.add("is-focused");
-    }, 1900);
-
-    /* Resolve: lens recedes, axes retract, wordmark emerges */
-    setTimeout(function () {
-        stage.classList.add("is-resolved");
-        mark.classList.add("is-visible");
-    }, 2400);
-
-    setTimeout(function () { dot.classList.add("is-lit"); }, 2750);
-
-    setTimeout(function () {
-        overlay.classList.add("is-leaving");
-        document.body.style.overflow = "";
-    }, 3200);
-
-    setTimeout(function () {
-        overlay.remove();
-    }, 4200);
-})();
-
-/* ---- Blur-up reveal on scroll ---- */
-(function () {
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const targets = document.querySelectorAll("[data-reveal]");
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    if (prefersReduced || !("IntersectionObserver" in window)) {
-        targets.forEach((el) => el.classList.add("is-visible"));
+    if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+        targets.forEach((element) => element.classList.add("is-visible"));
         return;
     }
 
-    function initObserver() {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add("is-visible");
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+        });
+    }, {
+        threshold: 0.12,
+        rootMargin: "0px 0px -7% 0px"
+    });
 
-        targets.forEach((el) => observer.observe(el));
-    }
-
-    if (_introDelay > 0) {
-        setTimeout(initObserver, _introDelay);
-    } else {
-        initObserver();
-    }
+    targets.forEach((element) => observer.observe(element));
 })();
 
-/* ---- Nav active section tracking ---- */
+/* Keep navigation state in sync with the visible content section. */
 (function () {
-    const sections = document.querySelectorAll("section[id]");
+    const sections = document.querySelectorAll("#selected-work, #learning-log, #about");
     const navLinks = document.querySelectorAll(".nav a[href^='#']");
-    if (!sections.length || !navLinks.length) return;
+
+    if (!sections.length || !navLinks.length || !("IntersectionObserver" in window)) return;
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                const id = entry.target.id;
-                navLinks.forEach((link) => {
-                    link.classList.toggle("is-active", link.getAttribute("href") === "#" + id);
-                });
-            }
+            if (!entry.isIntersecting) return;
+
+            navLinks.forEach((link) => {
+                link.classList.toggle("is-active", link.getAttribute("href") === `#${entry.target.id}`);
+            });
         });
-    }, { threshold: 0.15, rootMargin: "-80px 0px -60% 0px" });
-
-    sections.forEach((s) => observer.observe(s));
-})();
-
-
-/* ---- Section flash on nav click ---- */
-(function () {
-    document.querySelectorAll('a[href^="#"]').forEach((link) => {
-        link.addEventListener("click", () => {
-            const targetId = link.getAttribute("href").slice(1);
-            const target = document.getElementById(targetId);
-            if (!target) return;
-            const title = target.querySelector(".section-title");
-            if (!title) return;
-            title.classList.remove("flash");
-            void title.offsetWidth;
-            title.classList.add("flash");
-            title.addEventListener("animationend", () => title.classList.remove("flash"), { once: true });
-        });
+    }, {
+        threshold: 0.16,
+        rootMargin: "-20% 0px -62% 0px"
     });
+
+    sections.forEach((section) => observer.observe(section));
 })();

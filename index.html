@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pawvelle</title>
-    <meta name="description" content="Pawvelle — a quiet personal site for code, AI, and learning." data-i18n-meta="desc">
+    <meta name="description" content="Pawvelle — a personal site for code, AI, and learning." data-i18n-meta="desc">
     <meta name="color-scheme" content="light dark">
-    <meta name="theme-color" content="#ffffff" data-theme-color>
+    <meta name="theme-color" content="#F7F6F2" data-theme-color>
     <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
     <link rel="manifest" href="site.webmanifest">
@@ -33,63 +33,41 @@
             root.style.colorScheme = theme;
 
             const themeColor = document.querySelector("[data-theme-color]");
-            if (themeColor) themeColor.setAttribute("content", theme === "dark" ? "#000000" : "#ffffff");
+            if (themeColor) {
+                themeColor.setAttribute("content", theme === "dark" ? "#111111" : "#F7F6F2");
+            }
         })();
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap">
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
-    <div class="intro-overlay" id="introOverlay" aria-hidden="true">
-        <div class="intro-stage">
-            <span class="intro-line intro-line-h" aria-hidden="true"></span>
-            <span class="intro-line intro-line-v" aria-hidden="true"></span>
-            <svg class="intro-geo" viewBox="0 0 320 320" aria-hidden="true">
-                <line class="geo-diag" x1="20" y1="300" x2="300" y2="20" />
-                <rect class="geo-square" x="200" y="24" width="96" height="96" />
-                <circle class="geo-dashed" cx="76" cy="76" r="34" />
-                <circle class="geo-circle" cx="120" cy="200" r="88" />
-                <circle class="geo-arc" cx="120" cy="200" r="56" />
-                <polygon class="geo-triangle" points="248,210.4 224,252 272,252" />
-                <circle class="geo-dot" cx="191" cy="129" r="6" />
-            </svg>
-            <div class="intro-wordmark-container">
-                <span class="intro-overlay-mark" id="introMark">Pawvelle<span class="dot accent-dot" aria-hidden="true" id="introDot"></span></span>
-            </div>
-        </div>
-    </div>
     <header class="site-header" id="top">
         <div class="container header-inner">
-            <a class="wordmark" href="#top" aria-label="Pawvelle home">Pawvelle<span class="dot" aria-hidden="true"></span></a>
-            <nav class="nav" aria-label="Primary">
+            <a class="wordmark" href="#top" aria-label="Pawvelle home">
+                Pawvelle<span class="brand-dot" aria-hidden="true"></span>
+            </a>
+
+            <nav class="nav" aria-label="Primary" data-i18n-aria="aria.primary">
+                <a href="#selected-work" data-i18n="nav.work">Work</a>
+                <a href="#learning-log" data-i18n="nav.log">Log</a>
                 <a href="#about" data-i18n="nav.about">About</a>
-                <a href="#projects" data-i18n="nav.projects">Projects</a>
-                <a href="#lab" data-i18n="nav.lab">Lab</a>
-                <a href="https://github.com/Pawvelle" target="_blank" rel="noopener">GitHub</a>
+                <a class="nav-github" href="https://github.com/Pawvelle" target="_blank" rel="noopener">
+                    GitHub <span aria-hidden="true">↗</span>
+                </a>
+                <span class="nav-divider" aria-hidden="true"></span>
                 <button class="theme-toggle" type="button" id="themeToggle" aria-label="Switch theme" title="Switch theme">
-                    <svg class="theme-icon theme-icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <svg class="theme-icon theme-icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true">
                         <path d="M20.5 14.5A8.6 8.6 0 0 1 9.5 3.5A8.6 8.6 0 1 0 20.5 14.5Z"/>
                     </svg>
-                    <svg class="theme-icon theme-icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <svg class="theme-icon theme-icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true">
                         <circle cx="12" cy="12" r="4"/>
-                        <path d="M12 2v2"/>
-                        <path d="M12 20v2"/>
-                        <path d="m4.93 4.93 1.41 1.41"/>
-                        <path d="m17.66 17.66 1.41 1.41"/>
-                        <path d="M2 12h2"/>
-                        <path d="M20 12h2"/>
-                        <path d="m6.34 17.66-1.41 1.41"/>
-                        <path d="m19.07 4.93-1.41 1.41"/>
+                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
                     </svg>
                 </button>
                 <button class="locale-toggle" type="button" id="langToggle" aria-label="Switch language">
-                    <svg class="locale-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <circle cx="12" cy="12" r="9"/>
-                        <path d="M3 12h18"/>
-                        <path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18"/>
-                    </svg>
                     <span data-lang-label>中文</span>
                 </button>
             </nav>
@@ -97,159 +75,221 @@
     </header>
 
     <main class="container">
-        <section class="intro" id="intro">
-            <div class="intro-grid">
-                <div class="intro-main" data-reveal>
-                    <h1 class="intro-title">Pawvelle</h1>
-                    <p class="intro-lead" data-i18n="intro.lead">A quiet corner for programming, AI, and learning.</p>
-                    <p class="intro-text" data-i18n="intro.text">I’m a CS undergraduate learning how language models, developer tools, and small systems can make messy tasks clearer. Here, I slowly collect my projects, experiments, learning notes, and ideas that are still taking shape.</p>
-                    <nav class="intro-links" aria-label="Quick links">
-                        <a href="#projects" data-i18n="intro.link.projects">Projects</a>
-                        <a href="#lab" data-i18n="intro.link.lab">Lab</a>
-                        <a href="https://github.com/Pawvelle" target="_blank" rel="noopener">GitHub</a>
-                        <a href="mailto:hello@pawvelle.dev" data-i18n="intro.link.email">Email</a>
-                    </nav>
+        <section class="hero" id="intro">
+            <div class="hero-primary">
+                <div class="hero-geometry" aria-hidden="true">
+                    <span class="geo-circle"></span>
+                    <span class="geo-vertical"></span>
+                    <span class="geo-horizontal"></span>
+                    <span class="geo-square"></span>
                 </div>
 
-                <aside class="status-panel" aria-label="Current status" data-reveal>
-                    <div class="status-id">
-                        <a class="status-avatar-link" href="https://github.com/Pawvelle" target="_blank" rel="noopener" aria-label="Pawvelle on GitHub">
-                            <img class="status-avatar" src="https://github.com/Pawvelle.png" alt="Pawvelle on GitHub" width="52" height="52" loading="lazy">
-                        </a>
-                        <div class="status-id-text">
-                            <span class="status-id-name">Pawvelle</span>
-                            <span class="status-id-role" data-i18n="status.role">CS Undergraduate · AI / LLM</span>
-                        </div>
+                <h1 class="hero-title" data-reveal>Pawvelle</h1>
+
+                <p class="hero-copy" data-i18n="intro.copy" data-reveal>
+                    Computer science undergraduate exploring language models,
+                    agents, and developer tools.
+
+                    A record of the projects I build and how they grow
+                    from ideas into working systems.
+                </p>
+
+                <nav class="hero-links" aria-label="Quick links" data-i18n-aria="aria.quick" data-reveal>
+                    <a href="#selected-work">
+                        <span data-i18n="intro.link.work">View work</span>
+                        <span aria-hidden="true">↗</span>
+                    </a>
+                    <a href="https://github.com/Pawvelle" target="_blank" rel="noopener">
+                        GitHub <span aria-hidden="true">↗</span>
+                    </a>
+                    <a href="mailto:hello@pawvelle.dev">
+                        <span data-i18n="intro.link.email">Email</span>
+                        <span aria-hidden="true">↗</span>
+                    </a>
+                </nav>
+            </div>
+
+            <aside class="hero-aside" aria-label="Current focus" data-i18n-aria="aria.current">
+                <div class="status-block" data-reveal>
+                    <div class="construct-label">
+                        <h2>CURRENT</h2>
+                        <span class="label-rule label-rule-strong" aria-hidden="true"></span>
+                        <span class="label-rule" aria-hidden="true"></span>
                     </div>
-                    <div class="status-block">
-                        <span class="status-h" data-i18n="status.now">Now</span>
-                        <ul class="status-list">
-                            <li data-i18n="status.now.1">Learning Python and data structures</li>
-                            <li data-i18n="status.now.2">Exploring LLM tools and coding agents</li>
-                            <li data-i18n="status.now.3">Exploring the capabilities of different AI models</li>
-                        </ul>
-                    </div>
-                    <div class="status-block">
-                        <span class="status-h" data-i18n="status.focus">Focus</span>
-                        <p class="status-focus">LLM · Agent · Python · CLI</p>
-                    </div>
-                </aside>
+                    <ol class="now-list">
+                        <li>
+                            <span class="now-number">01</span>
+                            <span class="now-text">
+                                <span class="now-name" data-i18n="status.now.1.name">Minecraft Agent</span>
+                                <span class="now-desc" data-i18n="status.now.1.desc">Building an agent that can perceive, reason, and act in a game environment.</span>
+                            </span>
+                        </li>
+                        <li>
+                            <span class="now-number">02</span>
+                            <span class="now-text">
+                                <span class="now-name" data-i18n="status.now.2.name">Data Structures in C</span>
+                                <span class="now-desc" data-i18n="status.now.2.desc">Building foundations in data structures and algorithms with C.</span>
+                            </span>
+                        </li>
+                        <li>
+                            <span class="now-number">03</span>
+                            <span class="now-text">
+                                <span class="now-name" data-i18n="status.now.3.name">Coding Agents</span>
+                                <span class="now-desc" data-i18n="status.now.3.desc">Exploring how coding agents plan tasks, use tools, and complete workflows.</span>
+                            </span>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="balance-geometry" aria-hidden="true" data-reveal>
+                    <span class="balance-rect"></span>
+                    <span class="balance-accent"></span>
+                    <span class="balance-diagonal"></span>
+                    <span class="balance-baseline"></span>
+                </div>
+            </aside>
+        </section>
+
+        <section class="selected-work" id="selected-work">
+            <div class="selected-heading" data-reveal>
+                <span class="section-index">01</span>
+                <h2 data-i18n="selected.title">SELECTED WORK</h2>
+                <span aria-hidden="true"></span>
+            </div>
+
+            <div class="selected-grid">
+                <article class="selected-item selected-item-static" data-reveal>
+                    <span class="selected-number">01</span>
+                    <span class="selected-content">
+                        <strong data-i18n="selected.1.title">Minecraft Agent</strong>
+                        <span data-i18n="selected.1.desc">A locally running vision-language agent that explores perception, task planning, and action execution in Minecraft.</span>
+                        <span class="selected-stack" data-i18n="selected.1.stack">Python · MineRL · Vision-Language Model</span>
+                        <span class="selected-meta" data-i18n="selected.1.meta">In Progress · 2026</span>
+                    </span>
+                </article>
+
+                <a class="selected-item" href="https://github.com/Pawvelle/opengl-roly-punch-arena" target="_blank" rel="noopener" data-reveal>
+                    <span class="selected-number">02</span>
+                    <span class="selected-content">
+                        <strong data-i18n="selected.2.title">RolyPunch Arena</strong>
+                        <span data-i18n="selected.2.desc">A 3D interactive scene built with C++ and OpenGL, featuring impact feedback, physical motion, and camera control.</span>
+                        <span class="selected-stack" data-i18n="selected.2.stack">C++ · OpenGL · Interactive Graphics</span>
+                        <span class="selected-meta">2026 <span aria-hidden="true">↗</span></span>
+                    </span>
+                </a>
+
+                <a class="selected-item" href="https://github.com/Pawvelle/java-final-project-news-radar" target="_blank" rel="noopener" data-reveal>
+                    <span class="selected-number">03</span>
+                    <span class="selected-content">
+                        <strong data-i18n="selected.3.title">News Radar</strong>
+                        <span data-i18n="selected.3.desc">A command-line tool for collecting, filtering, and archiving campus information.</span>
+                        <span class="selected-stack" data-i18n="selected.3.stack">Java · Crawler · CLI</span>
+                        <span class="selected-meta">2026 <span aria-hidden="true">↗</span></span>
+                    </span>
+                </a>
+
+                <a class="selected-item" href="https://github.com/Pawvelle/jump-game" target="_blank" rel="noopener" data-reveal>
+                    <span class="selected-number">04</span>
+                    <span class="selected-content">
+                        <strong data-i18n="selected.4.title">Jump Game</strong>
+                        <span data-i18n="selected.4.desc">A browser game built around charging, motion, and landing-point calculation.</span>
+                        <span class="selected-stack" data-i18n="selected.4.stack">JavaScript · Web Game</span>
+                        <span class="selected-meta">2026 <span aria-hidden="true">↗</span></span>
+                    </span>
+                </a>
+            </div>
+        </section>
+
+        <section class="archive-section" id="more-work">
+            <div class="section-heading" data-reveal>
+                <span class="section-index">02</span>
+                <h2 class="section-title" data-i18n="more.title">MORE WORK</h2>
+                <span class="section-rule" aria-hidden="true"></span>
+            </div>
+            <p class="section-intro" data-i18n="more.intro" data-reveal>Additional projects and collaborations.</p>
+            <div class="work-list">
+                <article class="work-row" data-reveal>
+                    <span class="work-number">01</span>
+                    <div class="work-main"><h3 data-i18n="more.1.title">Personal Website</h3><p data-i18n="more.1.desc">A personal website built with plain HTML, CSS, and JavaScript, exploring constructivist design, responsive layouts, and bilingual interaction.</p></div>
+                    <div class="work-meta"><span data-i18n="more.1.stack">HTML · CSS · JavaScript</span><strong data-i18n="more.1.meta">Maintained · 2026</strong></div>
+                </article>
+                <article class="work-row" data-reveal>
+                    <span class="work-number">02</span>
+                    <div class="work-main"><h3 data-i18n="more.2.title">Tianyuan Water Monitoring</h3><p data-i18n="more.2.desc">A collaborative drone-based water-monitoring project. I worked on the interface, information presentation, and project demonstration.</p></div>
+                    <div class="work-meta"><span data-i18n="more.2.stack">Frontend · Data Visualization · Team Project</span><strong data-i18n="more.2.meta">2026</strong></div>
+                </article>
+                <article class="work-row" data-reveal>
+                    <span class="work-number">03</span>
+                    <div class="work-main"><h3 data-i18n="more.3.title">OpenGL Punching Bag</h3><p data-i18n="more.3.desc">A 3D interaction experiment featuring mouse-controlled punches, physical swinging, particle feedback, and basic lighting.</p></div>
+                    <div class="work-meta"><span data-i18n="more.3.stack">C++ · OpenGL · Interactive Graphics</span><strong data-i18n="more.3.meta">2026</strong></div>
+                </article>
+            </div>
+        </section>
+
+        <section class="archive-section learning-section" id="learning-log">
+            <div class="section-heading" data-reveal>
+                <span class="section-index">03</span>
+                <h2 class="section-title" data-i18n="learning.title">LEARNING LOG</h2>
+                <span class="section-rule" aria-hidden="true"></span>
+            </div>
+            <p class="section-intro" data-i18n="learning.intro" data-reveal>Notes from an ongoing learning process.</p>
+            <div class="learning-grid">
+                <article class="learning-item" data-reveal><span>01</span><div><h3 data-i18n="learning.1.title">Running MineRL on Apple Silicon</h3><p data-i18n="learning.1.desc">Notes on installing MineRL, Minecraft, JDK, and Python, including compatibility problems encountered on Apple Silicon.</p><small data-i18n="learning.1.stack">Environment · MineRL · macOS</small></div><strong data-i18n="learning.1.status">In Progress</strong></article>
+                <article class="learning-item" data-reveal><span>02</span><div><h3 data-i18n="learning.2.title">Data Structures in C</h3><p data-i18n="learning.2.desc">Rebuilding my understanding of lists, stacks, queues, trees, graphs, and common algorithms through C implementations.</p><small data-i18n="learning.2.stack">C · Data Structures · Algorithms</small></div><strong data-i18n="learning.2.status">Learning</strong></article>
+                <article class="learning-item" data-reveal><span>03</span><div><h3 data-i18n="learning.3.title">How Coding Agents Use Tools</h3><p data-i18n="learning.3.desc">Observing how coding agents inspect projects, plan tasks, use terminals, and modify code across multiple steps.</p><small data-i18n="learning.3.stack">Coding Agents · Tool Use · Workflow</small></div><strong data-i18n="learning.3.status">Documenting</strong></article>
+                <article class="learning-item" data-reveal><span>04</span><div><h3 data-i18n="learning.4.title">Local Vision-Language Models</h3><p data-i18n="learning.4.desc">Experiments with running vision-language models locally, focusing on model loading, image input, inference speed, and hardware limits.</p><small data-i18n="learning.4.stack">Vision-Language Model · Local Inference</small></div><strong data-i18n="learning.4.status">Experimenting</strong></article>
             </div>
         </section>
 
         <section class="section" id="about">
-            <h2 class="section-title" data-i18n="about.title" data-reveal>About</h2>
-            <ul class="list">
-                <li class="row" data-reveal>
-                    <span class="row-name" data-i18n="about.1.name">CS Undergraduate</span>
-                    <span class="row-desc" data-i18n="about.1.desc">Building foundations in programming, data structures, and software development.</span>
-                </li>
-                <li class="row" data-reveal>
-                    <span class="row-name" data-i18n="about.2.name">AI / LLM</span>
-                    <span class="row-desc" data-i18n="about.2.desc">Interested in language models, model applications, and AI-assisted development workflows.</span>
-                </li>
-                <li class="row" data-reveal>
-                    <span class="row-name" data-i18n="about.3.name">Agent Tools</span>
-                    <span class="row-desc" data-i18n="about.3.desc">Exploring how Codex, Antigravity, and Cursor plan tasks, complete workflows, and assist with coding.</span>
-                </li>
-                <li class="row" data-reveal>
-                    <span class="row-name" data-i18n="about.4.name">Developer Tools</span>
-                    <span class="row-desc" data-i18n="about.4.desc">Studying how CLI tools, automation scripts, and coding assistants make daily development clearer.</span>
-                </li>
-            </ul>
+            <div class="section-heading" data-reveal>
+                <span class="section-index">04</span>
+                <h2 class="section-title" data-i18n="about.title">About</h2>
+                <span class="section-rule" aria-hidden="true"></span>
+            </div>
+
+            <div class="about-body" data-reveal>
+                <p data-i18n="about.p1">I’m Pawvelle, a computer science undergraduate interested in language models and autonomous agents.</p>
+                <p data-i18n="about.p2">I’m currently building foundations in data structures, systems, and machine learning. I enjoy turning complex ideas into small systems that can be tested, understood, and improved.</p>
+                <p data-i18n="about.p3">This site is both a project archive and a record of that process.</p>
+            </div>
+            <dl class="about-index" data-reveal>
+                <div><dt data-i18n="about.focus.label">Focus</dt><dd data-i18n="about.focus.value">Language Models / Agents</dd></div>
+                <div><dt data-i18n="about.foundation.label">Foundation</dt><dd data-i18n="about.foundation.value">Data Structures / Systems</dd></div>
+                <div><dt data-i18n="about.workflow.label">Workflow</dt><dd data-i18n="about.workflow.value">Python / C / Git / CLI</dd></div>
+                <div><dt data-i18n="about.direction.label">Direction</dt><dd data-i18n="about.direction.value">LLM Engineering / Agent Systems</dd></div>
+            </dl>
         </section>
 
-        <section class="section" id="projects">
-            <h2 class="section-title" data-i18n="projects.title" data-reveal>Projects</h2>
-            <p class="section-desc" data-i18n="projects.desc" data-reveal>Small systems, experiments, and tools I’m building while learning.</p>
-            <div class="card-grid">
-                <a class="card project-card" href="https://github.com/Pawvelle/opengl-roly-punch-arena" target="_blank" rel="noopener" data-reveal>
-                    <span class="card-arrow" aria-hidden="true">
-                        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M6.5 13.5 13.5 6.5"/>
-                            <path d="M8 6.5h5.5V12"/>
-                        </svg>
-                    </span>
-                    <h3 class="card-title" data-i18n="project.1.title">RolyPunch Arena</h3>
-                    <p class="card-desc" data-i18n="project.1.desc">A 3D roly-poly boxing interaction scene system built with C++ and OpenGL.</p>
-                    <span class="card-meta" data-i18n="project.1.meta">C++ · OpenGL · 3D Interaction</span>
-                </a>
-                <a class="card project-card" href="https://github.com/Pawvelle/java-final-project-news-radar" target="_blank" rel="noopener" data-reveal>
-                    <span class="card-arrow" aria-hidden="true">
-                        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M6.5 13.5 13.5 6.5"/>
-                            <path d="M8 6.5h5.5V12"/>
-                        </svg>
-                    </span>
-                    <h3 class="card-title" data-i18n="project.2.title">News Radar</h3>
-                    <p class="card-desc" data-i18n="project.2.desc">A Java crawler for collecting and organizing campus notices.</p>
-                    <span class="card-meta" data-i18n="project.2.meta">Java · Crawler · Course Project</span>
-                </a>
-                <a class="card project-card" href="https://github.com/Pawvelle/jump-game" target="_blank" rel="noopener" data-reveal>
-                    <span class="card-arrow" aria-hidden="true">
-                        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M6.5 13.5 13.5 6.5"/>
-                            <path d="M8 6.5h5.5V12"/>
-                        </svg>
-                    </span>
-                    <h3 class="card-title" data-i18n="project.3.title">Web Jump Game</h3>
-                    <p class="card-desc" data-i18n="project.3.desc">A browser game experiment in timing, motion, and interaction.</p>
-                    <span class="card-meta" data-i18n="project.3.meta">JavaScript · Game · Experiment</span>
-                </a>
-                <a class="card project-card" href="https://github.com/Pawvelle/Pawvelle.github.io" target="_blank" rel="noopener" data-reveal>
-                    <span class="card-arrow" aria-hidden="true">
-                        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M6.5 13.5 13.5 6.5"/>
-                            <path d="M8 6.5h5.5V12"/>
-                        </svg>
-                    </span>
-                    <h3 class="card-title" data-i18n="project.4.title">Personal Website</h3>
-                    <p class="card-desc" data-i18n="project.4.desc">A quiet visual system built with plain HTML and CSS.</p>
-                    <span class="card-meta" data-i18n="project.4.meta">HTML · CSS · Design</span>
-                </a>
-            </div>
-        </section>
-
-        <section class="section" id="lab">
-            <h2 class="section-title" data-i18n="lab.title" data-reveal>Lab</h2>
-            <p class="section-desc" data-i18n="lab.desc" data-reveal>Small experiments, learning tracks, and tool workflows still in progress.</p>
-            <div class="card-grid card-grid-lab">
-                <div class="card lab-card" data-reveal>
-                    <h3 class="card-title" data-i18n="lab.1.name">Minecraft Agent</h3>
-                    <p class="card-desc" data-i18n="lab.1.desc">Exploring a vision-language agent that can understand game scenes, follow tasks, and perform basic actions in Minecraft.</p>
-                </div>
-                <div class="card lab-card" data-reveal>
-                    <h3 class="card-title" data-i18n="lab.2.name">Developer Tools</h3>
-                    <p class="card-desc" data-i18n="lab.2.desc">Exploring Codex, Antigravity, Cursor, and smoother workflows with coding assistants.</p>
-                </div>
-                <div class="card lab-card" data-reveal>
-                    <h3 class="card-title" data-i18n="lab.3.name">Java Practice</h3>
-                    <p class="card-desc" data-i18n="lab.3.desc">Practicing collections, IO, threads, OOP, and course projects.</p>
-                </div>
-            </div>
+        <section class="contact-section" id="contact" data-reveal>
+            <span class="contact-square" aria-hidden="true"></span>
+            <h2 data-i18n="contact.title">LET’S CONNECT</h2>
+            <p data-i18n="contact.copy">Building things that are not quite finished yet,<br>but worth continuing.</p>
+            <div class="contact-links"><a href="https://github.com/Pawvelle" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a><a href="mailto:hello@pawvelle.dev"><span data-i18n="contact.email">Email</span> <span aria-hidden="true">↗</span></a></div>
         </section>
     </main>
 
     <footer class="site-footer">
         <div class="container footer-grid">
             <div class="footer-col footer-brand">
-                <span class="wordmark">Pawvelle<span class="dot" aria-hidden="true"></span></span>
-                <p data-i18n="footer.brand.desc">A quiet index for code, AI, and learning.</p>
+                <span class="wordmark">Pawvelle<span class="brand-dot" aria-hidden="true"></span></span>
+                <p data-i18n="footer.brand.desc">An archive of code, agents, and continuous learning.</p>
             </div>
             <div class="footer-col">
                 <span class="footer-h" data-i18n="footer.explore">Explore</span>
+                <a href="#selected-work" data-i18n="footer.link.work">Work</a>
+                <a href="#learning-log" data-i18n="footer.link.log">Log</a>
                 <a href="#about" data-i18n="footer.link.about">About</a>
-                <a href="#projects" data-i18n="footer.link.projects">Projects</a>
-                <a href="#lab" data-i18n="footer.link.lab">Lab</a>
             </div>
             <div class="footer-col">
                 <span class="footer-h" data-i18n="footer.links">Links</span>
-                <a href="https://github.com/Pawvelle" target="_blank" rel="noopener">GitHub</a>
+                <a href="https://github.com/Pawvelle" target="_blank" rel="noopener">GitHub ↗</a>
                 <a href="mailto:hello@pawvelle.dev" data-i18n="footer.link.email">Email</a>
             </div>
         </div>
         <div class="container footer-base">
             <span>© 2026 Pawvelle</span>
+            <span class="footer-square" aria-hidden="true"></span>
         </div>
     </footer>
 
