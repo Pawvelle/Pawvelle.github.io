@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pawvelle</title>
-    <meta name="description" content="Pawvelle — a personal site for code, AI, and learning." data-i18n-meta="desc">
+    <meta name="description" content="Pawvelle — a personal archive of code, projects, and technical exploration." data-i18n-meta="desc">
     <meta name="color-scheme" content="light dark">
     <meta name="theme-color" content="#F7F6F2" data-theme-color>
     <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
@@ -46,14 +46,15 @@
 <body>
     <header class="site-header" id="top">
         <div class="container header-inner">
-            <a class="wordmark" href="#top" aria-label="Pawvelle home">
-                Pawvelle<span class="brand-dot" aria-hidden="true"></span>
+            <a class="wordmark" href="#top" aria-label="Pawvelle home" data-i18n-aria="aria.home">
+                <img class="header-avatar" src="https://github.com/Pawvelle.png?size=96" alt="Pawvelle avatar" data-i18n-alt="aria.avatar" width="38" height="38">
+                <span>Pawvelle</span>
             </a>
 
             <nav class="nav" aria-label="Primary" data-i18n-aria="aria.primary">
                 <a href="#selected-work" data-i18n="nav.work">Work</a>
-                <a href="#learning-log" data-i18n="nav.log">Log</a>
-                <a href="#about" data-i18n="nav.about">About</a>
+                <a href="#timeline" data-i18n="nav.timeline">Timeline</a>
+                <a href="#tech-stack" data-i18n="nav.stack">Tech Stack</a>
                 <a class="nav-github" href="https://github.com/Pawvelle" target="_blank" rel="noopener">
                     GitHub <span aria-hidden="true">↗</span>
                 </a>
@@ -87,11 +88,8 @@
                 <h1 class="hero-title" data-reveal>Pawvelle</h1>
 
                 <p class="hero-copy" data-i18n="intro.copy" data-reveal>
-                    Computer science undergraduate exploring language models,
-                    agents, and developer tools.
-
-                    A record of the projects I build and how they grow
-                    from ideas into working systems.
+                    CST undergraduate focused on LLMs and agent development.
+                    This site documents the projects I’m building and how they grow from ideas into systems.
                 </p>
 
                 <nav class="hero-links" aria-label="Quick links" data-i18n-aria="aria.quick" data-reveal>
@@ -113,8 +111,6 @@
                 <div class="status-block" data-reveal>
                     <div class="construct-label">
                         <h2>CURRENT</h2>
-                        <span class="label-rule label-rule-strong" aria-hidden="true"></span>
-                        <span class="label-rule" aria-hidden="true"></span>
                     </div>
                     <ol class="now-list">
                         <li>
@@ -144,8 +140,6 @@
                 <div class="balance-geometry" aria-hidden="true" data-reveal>
                     <span class="balance-rect"></span>
                     <span class="balance-accent"></span>
-                    <span class="balance-diagonal"></span>
-                    <span class="balance-baseline"></span>
                 </div>
             </aside>
         </section>
@@ -154,7 +148,6 @@
             <div class="selected-heading" data-reveal>
                 <span class="section-index">01</span>
                 <h2 data-i18n="selected.title">SELECTED WORK</h2>
-                <span aria-hidden="true"></span>
             </div>
 
             <div class="selected-grid">
@@ -204,18 +197,16 @@
             <div class="section-heading" data-reveal>
                 <span class="section-index">02</span>
                 <h2 class="section-title" data-i18n="more.title">MORE WORK</h2>
-                <span class="section-rule" aria-hidden="true"></span>
             </div>
-            <p class="section-intro" data-i18n="more.intro" data-reveal>Additional projects and collaborations.</p>
             <div class="work-list">
                 <article class="work-row" data-reveal>
                     <span class="work-number">01</span>
-                    <div class="work-main"><h3 data-i18n="more.1.title">Personal Website</h3><p data-i18n="more.1.desc">A personal website built with plain HTML, CSS, and JavaScript, exploring constructivist design, responsive layouts, and bilingual interaction.</p></div>
-                    <div class="work-meta"><span data-i18n="more.1.stack">HTML · CSS · JavaScript</span><strong data-i18n="more.1.meta">Maintained · 2026</strong></div>
+                    <div class="work-main"><h3 data-i18n="more.1.title">Lingrui Smart Arm</h3><p data-i18n="more.1.desc">A team project for an autonomous operation and maintenance robot system designed for high-precision current transformers. I contributed to project presentation, function communication, and team support work.</p></div>
+                    <div class="work-meta"><span data-i18n="more.1.stack">Team Project · Robotics · System Design</span><strong data-i18n="more.1.meta">2026</strong></div>
                 </article>
                 <article class="work-row" data-reveal>
                     <span class="work-number">02</span>
-                    <div class="work-main"><h3 data-i18n="more.2.title">Tianyuan Water Monitoring</h3><p data-i18n="more.2.desc">A collaborative drone-based water-monitoring project. I worked on the interface, information presentation, and project demonstration.</p></div>
+                    <div class="work-main"><h3 data-i18n="more.2.title">Tianyuan Smart Monitoring</h3><p data-i18n="more.2.desc">A team project for drone-based water quality monitoring. I mainly worked on the frontend interface, information presentation, and project demonstration materials.</p></div>
                     <div class="work-meta"><span data-i18n="more.2.stack">Frontend · Data Visualization · Team Project</span><strong data-i18n="more.2.meta">2026</strong></div>
                 </article>
                 <article class="work-row" data-reveal>
@@ -226,45 +217,35 @@
             </div>
         </section>
 
-        <section class="archive-section learning-section" id="learning-log">
+        <section class="archive-section timeline-section" id="timeline">
             <div class="section-heading" data-reveal>
                 <span class="section-index">03</span>
-                <h2 class="section-title" data-i18n="learning.title">LEARNING LOG</h2>
-                <span class="section-rule" aria-hidden="true"></span>
+                <h2 class="section-title" data-i18n="timeline.title">TIMELINE</h2>
             </div>
-            <p class="section-intro" data-i18n="learning.intro" data-reveal>Notes from an ongoing learning process.</p>
-            <div class="learning-grid">
-                <article class="learning-item" data-reveal><span>01</span><div><h3 data-i18n="learning.1.title">Running MineRL on Apple Silicon</h3><p data-i18n="learning.1.desc">Notes on installing MineRL, Minecraft, JDK, and Python, including compatibility problems encountered on Apple Silicon.</p><small data-i18n="learning.1.stack">Environment · MineRL · macOS</small></div><strong data-i18n="learning.1.status">In Progress</strong></article>
-                <article class="learning-item" data-reveal><span>02</span><div><h3 data-i18n="learning.2.title">Data Structures in C</h3><p data-i18n="learning.2.desc">Rebuilding my understanding of lists, stacks, queues, trees, graphs, and common algorithms through C implementations.</p><small data-i18n="learning.2.stack">C · Data Structures · Algorithms</small></div><strong data-i18n="learning.2.status">Learning</strong></article>
-                <article class="learning-item" data-reveal><span>03</span><div><h3 data-i18n="learning.3.title">How Coding Agents Use Tools</h3><p data-i18n="learning.3.desc">Observing how coding agents inspect projects, plan tasks, use terminals, and modify code across multiple steps.</p><small data-i18n="learning.3.stack">Coding Agents · Tool Use · Workflow</small></div><strong data-i18n="learning.3.status">Documenting</strong></article>
-                <article class="learning-item" data-reveal><span>04</span><div><h3 data-i18n="learning.4.title">Local Vision-Language Models</h3><p data-i18n="learning.4.desc">Experiments with running vision-language models locally, focusing on model loading, image input, inference speed, and hardware limits.</p><small data-i18n="learning.4.stack">Vision-Language Model · Local Inference</small></div><strong data-i18n="learning.4.status">Experimenting</strong></article>
+            <div class="timeline-list">
+                <article class="timeline-item" data-reveal><time>2026.06</time><div><h3 data-i18n="timeline.2.title">Second Prize, The 14th Hubei “Challenge Cup” College Student Entrepreneurship Plan Competition</h3><p data-i18n="timeline.2.desc">Awarded in an entrepreneurship competition, reflecting project presentation, solution organization, and comprehensive communication ability.</p></div></article>
+                <article class="timeline-item" data-reveal><time>2026.06</time><div><h3 data-i18n="timeline.1.title">Second Prize, Hubei Division, The 28th China Robot and Artificial Intelligence Competition</h3><p data-i18n="timeline.1.desc">Awarded in a robotics and AI competition, reflecting project practice and team collaboration ability.</p></div></article>
+                <article class="timeline-item" data-reveal><time>2026.05</time><div><h3 data-i18n="timeline.3.title">Third Prize, Central South Regional Contest, The 19th Chinese Collegiate Computer Design Competition</h3><p data-i18n="timeline.3.desc">Awarded in a computer design competition, reflecting development practice, presentation ability, and competition experience.</p></div></article>
             </div>
         </section>
 
-        <section class="section" id="about">
+        <section class="archive-section tech-section" id="tech-stack">
             <div class="section-heading" data-reveal>
                 <span class="section-index">04</span>
-                <h2 class="section-title" data-i18n="about.title">About</h2>
-                <span class="section-rule" aria-hidden="true"></span>
+                <h2 class="section-title" data-i18n="stack.title">TECH STACK</h2>
             </div>
-
-            <div class="about-body" data-reveal>
-                <p data-i18n="about.p1">I’m Pawvelle, a computer science undergraduate interested in language models and autonomous agents.</p>
-                <p data-i18n="about.p2">I’m currently building foundations in data structures, systems, and machine learning. I enjoy turning complex ideas into small systems that can be tested, understood, and improved.</p>
-                <p data-i18n="about.p3">This site is both a project archive and a record of that process.</p>
+            <div class="stack-grid">
+                <article data-reveal><span>01</span><h3 data-i18n="stack.1.title">LANGUAGES</h3><ul class="stack-tags"><li data-i18n="stack.1.1">Python</li><li data-i18n="stack.1.2">Java</li><li data-i18n="stack.1.3">JavaScript</li><li data-i18n="stack.1.4">HTML</li><li data-i18n="stack.1.5">CSS</li></ul></article>
+                <article data-reveal><span>02</span><h3 data-i18n="stack.2.title">AI / AGENTS</h3><ul class="stack-tags"><li data-i18n="stack.2.1">LLM Applications</li><li data-i18n="stack.2.2">Agents</li><li data-i18n="stack.2.3">Prompt Engineering</li><li data-i18n="stack.2.4">Vision-Language Models</li><li data-i18n="stack.2.5">Local Inference</li></ul></article>
+                <article data-reveal><span>03</span><h3 data-i18n="stack.3.title">TOOLS</h3><ul class="stack-tags"><li data-i18n="stack.3.1">Git</li><li data-i18n="stack.3.2">GitHub</li><li data-i18n="stack.3.3">CLI</li><li data-i18n="stack.3.4">Conda</li><li data-i18n="stack.3.5">VS Code</li><li data-i18n="stack.3.6">Cursor</li></ul></article>
+                <article data-reveal><span>04</span><h3 data-i18n="stack.4.title">EXPLORING</h3><ul class="stack-tags"><li data-i18n="stack.4.1">MineRL</li><li data-i18n="stack.4.2">OpenGL</li><li data-i18n="stack.4.3">Workflow Automation</li><li data-i18n="stack.4.4">System Prototyping</li></ul></article>
             </div>
-            <dl class="about-index" data-reveal>
-                <div><dt data-i18n="about.focus.label">Focus</dt><dd data-i18n="about.focus.value">Language Models / Agents</dd></div>
-                <div><dt data-i18n="about.foundation.label">Foundation</dt><dd data-i18n="about.foundation.value">Data Structures / Systems</dd></div>
-                <div><dt data-i18n="about.workflow.label">Workflow</dt><dd data-i18n="about.workflow.value">Python / C / Git / CLI</dd></div>
-                <div><dt data-i18n="about.direction.label">Direction</dt><dd data-i18n="about.direction.value">LLM Engineering / Agent Systems</dd></div>
-            </dl>
         </section>
 
         <section class="contact-section" id="contact" data-reveal>
             <span class="contact-square" aria-hidden="true"></span>
             <h2 data-i18n="contact.title">LET’S CONNECT</h2>
-            <p data-i18n="contact.copy">Building things that are not quite finished yet,<br>but worth continuing.</p>
+            <p data-i18n="contact.copy">Turning a few worthwhile ideas<br>into things that can actually run.</p>
             <div class="contact-links"><a href="https://github.com/Pawvelle" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a><a href="mailto:hello@pawvelle.dev"><span data-i18n="contact.email">Email</span> <span aria-hidden="true">↗</span></a></div>
         </section>
     </main>
@@ -273,13 +254,13 @@
         <div class="container footer-grid">
             <div class="footer-col footer-brand">
                 <span class="wordmark">Pawvelle<span class="brand-dot" aria-hidden="true"></span></span>
-                <p data-i18n="footer.brand.desc">An archive of code, agents, and continuous learning.</p>
+                <p data-i18n="footer.brand.desc">An archive of code, projects, and ongoing building.</p>
             </div>
             <div class="footer-col">
                 <span class="footer-h" data-i18n="footer.explore">Explore</span>
                 <a href="#selected-work" data-i18n="footer.link.work">Work</a>
-                <a href="#learning-log" data-i18n="footer.link.log">Log</a>
-                <a href="#about" data-i18n="footer.link.about">About</a>
+                <a href="#timeline" data-i18n="footer.link.timeline">Timeline</a>
+                <a href="#tech-stack" data-i18n="footer.link.stack">Tech Stack</a>
             </div>
             <div class="footer-col">
                 <span class="footer-h" data-i18n="footer.links">Links</span>
