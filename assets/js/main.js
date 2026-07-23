@@ -88,7 +88,9 @@ const I18N = {
         "footer.links": "Links",
         "footer.link.email": "Email",
         "theme.to.dark": "Switch to dark mode",
-        "theme.to.light": "Switch to light mode"
+        "theme.to.light": "Switch to light mode",
+        "menu.open": "Open menu",
+        "menu.close": "Close menu"
     },
     zh: {
         "meta.desc": "Pawvelle — 一个关于代码、项目与技术探索的个人档案。",
@@ -179,7 +181,9 @@ const I18N = {
         "footer.links": "链接",
         "footer.link.email": "邮箱",
         "theme.to.dark": "切换到深色模式",
-        "theme.to.light": "切换到浅色模式"
+        "theme.to.light": "切换到浅色模式",
+        "menu.open": "打开菜单",
+        "menu.close": "关闭菜单"
     }
 };
 
@@ -187,8 +191,12 @@ const LANG_STORAGE_KEY = "pawvelle-lang";
 const THEME_STORAGE_KEY = "pawvelle-theme";
 const themeToggle = document.getElementById("themeToggle");
 const langToggle = document.getElementById("langToggle");
+const menuToggle = document.getElementById("menuToggle");
+const mobileMenu = document.getElementById("mobileMenu");
+const siteHeader = document.querySelector(".site-header");
 const themeColorMeta = document.querySelector("[data-theme-color]");
 const systemThemeQuery = window.matchMedia("(prefers-color-scheme: dark)");
+const mobileLayoutQuery = window.matchMedia("(max-width: 768px)");
 
 function storedTheme() {
     try {
@@ -216,6 +224,24 @@ function updateThemeToggle(theme) {
 
     themeToggle.setAttribute("aria-label", label);
     themeToggle.setAttribute("title", label);
+}
+
+function updateMenuToggle(isOpen) {
+    if (!menuToggle) return;
+
+    const dict = I18N[currentLang] || I18N.en;
+    const label = dict[isOpen ? "menu.close" : "menu.open"];
+
+    menuToggle.setAttribute("aria-expanded", String(isOpen));
+    menuToggle.setAttribute("aria-label", label);
+    menuToggle.setAttribute("title", label);
+}
+
+function setMenuOpen(isOpen) {
+    if (!siteHeader || !menuToggle) return;
+
+    siteHeader.classList.toggle("is-menu-open", isOpen);
+    updateMenuToggle(isOpen);
 }
 
 function applyTheme(theme, shouldSave = false) {
@@ -281,6 +307,7 @@ function applyLang(lang) {
     } catch (error) {}
 
     updateThemeToggle(activeTheme());
+    updateMenuToggle(siteHeader?.classList.contains("is-menu-open") || false);
 }
 
 let currentLang = detectLang();
@@ -299,6 +326,30 @@ if (themeToggle) {
         const nextTheme = activeTheme() === "dark" ? "light" : "dark";
         applyTheme(nextTheme, true);
     });
+}
+
+if (menuToggle && mobileMenu) {
+    menuToggle.addEventListener("click", () => {
+        setMenuOpen(!siteHeader?.classList.contains("is-menu-open"));
+    });
+
+    mobileMenu.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => setMenuOpen(false));
+    });
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") setMenuOpen(false);
+    });
+
+    const closeMenuOutsideMobile = (event) => {
+        if (!event.matches) setMenuOpen(false);
+    };
+
+    if (mobileLayoutQuery.addEventListener) {
+        mobileLayoutQuery.addEventListener("change", closeMenuOutsideMobile);
+    } else if (mobileLayoutQuery.addListener) {
+        mobileLayoutQuery.addListener(closeMenuOutsideMobile);
+    }
 }
 
 const syncSystemTheme = () => {
