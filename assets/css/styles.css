@@ -496,6 +496,7 @@ html[data-theme="dark"] .theme-icon-sun {
     bottom: 0;
     left: 0;
     height: 236px;
+    --balance-bottom-gap: 24px;
     --balance-right: clamp(40px, 4vw, 62px);
     --balance-rect-height: 186px;
     --diagonal-outer-width: 232px;
@@ -505,7 +506,7 @@ html[data-theme="dark"] .theme-icon-sun {
 
 .balance-rect {
     right: var(--balance-right);
-    bottom: 0;
+    bottom: var(--balance-bottom-gap);
     width: clamp(142px, 13vw, 184px);
     height: var(--balance-rect-height);
     overflow: hidden;
@@ -528,7 +529,7 @@ html[data-theme="dark"] .theme-icon-sun {
 .balance-geometry::before {
     content: "";
     position: absolute;
-    bottom: var(--balance-rect-height);
+    bottom: calc(var(--balance-rect-height) + var(--balance-bottom-gap));
     right: calc(
         var(--balance-right) + var(--diagonal-exit-inset) - var(--diagonal-outer-width)
     );
@@ -542,7 +543,7 @@ html[data-theme="dark"] .theme-icon-sun {
 
 .balance-accent {
     right: clamp(112px, 9.7vw, 138px);
-    bottom: 0;
+    bottom: var(--balance-bottom-gap);
     width: 38px;
     height: 38px;
     background: var(--accent);
