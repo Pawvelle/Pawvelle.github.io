@@ -915,10 +915,15 @@ html[lang="en"] .section-title {
 .stack-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: start;
     gap: 40px 28px;
 }
 
 .stack-grid > article {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 0;
     min-height: 0;
     padding: 0;
     text-align: center;
@@ -930,45 +935,40 @@ html[lang="en"] .section-title {
     font-size: 18px;
     font-weight: 700;
     letter-spacing: 0.03em;
+    line-height: 1.3;
 }
 
 .stack-tags {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    align-content: flex-start;
     gap: 9px 8px;
     margin-top: 16px;
     list-style: none;
 }
 
 .stack-tags li {
+    max-width: 100%;
     padding: 6px 9px 7px;
     border: 1px solid var(--line-soft);
     border-radius: 5px;
     color: var(--text);
     font-size: 13px;
     font-weight: 600;
-    line-height: 1.2;
-    white-space: nowrap;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+    white-space: normal;
 }
 
-/* Keep the shorter language group on the same vertical rhythm as the
-   denser technology groups: two labels, two labels, then a centered close. */
-.stack-grid > article:first-child .stack-tags {
-    display: grid;
-    grid-template-columns: repeat(2, max-content);
-    justify-content: center;
-    gap: 12px 8px;
-}
+@media (min-width: 769px) {
+    .stack-grid > article:first-child .stack-tags {
+        width: min(100%, 300px);
+    }
 
-.stack-grid > article:first-child .stack-tags li {
-    padding: 6px 9px 7px;
-    font-size: 13px;
-}
-
-.stack-grid > article:first-child .stack-tags li:last-child {
-    grid-column: 1 / -1;
-    justify-self: center;
+    .stack-grid > article:nth-child(4) .stack-tags {
+        width: min(100%, 280px);
+    }
 }
 
 /* ---------- Contact ---------- */
@@ -1776,6 +1776,7 @@ html[lang="en"] .section-title {
     }
 
     .stack-grid > article {
+        align-items: flex-start;
         min-width: 0;
         text-align: left;
     }
@@ -1785,26 +1786,13 @@ html[lang="en"] .section-title {
         font-size: 17px;
     }
 
-    .stack-tags,
-    .stack-grid > article:first-child .stack-tags {
-        display: flex;
-        flex-wrap: wrap;
+    .stack-tags {
         justify-content: flex-start;
         gap: 10px;
     }
 
-    .stack-tags li,
-    .stack-grid > article:first-child .stack-tags li {
-        max-width: 100%;
+    .stack-tags li {
         padding: 9px 12px;
-        font-size: 13px;
-        line-height: 1.25;
-        overflow-wrap: anywhere;
-        white-space: normal;
-    }
-
-    .stack-grid > article:first-child .stack-tags li:last-child {
-        justify-self: auto;
     }
 
     .contact-section {
