@@ -257,7 +257,7 @@ function applyTheme(theme, shouldSave = false) {
     document.documentElement.style.colorScheme = theme;
 
     if (themeColorMeta) {
-        themeColorMeta.setAttribute("content", theme === "dark" ? "#111111" : "#F7F6F2");
+        themeColorMeta.setAttribute("content", theme === "dark" ? "#000000" : "#FFFFFF");
     }
 
     if (shouldSave) {

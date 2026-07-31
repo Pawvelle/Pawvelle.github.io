@@ -6,7 +6,7 @@
     <title>Pawvelle</title>
     <meta name="description" content="Pawvelle — a personal archive of code, projects, and technical exploration." data-i18n-meta="desc">
     <meta name="color-scheme" content="light dark">
-    <meta name="theme-color" content="#F7F6F2" data-theme-color>
+    <meta name="theme-color" content="#FFFFFF" data-theme-color>
     <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
     <link rel="manifest" href="site.webmanifest">
@@ -34,14 +34,14 @@
 
             const themeColor = document.querySelector("[data-theme-color]");
             if (themeColor) {
-                themeColor.setAttribute("content", theme === "dark" ? "#111111" : "#F7F6F2");
+                themeColor.setAttribute("content", theme === "dark" ? "#000000" : "#FFFFFF");
             }
         })();
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap">
-    <link rel="stylesheet" href="assets/css/styles.css?v=20260724-mobile-geometry-lift">
+    <link rel="stylesheet" href="assets/css/styles.css?v=20260731-signal-pink">
 </head>
 <body>
     <header class="site-header" id="top">
@@ -152,8 +152,10 @@
 
                             <!-- Open construction grid -->
                             <g class="bc-grid">
-                                <line x1="57" y1="211" x2="720" y2="211"/>
                                 <line x1="0" y1="344" x2="720" y2="344"/>
+                            </g>
+                            <g class="bc-grid-emphasis">
+                                <line x1="57" y1="211" x2="720" y2="211"/>
                                 <line x1="262" y1="112" x2="262" y2="400"/>
                             </g>
 

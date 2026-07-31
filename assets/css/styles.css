@@ -6,15 +6,15 @@
 :root {
     color-scheme: light;
 
-    --background: #f7f6f2;
-    --text: #111111;
-    --muted: #666660;
-    --accent: #e88ba7;
-    --line-strong: rgba(17, 17, 17, 0.30);
-    --line-soft: rgba(17, 17, 17, 0.13);
+    --background: #ffffff;
+    --text: #000000;
+    --muted: rgba(0, 0, 0, 0.62);
+    --accent: #d81f52;
+    --line-strong: rgba(0, 0, 0, 0.34);
+    --line-soft: rgba(0, 0, 0, 0.14);
     --line-accent: var(--accent);
     --line: var(--line-soft);
-    --selection: #e88ba7;
+    --selection: #ffadc0;
 
     --max-width: 1280px;
     --container-width: min(calc(100% - 48px), var(--max-width));
@@ -41,15 +41,15 @@
 
 html[data-theme="dark"] {
     color-scheme: dark;
-    --background: #111111;
-    --text: #f7f6f2;
-    --muted: #aaa9a2;
-    --accent: #df819e;
-    --line-strong: rgba(247, 246, 242, 0.30);
-    --line-soft: rgba(247, 246, 242, 0.13);
+    --background: #000000;
+    --text: #ffffff;
+    --muted: rgba(255, 255, 255, 0.58);
+    --accent: #ff4f7b;
+    --line-strong: rgba(255, 255, 255, 0.36);
+    --line-soft: rgba(255, 255, 255, 0.12);
     --line-accent: var(--accent);
     --line: var(--line-soft);
-    --selection: #b8617d;
+    --selection: #ff9ab3;
 }
 
 * {
@@ -102,7 +102,7 @@ button:focus-visible {
 
 ::selection {
     background: var(--selection);
-    color: #111111;
+    color: #000000;
 }
 
 .container {
@@ -529,6 +529,7 @@ html[data-theme="dark"] .theme-icon-sun {
 }
 
 .balance-composition .bc-grid,
+.balance-composition .bc-grid-emphasis,
 .balance-composition .bc-cross,
 .balance-composition .bc-arc,
 .balance-composition .bc-diag,
@@ -545,10 +546,16 @@ html[data-theme="dark"] .theme-icon-sun {
     opacity: 0.72;
 }
 
+.balance-composition .bc-grid-emphasis {
+    stroke: var(--line-strong);
+    stroke-width: 1.25;
+    opacity: 0.52;
+}
+
 .balance-composition .bc-cross {
     stroke: var(--line-strong);
-    stroke-width: 1.15;
-    opacity: 0.4;
+    stroke-width: 1.45;
+    opacity: 0.64;
 }
 
 .balance-composition .bc-accent {
