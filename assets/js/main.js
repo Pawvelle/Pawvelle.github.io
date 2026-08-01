@@ -1,50 +1,20 @@
 const I18N = {
     en: {
         "meta.desc": "Pawvelle — a personal archive of code, projects, and technical exploration.",
+        "access.skip": "Skip to content",
         "aria.primary": "Primary navigation",
-        "aria.quick": "Quick links",
-        "aria.current": "Current focus",
-        "aria.home": "Pawvelle home",
-        "aria.avatar": "Pawvelle avatar",
-        "nav.work": "Work",
-        "nav.timeline": "Timeline",
+        "aria.display": "Display controls",
+        "nav.intro": "Intro",
         "nav.stack": "Tech Stack",
-        "intro.copy": "CST undergraduate focused on LLMs and agent development.\nThis site documents the projects I’m building and how they grow from ideas into systems.",
-        "intro.link.work": "View work",
-        "intro.link.email": "Email",
-        "status.now.1.name": "Minecraft Agent",
-        "status.now.1.desc": "Vision-language agent for Minecraft",
-        "status.now.2.name": "Local Multimodal Inference",
-        "status.now.2.desc": "Local model inference on Apple Silicon",
-        "status.now.3.name": "Agentic Developer Systems",
-        "status.now.3.desc": "Code understanding, tool use, and task execution",
-        "selected.title": "SELECTED WORK",
-        "selected.1.title": "Minecraft Agent",
-        "selected.1.desc": "A locally running vision-language agent that explores perception, task planning, and action execution in Minecraft.",
-        "selected.1.stack": "Python · MineRL · Vision-Language Model",
-        "selected.1.meta": "In Progress · 2026",
-        "selected.2.title": "RolyPunch Arena",
-        "selected.2.desc": "A 3D interactive scene built with C++ and OpenGL, featuring impact feedback, physical motion, and camera control.",
-        "selected.2.stack": "C++ · OpenGL · Interactive Graphics",
-        "selected.3.title": "News Radar",
-        "selected.3.desc": "A command-line tool for collecting, filtering, and archiving campus information.",
-        "selected.3.stack": "Java · Crawler · CLI",
-        "selected.4.title": "Jump Game",
-        "selected.4.desc": "A browser game built around charging, motion, and landing-point calculation.",
-        "selected.4.stack": "JavaScript · Web Game",
-        "more.title": "MORE WORK",
-        "more.1.title": "Lingrui Smart Arm",
-        "more.1.desc": "A team project for autonomous operation and maintenance in high-precision current transformer scenarios. I contributed to the robot system’s algorithm design, as well as system planning, functional presentation, and project collaboration.",
-        "more.1.stack": "Algorithm Design · Robotics · System Design · Team Project",
-        "more.1.meta": "2026.06",
-        "more.2.title": "Tianyuan Smart Monitoring",
-        "more.2.desc": "A team project for drone-based water quality monitoring and data analysis. I designed the BP neural network model, contributed to the overall algorithm solution, and worked on the frontend interface and data visualization.",
-        "more.2.stack": "BP Neural Network · Algorithm Design · Data Visualization · Team Project",
-        "more.2.meta": "2026.05",
-        "more.3.title": "OpenGL Punching Bag",
-        "more.3.desc": "A 3D interaction experiment featuring mouse-controlled punches, physical swinging, particle feedback, and basic lighting.",
-        "more.3.stack": "C++ · OpenGL · Interactive Graphics",
-        "more.3.meta": "2026.06",
+        "nav.timeline": "Timeline",
+        "nav.work": "Projects",
+        "nav.contact": "Contact",
+        "intro.role": "CST Undergraduate | LLMs & Agent Development",
+        "intro.copy": "CST undergraduate focused on LLMs and agent development. This site documents the projects I’m building and how they grow from ideas into systems.",
+        "intro.link.work": "View Projects",
+        "intro.link.contact": "Get in Touch",
+        "intro.scroll": "Scroll to explore",
+        "stack.title": "Tech Stack",
         "timeline.title": "TIMELINE",
         "timeline.1.title": "The 28th China Robot and Artificial Intelligence Competition",
         "timeline.1.desc": "Contributed to robot system optimization, winning the Hubei Provincial Second Prize.",
@@ -54,94 +24,40 @@ const I18N = {
         "timeline.3.desc": "Contributed to project development and code organization, and received the Third Prize.",
         "timeline.4.title": "CRAIC Artificial Intelligence Innovation Competition (National Finals)",
         "timeline.4.desc": "Contributed to robot algorithm and neural network design, winning the National Second Prize.",
-        "stack.title": "TECH STACK",
-        "stack.1.title": "Languages",
-        "stack.1.1": "Python",
-        "stack.1.2": "Java",
-        "stack.1.3": "JavaScript",
-        "stack.1.4": "C",
-        "stack.1.5": "HTML/CSS",
-        "stack.1.6": "SQL",
-        "stack.2.title": "AI & LLM",
-        "stack.2.1": "LLMs",
-        "stack.2.2": "AI Agents",
-        "stack.2.3": "RAG",
-        "stack.2.4": "VLMs",
-        "stack.2.5": "Fine-tuning",
-        "stack.2.6": "PyTorch",
-        "stack.3.title": "Intelligent Agents",
-        "stack.3.1": "Embodied AI",
-        "stack.3.2": "Autonomous Agents",
-        "stack.3.3": "Human-Agent Interaction",
-        "stack.3.4": "MineRL",
-        "stack.4.title": "Development Tools",
-        "stack.4.1": "Git",
-        "stack.4.2": "GitHub",
-        "stack.4.3": "Linux",
-        "stack.4.4": "Conda",
-        "stack.4.5": "Cursor",
-        "stack.4.6": "Codex",
+        "selected.title": "Projects",
+        "selected.1.title": "Minecraft Agent",
+        "selected.1.desc": "A locally running vision-language agent that explores perception, task planning, and action execution in Minecraft.",
+        "selected.1.meta": "In Progress · 2026",
+        "selected.2.title": "RolyPunch Arena",
+        "selected.2.desc": "A 3D interactive scene built with C++ and OpenGL, featuring impact feedback, physical motion, and camera control.",
+        "selected.3.title": "News Radar",
+        "selected.3.desc": "A command-line tool for collecting, filtering, and archiving campus information.",
+        "selected.4.title": "Jump Game",
+        "selected.4.desc": "A browser game built around charging, motion, and landing-point calculation.",
         "contact.title": "LET’S CONNECT",
-        "contact.copy": "Turning a few worthwhile ideas\ninto things that can actually run.",
+        "contact.copy": "Turning a few worthwhile ideas into things that can actually run.",
         "contact.email": "Email",
         "footer.brand.desc": "An archive of code, projects, and ongoing building.",
-        "footer.explore": "Explore",
-        "footer.link.work": "Work",
-        "footer.link.timeline": "Timeline",
-        "footer.link.stack": "Tech Stack",
-        "footer.links": "Links",
-        "footer.link.email": "Email",
         "theme.to.dark": "Switch to dark mode",
         "theme.to.light": "Switch to light mode",
-        "menu.open": "Open menu",
-        "menu.close": "Close menu"
+        "language.switch": "Switch language"
     },
     zh: {
         "meta.desc": "Pawvelle — 一个关于代码、项目与技术探索的个人档案。",
+        "access.skip": "跳到主要内容",
         "aria.primary": "主导航",
-        "aria.quick": "快捷链接",
-        "aria.current": "当前重点",
-        "aria.home": "Pawvelle 首页",
-        "aria.avatar": "Pawvelle 头像",
-        "nav.work": "项目",
-        "nav.timeline": "时间线",
+        "aria.display": "显示设置",
+        "nav.intro": "简介",
         "nav.stack": "技术栈",
-        "intro.copy": "计算机科学与技术本科生，关注大语言模型与智能体开发。\n这里记录我正在构建的项目，以及它们从想法走向系统的过程。",
+        "nav.timeline": "时间线",
+        "nav.work": "项目",
+        "nav.contact": "联系",
+        "intro.role": "计算机科学与技术本科生 | 大语言模型与智能体开发",
+        "intro.copy": "计算机科学与技术本科生，关注大语言模型与智能体开发。这里记录我正在构建的项目，以及它们从想法走向系统的过程。",
         "intro.link.work": "查看项目",
-        "intro.link.email": "邮箱",
-        "status.now.1.name": "Minecraft Agent",
-        "status.now.1.desc": "Minecraft 视觉语言智能体",
-        "status.now.2.name": "本地多模态推理",
-        "status.now.2.desc": "Apple Silicon 本地模型推理",
-        "status.now.3.name": "智能体开发系统",
-        "status.now.3.desc": "代码理解、工具调用与任务执行",
-        "selected.title": "精选项目",
-        "selected.1.title": "Minecraft Agent",
-        "selected.1.desc": "一个在本地运行的视觉语言智能体，尝试在 Minecraft 中完成环境感知、任务规划与动作执行。",
-        "selected.1.stack": "Python · MineRL · Vision-Language Model",
-        "selected.1.meta": "开发中 · 2026",
-        "selected.2.title": "RolyPunch Arena",
-        "selected.2.desc": "一个使用 C++ 与 OpenGL 构建的三维交互场景，包含受击反馈、物理摆动与视角控制。",
-        "selected.2.stack": "C++ · OpenGL · Interactive Graphics",
-        "selected.3.title": "News Radar",
-        "selected.3.desc": "一个用于收集、筛选和归档校园资讯的命令行工具。",
-        "selected.3.stack": "Java · Crawler · CLI",
-        "selected.4.title": "Jump Game",
-        "selected.4.desc": "一个围绕蓄力、运动轨迹和落点判断构建的浏览器小游戏。",
-        "selected.4.stack": "JavaScript · Web Game",
-        "more.title": "更多项目",
-        "more.1.title": "灵锐智臂——高精度互感器自主运维机器人系统",
-        "more.1.desc": "团队项目，面向高精度互感器的自主运维场景。参与机器人系统的算法设计，并协助完成系统方案梳理、功能表达与项目协作。",
-        "more.1.stack": "Algorithm Design · Robotics · System Design · Team Project",
-        "more.1.meta": "2026.06",
-        "more.2.title": "田园智测——无人机水质检测",
-        "more.2.desc": "团队项目，面向无人机水质监测与水质数据分析。负责 BP 神经网络模型的设计，参与整体算法方案开发，并完成前端界面与数据可视化展示。",
-        "more.2.stack": "BP Neural Network · Algorithm Design · Data Visualization · Team Project",
-        "more.2.meta": "2026.05",
-        "more.3.title": "OpenGL 拳击沙袋",
-        "more.3.desc": "一个三维拳击沙袋交互实验，包含鼠标出拳、受力摆动、粒子反馈与基础光照。",
-        "more.3.stack": "C++ · OpenGL · Interactive Graphics",
-        "more.3.meta": "2026.06",
+        "intro.link.contact": "与我联系",
+        "intro.scroll": "向下探索",
+        "stack.title": "技术栈",
         "timeline.title": "时间线",
         "timeline.1.title": "第28届中国机器人及人工智能大赛",
         "timeline.1.desc": "参与机器人系统算法优化，获湖北省二等奖。",
@@ -151,68 +67,54 @@ const I18N = {
         "timeline.3.desc": "参与项目开发与代码整理，获得三等奖。",
         "timeline.4.title": "CRAIC 人工智能创新赛国赛",
         "timeline.4.desc": "参与机器人算法与神经网络设计，获全国二等奖。",
-        "stack.title": "技术栈",
-        "stack.1.title": "编程语言",
-        "stack.1.1": "Python",
-        "stack.1.2": "Java",
-        "stack.1.3": "JavaScript",
-        "stack.1.4": "C",
-        "stack.1.5": "HTML/CSS",
-        "stack.1.6": "SQL",
-        "stack.2.title": "大语言模型",
-        "stack.2.1": "LLMs",
-        "stack.2.2": "AI Agents",
-        "stack.2.3": "RAG",
-        "stack.2.4": "VLMs",
-        "stack.2.5": "Fine-tuning",
-        "stack.2.6": "PyTorch",
-        "stack.3.title": "智能体",
-        "stack.3.1": "Embodied AI",
-        "stack.3.2": "Autonomous Agents",
-        "stack.3.3": "Human-Agent Interaction",
-        "stack.3.4": "MineRL",
-        "stack.4.title": "开发工具链",
-        "stack.4.1": "Git",
-        "stack.4.2": "GitHub",
-        "stack.4.3": "Linux",
-        "stack.4.4": "Conda",
-        "stack.4.5": "Cursor",
-        "stack.4.6": "Codex",
+        "selected.title": "项目",
+        "selected.1.title": "Minecraft Agent",
+        "selected.1.desc": "一个在本地运行的视觉语言智能体，尝试在 Minecraft 中完成环境感知、任务规划与动作执行。",
+        "selected.1.meta": "开发中 · 2026",
+        "selected.2.title": "RolyPunch Arena",
+        "selected.2.desc": "一个使用 C++ 与 OpenGL 构建的三维交互场景，包含受击反馈、物理摆动与视角控制。",
+        "selected.3.title": "News Radar",
+        "selected.3.desc": "一个用于收集、筛选和归档校园资讯的命令行工具。",
+        "selected.4.title": "Jump Game",
+        "selected.4.desc": "一个围绕蓄力、运动轨迹和落点判断构建的浏览器小游戏。",
         "contact.title": "保持联系",
-        "contact.copy": "正在把一些值得继续做下去的想法，\n慢慢变成真正可运行的东西。",
+        "contact.copy": "正在把一些值得继续做下去的想法，慢慢变成真正可运行的东西。",
         "contact.email": "邮箱",
         "footer.brand.desc": "代码、项目与持续构建的档案。",
-        "footer.explore": "探索",
-        "footer.link.work": "项目",
-        "footer.link.timeline": "时间线",
-        "footer.link.stack": "技术栈",
-        "footer.links": "链接",
-        "footer.link.email": "邮箱",
         "theme.to.dark": "切换到深色模式",
         "theme.to.light": "切换到浅色模式",
-        "menu.open": "打开菜单",
-        "menu.close": "关闭菜单"
+        "language.switch": "切换语言"
     }
 };
 
 const LANG_STORAGE_KEY = "pawvelle-lang";
 const THEME_STORAGE_KEY = "pawvelle-theme";
-const themeToggle = document.getElementById("themeToggle");
-const langToggle = document.getElementById("langToggle");
-const menuToggle = document.getElementById("menuToggle");
-const mobileMenu = document.getElementById("mobileMenu");
-const siteHeader = document.querySelector(".site-header");
-const themeColorMeta = document.querySelector("[data-theme-color]");
 const systemThemeQuery = window.matchMedia("(prefers-color-scheme: dark)");
-const mobileLayoutQuery = window.matchMedia("(max-width: 768px)");
+const themeColorMeta = document.querySelector("[data-theme-color]");
+const themeToggles = document.querySelectorAll("[data-theme-toggle]");
+const langToggles = document.querySelectorAll("[data-lang-toggle]");
+const siteHeader = document.querySelector(".site-header");
+const siteShell = document.getElementById("siteShell");
+const splash = document.getElementById("splash");
+const enterButtons = document.querySelectorAll("[data-enter-site]");
 
-function storedTheme() {
+function readStorage(key) {
     try {
-        const saved = localStorage.getItem(THEME_STORAGE_KEY);
-        return saved === "dark" || saved === "light" ? saved : null;
+        return localStorage.getItem(key);
     } catch (error) {
         return null;
     }
+}
+
+function writeStorage(key, value) {
+    try {
+        localStorage.setItem(key, value);
+    } catch (error) {}
+}
+
+function storedTheme() {
+    const saved = readStorage(THEME_STORAGE_KEY);
+    return saved === "dark" || saved === "light" ? saved : null;
 }
 
 function detectTheme() {
@@ -223,33 +125,28 @@ function activeTheme() {
     return document.documentElement.dataset.theme === "dark" ? "dark" : "light";
 }
 
-function updateThemeToggle(theme) {
-    if (!themeToggle) return;
-
-    const nextTheme = theme === "dark" ? "light" : "dark";
-    const dict = I18N[currentLang] || I18N.en;
-    const label = dict[nextTheme === "dark" ? "theme.to.dark" : "theme.to.light"];
-
-    themeToggle.setAttribute("aria-label", label);
-    themeToggle.setAttribute("title", label);
+function detectLang() {
+    const saved = readStorage(LANG_STORAGE_KEY);
+    if (saved === "en" || saved === "zh") return saved;
+    return (navigator.language || "").toLowerCase().startsWith("zh") ? "zh" : "en";
 }
 
-function updateMenuToggle(isOpen) {
-    if (!menuToggle) return;
+let currentLang = detectLang();
 
+function updateControlLabels() {
     const dict = I18N[currentLang] || I18N.en;
-    const label = dict[isOpen ? "menu.close" : "menu.open"];
+    const nextTheme = activeTheme() === "dark" ? "light" : "dark";
+    const themeLabel = dict[nextTheme === "dark" ? "theme.to.dark" : "theme.to.light"];
 
-    menuToggle.setAttribute("aria-expanded", String(isOpen));
-    menuToggle.setAttribute("aria-label", label);
-    menuToggle.setAttribute("title", label);
-}
+    themeToggles.forEach((button) => {
+        button.setAttribute("aria-label", themeLabel);
+        button.setAttribute("title", themeLabel);
+    });
 
-function setMenuOpen(isOpen) {
-    if (!siteHeader || !menuToggle) return;
-
-    siteHeader.classList.toggle("is-menu-open", isOpen);
-    updateMenuToggle(isOpen);
+    langToggles.forEach((button) => {
+        button.setAttribute("aria-label", dict["language.switch"]);
+        button.setAttribute("title", dict["language.switch"]);
+    });
 }
 
 function applyTheme(theme, shouldSave = false) {
@@ -257,31 +154,11 @@ function applyTheme(theme, shouldSave = false) {
     document.documentElement.style.colorScheme = theme;
 
     if (themeColorMeta) {
-        themeColorMeta.setAttribute("content", theme === "dark" ? "#000000" : "#FFFFFF");
+        themeColorMeta.setAttribute("content", theme === "dark" ? "#0A0A0A" : "#FFFFFF");
     }
 
-    if (shouldSave) {
-        try {
-            localStorage.setItem(THEME_STORAGE_KEY, theme);
-        } catch (error) {}
-    }
-
-    updateThemeToggle(theme);
-}
-
-function detectLang() {
-    let saved = null;
-
-    try {
-        saved = localStorage.getItem(LANG_STORAGE_KEY);
-    } catch (error) {
-        saved = null;
-    }
-
-    if (saved === "en" || saved === "zh") return saved;
-
-    const browser = (navigator.language || "").toLowerCase();
-    return browser.startsWith("zh") ? "zh" : "en";
+    if (shouldSave) writeStorage(THEME_STORAGE_KEY, theme);
+    updateControlLabels();
 }
 
 function applyLang(lang) {
@@ -297,68 +174,60 @@ function applyLang(lang) {
         if (dict[key] !== undefined) element.setAttribute("aria-label", dict[key]);
     });
 
-    document.querySelectorAll("[data-i18n-alt]").forEach((element) => {
-        const key = element.getAttribute("data-i18n-alt");
-        if (dict[key] !== undefined) element.setAttribute("alt", dict[key]);
-    });
-
     const meta = document.querySelector("[data-i18n-meta='desc']");
     if (meta && dict["meta.desc"]) meta.setAttribute("content", dict["meta.desc"]);
 
     document.documentElement.lang = lang === "zh" ? "zh-Hans" : "en";
+    document.querySelectorAll("[data-lang-label]").forEach((label) => {
+        label.textContent = lang === "zh" ? "EN" : "中文";
+    });
 
-    const label = document.querySelector("[data-lang-label]");
-    if (label) label.textContent = lang === "zh" ? "EN" : "中文";
-
-    try {
-        localStorage.setItem(LANG_STORAGE_KEY, lang);
-    } catch (error) {}
-
-    updateThemeToggle(activeTheme());
-    updateMenuToggle(siteHeader?.classList.contains("is-menu-open") || false);
+    writeStorage(LANG_STORAGE_KEY, lang);
+    updateControlLabels();
 }
 
-let currentLang = detectLang();
+function enterSite() {
+    if (!document.body.classList.contains("splash-open")) return;
+
+    siteShell?.removeAttribute("inert");
+    siteShell?.setAttribute("aria-hidden", "false");
+    if (siteShell) siteShell.scrollTop = 0;
+
+    document.body.classList.remove("splash-open");
+    document.body.classList.add("portfolio-entered");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    window.setTimeout(() => {
+        splash?.setAttribute("inert", "");
+        splash?.setAttribute("aria-hidden", "true");
+        document.getElementById("intro")?.focus({ preventScroll: true });
+    }, reducedMotion ? 0 : 1000);
+}
+
+function resetEntryScroll() {
+    window.scrollTo(0, 0);
+    if (siteShell) siteShell.scrollTop = 0;
+}
+
+resetEntryScroll();
+
 applyTheme(detectTheme());
 applyLang(currentLang);
 
-if (langToggle) {
-    langToggle.addEventListener("click", () => {
+themeToggles.forEach((button) => {
+    button.addEventListener("click", () => {
+        applyTheme(activeTheme() === "dark" ? "light" : "dark", true);
+    });
+});
+
+langToggles.forEach((button) => {
+    button.addEventListener("click", () => {
         currentLang = currentLang === "zh" ? "en" : "zh";
         applyLang(currentLang);
     });
-}
+});
 
-if (themeToggle) {
-    themeToggle.addEventListener("click", () => {
-        const nextTheme = activeTheme() === "dark" ? "light" : "dark";
-        applyTheme(nextTheme, true);
-    });
-}
-
-if (menuToggle && mobileMenu) {
-    menuToggle.addEventListener("click", () => {
-        setMenuOpen(!siteHeader?.classList.contains("is-menu-open"));
-    });
-
-    mobileMenu.querySelectorAll("a").forEach((link) => {
-        link.addEventListener("click", () => setMenuOpen(false));
-    });
-
-    document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape") setMenuOpen(false);
-    });
-
-    const closeMenuOutsideMobile = (event) => {
-        if (!event.matches) setMenuOpen(false);
-    };
-
-    if (mobileLayoutQuery.addEventListener) {
-        mobileLayoutQuery.addEventListener("change", closeMenuOutsideMobile);
-    } else if (mobileLayoutQuery.addListener) {
-        mobileLayoutQuery.addListener(closeMenuOutsideMobile);
-    }
-}
+enterButtons.forEach((button) => button.addEventListener("click", enterSite));
 
 const syncSystemTheme = () => {
     if (!storedTheme()) applyTheme(detectTheme());
@@ -370,12 +239,21 @@ if (systemThemeQuery.addEventListener) {
     systemThemeQuery.addListener(syncSystemTheme);
 }
 
-/* Restrained fade-and-rise reveal. */
-(function () {
-    const targets = document.querySelectorAll("[data-reveal]");
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+siteShell?.addEventListener("scroll", () => {
+    siteHeader?.classList.toggle("is-scrolled", siteShell.scrollTop > 16);
+}, { passive: true });
 
-    if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+window.addEventListener("pageshow", () => {
+    if (document.body.classList.contains("splash-open")) resetEntryScroll();
+});
+
+window.addEventListener("beforeunload", resetEntryScroll);
+
+(function setupReveals() {
+    const targets = document.querySelectorAll("[data-reveal]");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (reducedMotion || !("IntersectionObserver" in window)) {
         targets.forEach((element) => element.classList.add("is-visible"));
         return;
     }
@@ -386,33 +264,143 @@ if (systemThemeQuery.addEventListener) {
             entry.target.classList.add("is-visible");
             observer.unobserve(entry.target);
         });
-    }, {
-        threshold: 0.12,
-        rootMargin: "0px 0px -7% 0px"
-    });
+    }, { threshold: 0.1, rootMargin: "0px 0px -8% 0px" });
 
     targets.forEach((element) => observer.observe(element));
 })();
 
-/* Keep navigation state in sync with the visible content section. */
-(function () {
-    const sections = document.querySelectorAll("#selected-work, #timeline, #tech-stack");
-    const navLinks = document.querySelectorAll(".nav a[href^='#']");
+(function setupActiveNavigation() {
+    const sections = document.querySelectorAll("#intro, #tech-stack, #timeline, #selected-work, #contact");
+    const links = document.querySelectorAll(".primary-nav a[href^='#']");
 
-    if (!sections.length || !navLinks.length || !("IntersectionObserver" in window)) return;
+    if (!sections.length || !("IntersectionObserver" in window)) return;
+
+    links.forEach((link) => {
+        link.addEventListener("click", () => {
+            links.forEach((item) => item.classList.toggle("is-active", item === link));
+        });
+    });
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
             if (!entry.isIntersecting) return;
-
-            navLinks.forEach((link) => {
+            links.forEach((link) => {
                 link.classList.toggle("is-active", link.getAttribute("href") === `#${entry.target.id}`);
             });
         });
-    }, {
-        threshold: 0.16,
-        rootMargin: "-20% 0px -62% 0px"
-    });
+    }, { threshold: 0.12, rootMargin: "-22% 0px -62% 0px" });
 
     sections.forEach((section) => observer.observe(section));
+})();
+
+(function setupContactCentering() {
+    // The contact section is a tall, vertically-centered closing statement, so a
+    // plain top-aligned anchor jump leaves its heading sitting oddly low (or, if
+    // compensated with a fixed offset, risks revealing the footer on tall
+    // viewports). Centering the target in the viewport keeps it looking right at
+    // any window height.
+    const contact = document.getElementById("contact");
+    if (!contact) return;
+
+    const links = document.querySelectorAll('a[href="#contact"]');
+    if (!links.length) return;
+
+    links.forEach((link) => {
+        link.addEventListener("click", (event) => {
+            event.preventDefault();
+            const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            contact.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "center" });
+            history.pushState(null, "", "#contact");
+        });
+    });
+})();
+
+(function setupProjectRailReel() {
+    const stage = document.getElementById("projectScrollStage");
+    const grid = document.getElementById("projectFeatureGrid");
+    const feature = document.getElementById("projectFeature");
+    const viewport = document.getElementById("projectRailViewport");
+    const track = document.getElementById("projectRailTrack");
+
+    if (!stage || !grid || !feature || !viewport || !track) return;
+
+    const PIN_BREAKPOINT = 900;
+    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let extraScroll = 0;
+    let headerHeight = 0;
+    let ticking = false;
+
+    function reset() {
+        grid.classList.remove("is-pinned");
+        grid.style.top = "";
+        viewport.style.height = "";
+        track.style.transform = "";
+        stage.style.height = "";
+        extraScroll = 0;
+    }
+
+    function measure() {
+        const eligible = !reducedMotionQuery.matches && window.innerWidth > PIN_BREAKPOINT;
+
+        if (!eligible) {
+            reset();
+            return;
+        }
+
+        const featureHeight = feature.offsetHeight;
+        const trackHeight = track.scrollHeight;
+        const extra = Math.round(trackHeight - featureHeight);
+
+        if (extra <= 0) {
+            reset();
+            return;
+        }
+
+        // Recompute in place (never bounce height back to auto first): collapsing the
+        // tall spacer momentarily would clamp the scroll position while the user is
+        // mid-scroll inside the pinned range, yanking the page back up.
+        headerHeight = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--header-height")) || 0;
+        extraScroll = extra;
+
+        grid.classList.add("is-pinned");
+        grid.style.top = `${headerHeight}px`;
+        viewport.style.height = `${featureHeight}px`;
+        stage.style.height = `${featureHeight + extra}px`;
+
+        applyProgress();
+    }
+
+    function applyProgress() {
+        if (extraScroll <= 0) return;
+
+        const stageTop = stage.getBoundingClientRect().top;
+        const scrolledPast = headerHeight - stageTop;
+        const progress = Math.min(1, Math.max(0, scrolledPast / extraScroll));
+
+        track.style.transform = `translateY(-${(progress * extraScroll).toFixed(1)}px)`;
+    }
+
+    function onScroll() {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(() => {
+            applyProgress();
+            ticking = false;
+        });
+    }
+
+    siteShell?.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", measure);
+    reducedMotionQuery.addEventListener?.("change", measure);
+    document.fonts?.ready?.then(measure).catch(() => {});
+
+    if ("ResizeObserver" in window) {
+        const resizeObserver = new ResizeObserver(() => measure());
+        resizeObserver.observe(feature);
+        resizeObserver.observe(track);
+    }
+
+    langToggles.forEach((button) => button.addEventListener("click", () => window.setTimeout(measure, 0)));
+
+    measure();
 })();

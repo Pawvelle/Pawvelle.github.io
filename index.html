@@ -13,304 +13,217 @@
     <script>
         (function () {
             const root = document.documentElement;
-            const storageKey = "pawvelle-theme";
             const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
             let savedTheme = null;
 
             try {
-                savedTheme = localStorage.getItem(storageKey);
+                savedTheme = localStorage.getItem("pawvelle-theme");
             } catch (error) {
                 savedTheme = null;
             }
 
             const theme = savedTheme === "dark" || savedTheme === "light"
                 ? savedTheme
-                : systemDark
-                    ? "dark"
-                    : "light";
+                : systemDark ? "dark" : "light";
 
             root.dataset.theme = theme;
             root.style.colorScheme = theme;
 
+            if ("scrollRestoration" in history) {
+                history.scrollRestoration = "manual";
+            }
+
             const themeColor = document.querySelector("[data-theme-color]");
             if (themeColor) {
-                themeColor.setAttribute("content", theme === "dark" ? "#000000" : "#FFFFFF");
+                themeColor.setAttribute("content", theme === "dark" ? "#0A0A0A" : "#FFFFFF");
             }
         })();
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap">
-    <link rel="stylesheet" href="assets/css/styles.css?v=20260731-signal-pink">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;family=Poppins:wght@200;300;400;500;600&amp;display=swap">
+    <link rel="stylesheet" href="assets/css/homepage.css?v=20260802-projects-grid">
 </head>
-<body>
-    <header class="site-header" id="top">
-        <div class="container header-inner">
-            <a class="wordmark" href="#top" aria-label="Pawvelle home" data-i18n-aria="aria.home">
-                <img class="header-avatar" src="https://github.com/Pawvelle.png?size=96" alt="Pawvelle avatar" data-i18n-alt="aria.avatar" width="38" height="38">
-                <span>Pawvelle</span>
-            </a>
+<body class="splash-open">
+    <section class="splash" id="splash" aria-labelledby="splashName">
+        <div class="splash-content">
+            <h1 class="sr-only" id="splashName">Pawvelle</h1>
+            <img class="signature-wordmark" src="assets/images/pawvelle-signature.png" alt="" width="1422" height="624">
+            <p class="splash-role">CST Undergraduate · LLMs &amp; Agents</p>
+            <button class="outline-button splash-enter" type="button" data-enter-site>
+                <span>See Portfolio</span>
+            </button>
+        </div>
+    </section>
 
-            <nav class="nav" aria-label="Primary" data-i18n-aria="aria.primary">
-                <div class="nav-links" id="mobileMenu">
-                    <a href="#selected-work" data-i18n="nav.work">Work</a>
+    <div class="site-shell" id="siteShell" aria-hidden="true" inert>
+        <a class="skip-link" href="#intro" data-i18n="access.skip">Skip to content</a>
+
+        <header class="site-header" id="top">
+            <div class="page-width header-inner">
+                <a class="header-brand" href="https://github.com/Pawvelle" target="_blank" rel="noopener" aria-label="GitHub profile">
+                    <img src="https://github.com/Pawvelle.png" alt="" width="32" height="32" loading="lazy">
+                </a>
+
+                <nav class="primary-nav" aria-label="Primary navigation" data-i18n-aria="aria.primary">
+                    <a href="#intro" data-i18n="nav.intro">Intro</a>
+                    <a href="#selected-work" data-i18n="nav.work">Projects</a>
                     <a href="#timeline" data-i18n="nav.timeline">Timeline</a>
                     <a href="#tech-stack" data-i18n="nav.stack">Tech Stack</a>
-                    <a class="nav-github" href="https://github.com/Pawvelle" target="_blank" rel="noopener">
-                        GitHub <span aria-hidden="true">↗</span>
-                    </a>
-                </div>
-                <span class="nav-divider" aria-hidden="true"></span>
-                <button class="theme-toggle" type="button" id="themeToggle" aria-label="Switch theme" title="Switch theme">
-                    <svg class="theme-icon theme-icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true">
-                        <path d="M20.5 14.5A8.6 8.6 0 0 1 9.5 3.5A8.6 8.6 0 1 0 20.5 14.5Z"/>
-                    </svg>
-                    <svg class="theme-icon theme-icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true">
-                        <circle cx="12" cy="12" r="4"/>
-                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
-                    </svg>
-                </button>
-                <button class="locale-toggle" type="button" id="langToggle" aria-label="Switch language">
-                    <span data-lang-label>中文</span>
-                </button>
-                <button class="menu-toggle" type="button" id="menuToggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu">
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                </button>
-            </nav>
-        </div>
-    </header>
-
-    <main class="container">
-        <section class="hero" id="intro">
-            <div class="hero-primary">
-                <div class="hero-geometry" aria-hidden="true">
-                    <span class="geo-circle"></span>
-                    <span class="geo-vertical"></span>
-                    <span class="geo-horizontal"></span>
-                    <span class="geo-square"></span>
-                </div>
-
-                <h1 class="hero-title" data-reveal>Pawvelle</h1>
-
-                <p class="hero-copy" data-i18n="intro.copy" data-reveal>
-                    CST undergraduate focused on LLMs and agent development.
-                    This site documents the projects I’m building and how they grow from ideas into systems.
-                </p>
-
-                <nav class="hero-links" aria-label="Quick links" data-i18n-aria="aria.quick">
-                    <a href="#selected-work">
-                        <span data-i18n="intro.link.work">View work</span>
-                        <span aria-hidden="true">↗</span>
-                    </a>
-                    <a href="https://github.com/Pawvelle" target="_blank" rel="noopener">
-                        GitHub <span aria-hidden="true">↗</span>
-                    </a>
-                    <a href="mailto:hello@pawvelle.dev">
-                        <span data-i18n="intro.link.email">Email</span>
-                        <span aria-hidden="true">↗</span>
-                    </a>
+                    <a href="#contact" data-i18n="nav.contact">Contact</a>
                 </nav>
+
+                <div class="header-tools" aria-label="Display controls" data-i18n-aria="aria.display">
+                    <button class="utility-button theme-toggle" type="button" data-theme-toggle aria-label="Switch theme" title="Switch theme">
+                        <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.2A8.2 8.2 0 0 1 8.8 4 8.2 8.2 0 1 0 20 15.2Z"/></svg>
+                        <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M6.35 17.65l-1.42 1.42M19.07 4.93l-1.42 1.42"/></svg>
+                    </button>
+                    <button class="utility-button lang-toggle" type="button" data-lang-toggle aria-label="Switch language" title="Switch language">
+                        <span data-lang-label>中文</span>
+                    </button>
+                </div>
             </div>
+        </header>
 
-            <aside class="hero-aside" aria-label="Current focus" data-i18n-aria="aria.current">
-                <div class="status-block" data-reveal>
-                    <div class="construct-label">
-                        <h2>CURRENT</h2>
-                    </div>
-                    <ol class="now-list">
-                        <li>
-                            <span class="now-number">01</span>
-                            <span class="now-text">
-                                <span class="now-name" data-i18n="status.now.1.name">Minecraft Agent</span>
-                                <span class="now-desc" data-i18n="status.now.1.desc">Vision-language agent for Minecraft</span>
-                            </span>
-                        </li>
-                        <li>
-                            <span class="now-number">02</span>
-                            <span class="now-text">
-                                <span class="now-name" data-i18n="status.now.2.name">Local Multimodal Inference</span>
-                                <span class="now-desc" data-i18n="status.now.2.desc">Local model inference on Apple Silicon</span>
-                            </span>
-                        </li>
-                        <li>
-                            <span class="now-number">03</span>
-                            <span class="now-text">
-                                <span class="now-name" data-i18n="status.now.3.name">Agentic Developer Systems</span>
-                                <span class="now-desc" data-i18n="status.now.3.desc">Code understanding, tool use, and task execution</span>
-                            </span>
-                        </li>
-                    </ol>
-
-                    <div class="balance-geometry" aria-hidden="true">
-                        <svg class="balance-composition" viewBox="0 0 720 400" xmlns="http://www.w3.org/2000/svg" focusable="false" preserveAspectRatio="xMidYMid meet">
-                            <defs>
-                                <clipPath id="balance-accent-clip" clipPathUnits="userSpaceOnUse">
-                                    <rect x="120" y="240" width="275" height="104"/>
-                                </clipPath>
-                            </defs>
-
-                            <!-- Open construction grid -->
-                            <g class="bc-grid">
-                                <line x1="0" y1="344" x2="720" y2="344"/>
-                            </g>
-                            <g class="bc-grid-emphasis">
-                                <line x1="57" y1="211" x2="720" y2="211"/>
-                                <line x1="262" y1="112" x2="262" y2="400"/>
-                            </g>
-
-                            <!-- Faint registration cross echoing the left-side geometry -->
-                            <g class="bc-cross">
-                                <line x1="76" y1="134" x2="190" y2="134"/>
-                                <line x1="133" y1="76" x2="133" y2="192"/>
-                            </g>
-
-                            <!-- Asymmetric color and structural masses -->
-                            <rect class="bc-accent bc-accent-main" x="120" y="240" width="275" height="104"/>
-                            <rect class="bc-light-bar" x="434" y="189" width="25" height="211"/>
-                            <rect class="bc-accent bc-accent-point" x="576" y="99" width="50" height="50"/>
-
-                            <!-- Circular counterweight and diagonal tension -->
-                            <path class="bc-arc" d="M470 344 A106 106 0 0 1 682 344"/>
-                            <path class="bc-diag" d="M720 0 L88 400 L88 344"/>
-                            <path class="bc-diag-contrast" d="M720 0 L88 400 L88 344" clip-path="url(#balance-accent-clip)"/>
-                        </svg>
+        <main>
+            <section class="intro-section page-width" id="intro" tabindex="-1">
+                <div class="intro-copy is-visible" data-reveal>
+                    <h1 class="intro-name">Pawvelle</h1>
+                    <p class="intro-role" data-i18n="intro.role">CST Undergraduate | LLMs &amp; Agent Development</p>
+                    <p class="intro-description" data-i18n="intro.copy">CST undergraduate focused on LLMs and agent development. This site documents the projects I’m building and how they grow from ideas into systems.</p>
+                    <div class="intro-actions">
+                        <a class="solid-button" href="#selected-work" data-i18n="intro.link.work">View Projects</a>
+                        <a class="outline-button" href="#contact" data-i18n="intro.link.contact">Get in Touch</a>
                     </div>
                 </div>
-            </aside>
-        </section>
-
-        <section class="selected-work" id="selected-work">
-            <div class="selected-heading" data-reveal>
-                <span class="section-index">01</span>
-                <h2 data-i18n="selected.title">SELECTED WORK</h2>
-            </div>
-
-            <div class="selected-grid">
-                <article class="selected-item selected-item-static" data-reveal>
-                    <span class="selected-number">01</span>
-                    <span class="selected-content">
-                        <strong data-i18n="selected.1.title">Minecraft Agent</strong>
-                        <span data-i18n="selected.1.desc">A locally running vision-language agent that explores perception, task planning, and action execution in Minecraft.</span>
-                        <span class="selected-stack" data-i18n="selected.1.stack">Python · MineRL · Vision-Language Model</span>
-                        <span class="selected-meta" data-i18n="selected.1.meta">In Progress · 2026</span>
-                    </span>
-                </article>
-
-                <a class="selected-item" href="https://github.com/Pawvelle/opengl-roly-punch-arena" target="_blank" rel="noopener" data-reveal>
-                    <span class="selected-number">02</span>
-                    <span class="selected-content">
-                        <strong data-i18n="selected.2.title">RolyPunch Arena</strong>
-                        <span data-i18n="selected.2.desc">A 3D interactive scene built with C++ and OpenGL, featuring impact feedback, physical motion, and camera control.</span>
-                        <span class="selected-stack" data-i18n="selected.2.stack">C++ · OpenGL · Interactive Graphics</span>
-                        <span class="selected-meta">2026.06 <span aria-hidden="true">↗</span></span>
-                    </span>
+                <div class="intro-visual" aria-hidden="true"></div>
+                <a class="scroll-cue" href="#selected-work">
+                    <span data-i18n="intro.scroll">Scroll to explore</span>
+                    <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m4 7 6 6 6-6"/></svg>
                 </a>
+            </section>
 
-                <a class="selected-item" href="https://github.com/Pawvelle/java-final-project-news-radar" target="_blank" rel="noopener" data-reveal>
-                    <span class="selected-number">03</span>
-                    <span class="selected-content">
-                        <strong data-i18n="selected.3.title">News Radar</strong>
-                        <span data-i18n="selected.3.desc">A command-line tool for collecting, filtering, and archiving campus information.</span>
-                        <span class="selected-stack" data-i18n="selected.3.stack">Java · Crawler · CLI</span>
-                        <span class="selected-meta">2026.05 <span aria-hidden="true">↗</span></span>
-                    </span>
-                </a>
+            <section class="projects-section" id="selected-work">
+                <div class="page-width">
+                    <h2 class="section-title" data-reveal data-i18n="selected.title">Projects</h2>
+                    <div class="project-scroll-stage" id="projectScrollStage">
+                        <div class="project-feature-grid" id="projectFeatureGrid">
+                            <article class="project-feature" data-reveal id="projectFeature">
+                                <div class="project-feature-media">
+                                    <img src="assets/images/projects/minecraft-agent.jpg" alt="Minecraft Agent" width="1280" height="720" loading="lazy">
+                                </div>
+                                <div class="project-feature-body">
+                                    <h3 data-i18n="selected.1.title">Minecraft Agent</h3>
+                                    <p class="project-meta" data-i18n="selected.1.meta">In Progress · 2026</p>
+                                </div>
+                            </article>
 
-                <a class="selected-item" href="https://github.com/Pawvelle/jump-game" target="_blank" rel="noopener" data-reveal>
-                    <span class="selected-number">04</span>
-                    <span class="selected-content">
-                        <strong data-i18n="selected.4.title">Jump Game</strong>
-                        <span data-i18n="selected.4.desc">A browser game built around charging, motion, and landing-point calculation.</span>
-                        <span class="selected-stack" data-i18n="selected.4.stack">JavaScript · Web Game</span>
-                        <span class="selected-meta">2026.05 <span aria-hidden="true">↗</span></span>
-                    </span>
-                </a>
-            </div>
-        </section>
+                            <div class="project-rail-viewport" id="projectRailViewport">
+                                <div class="project-rail-track" id="projectRailTrack">
+                                    <article class="project-rail-item" data-reveal>
+                                        <a class="project-rail-card" href="https://github.com/Pawvelle/opengl-roly-punch-arena" target="_blank" rel="noopener">
+                                            <div class="project-rail-media">
+                                                <img src="assets/images/projects/rolypunch-arena-square.jpg" alt="RolyPunch Arena" width="900" height="900" loading="lazy">
+                                            </div>
+                                            <div class="project-rail-body">
+                                                <h3 data-i18n="selected.2.title">RolyPunch Arena</h3>
+                                                <p class="project-meta">2026.06 ↗</p>
+                                            </div>
+                                        </a>
+                                    </article>
+                                    <article class="project-rail-item" data-reveal>
+                                        <a class="project-rail-card" href="https://github.com/Pawvelle/java-final-project-news-radar" target="_blank" rel="noopener">
+                                            <div class="project-rail-media">
+                                                <img src="assets/images/projects/news-radar-square.jpg" alt="News Radar" width="900" height="900" loading="lazy">
+                                            </div>
+                                            <div class="project-rail-body">
+                                                <h3 data-i18n="selected.3.title">News Radar</h3>
+                                                <p class="project-meta">2026.05 ↗</p>
+                                            </div>
+                                        </a>
+                                    </article>
+                                    <article class="project-rail-item" data-reveal>
+                                        <a class="project-rail-card" href="https://github.com/Pawvelle/jump-game" target="_blank" rel="noopener">
+                                            <div class="project-rail-media">
+                                                <img src="assets/images/projects/jump-game-square.jpg" alt="Jump Game" width="900" height="900" loading="lazy">
+                                            </div>
+                                            <div class="project-rail-body">
+                                                <h3 data-i18n="selected.4.title">Jump Game</h3>
+                                                <p class="project-meta">2026.05 ↗</p>
+                                            </div>
+                                        </a>
+                                    </article>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-        <section class="archive-section" id="more-work">
-            <div class="section-heading" data-reveal>
-                <span class="section-index">02</span>
-                <h2 class="section-title" data-i18n="more.title">MORE WORK</h2>
-            </div>
-            <div class="work-list">
-                <article class="work-row" data-reveal>
-                    <span class="work-number">01</span>
-                    <div class="work-main"><h3 data-i18n="more.1.title">Lingrui Smart Arm</h3><p data-i18n="more.1.desc">A team project for autonomous operation and maintenance in high-precision current transformer scenarios. I contributed to the robot system’s algorithm design, as well as system planning, functional presentation, and project collaboration.</p></div>
-                    <div class="work-meta"><span data-i18n="more.1.stack">Algorithm Design · Robotics · System Design · Team Project</span><strong data-i18n="more.1.meta">2026.06</strong></div>
-                </article>
-                <article class="work-row" data-reveal>
-                    <span class="work-number">02</span>
-                    <div class="work-main"><h3 data-i18n="more.2.title">Tianyuan Smart Monitoring</h3><p data-i18n="more.2.desc">A team project for drone-based water quality monitoring and data analysis. I designed the BP neural network model, contributed to the overall algorithm solution, and worked on the frontend interface and data visualization.</p></div>
-                    <div class="work-meta"><span data-i18n="more.2.stack">BP Neural Network · Algorithm Design · Data Visualization · Team Project</span><strong data-i18n="more.2.meta">2026.05</strong></div>
-                </article>
-                <a class="work-row" href="https://github.com/Pawvelle/opengl-punching-bag-feedback" target="_blank" rel="noopener" data-reveal>
-                    <span class="work-number">03</span>
-                    <div class="work-main"><h3 data-i18n="more.3.title">OpenGL Punching Bag</h3><p data-i18n="more.3.desc">A 3D interaction experiment featuring mouse-controlled punches, physical swinging, particle feedback, and basic lighting.</p></div>
-                    <div class="work-meta"><span data-i18n="more.3.stack">C++ · OpenGL · Interactive Graphics</span><strong data-i18n="more.3.meta">2026.06</strong></div>
-                </a>
-            </div>
-        </section>
+            <section class="timeline-section" id="timeline">
+                <div class="page-width">
+                    <h2 class="section-title" data-reveal data-i18n="timeline.title">TIMELINE</h2>
+                    <div class="timeline-list">
+                    <article class="timeline-item" data-reveal>
+                        <div class="timeline-card"><time>2026.07</time><h3 data-i18n="timeline.4.title">CRAIC Artificial Intelligence Innovation Competition (National Finals)</h3><p data-i18n="timeline.4.desc">Contributed to robot algorithm and neural network design, winning the National Second Prize.</p></div>
+                    </article>
+                    <article class="timeline-item" data-reveal>
+                        <div class="timeline-card"><time>2026.06</time><h3 data-i18n="timeline.2.title">The 14th Hubei “Challenge Cup” Business Plan Competition</h3><p data-i18n="timeline.2.desc">Participated in AI solution design and project innovation, winning the Hubei Provincial Second Prize.</p></div>
+                    </article>
+                    <article class="timeline-item" data-reveal>
+                        <div class="timeline-card"><time>2026.06</time><h3 data-i18n="timeline.1.title">The 28th China Robot and Artificial Intelligence Competition</h3><p data-i18n="timeline.1.desc">Contributed to robot system optimization, winning the Hubei Provincial Second Prize.</p></div>
+                    </article>
+                    <article class="timeline-item" data-reveal>
+                        <div class="timeline-card"><time>2026.05</time><h3 data-i18n="timeline.3.title">The 28th Central South Regional Competition of Chinese Collegiate Computing Competition</h3><p data-i18n="timeline.3.desc">Contributed to project development and code organization, and received the Third Prize.</p></div>
+                    </article>
+                    </div>
+                </div>
+            </section>
 
-        <section class="archive-section timeline-section" id="timeline">
-            <div class="section-heading" data-reveal>
-                <span class="section-index">03</span>
-                <h2 class="section-title" data-i18n="timeline.title">TIMELINE</h2>
-            </div>
-            <div class="timeline-list">
-                <article class="timeline-item" data-reveal><time>2026.07</time><div><h3 data-i18n="timeline.4.title">CRAIC Artificial Intelligence Innovation Competition (National Finals)</h3><p data-i18n="timeline.4.desc">Contributed to robot algorithm and neural network design, winning the National Second Prize.</p></div></article>
-                <article class="timeline-item" data-reveal><time>2026.06</time><div><h3 data-i18n="timeline.2.title">The 14th Hubei "Challenge Cup" Business Plan Competition</h3><p data-i18n="timeline.2.desc">Participated in AI solution design and project innovation, winning the Hubei Provincial Second Prize.</p></div></article>
-                <article class="timeline-item" data-reveal><time>2026.06</time><div><h3 data-i18n="timeline.1.title">The 28th China Robot and Artificial Intelligence Competition</h3><p data-i18n="timeline.1.desc">Contributed to robot system optimization, winning the Hubei Provincial Second Prize.</p></div></article>
-                <article class="timeline-item" data-reveal><time>2026.05</time><div><h3 data-i18n="timeline.3.title">The 28th Central South Regional Competition of Chinese Collegiate Computing Competition</h3><p data-i18n="timeline.3.desc">Contributed to project development and code organization, and received the Third Prize.</p></div></article>
-            </div>
-        </section>
+            <section class="tech-section section-band" id="tech-stack">
+                <div class="page-width">
+                    <h2 class="section-title" data-reveal data-i18n="stack.title">Tech Stack</h2>
+                    <ul class="technology-grid" data-reveal>
+                        <li><img class="tech-logo" src="https://cdn.simpleicons.org/python/333333" alt="" width="96" height="96"><span>Python</span></li>
+                        <li><img class="tech-logo tech-logo--monochrome" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-plain.svg" alt="" width="96" height="96"><span>Java</span></li>
+                        <li><img class="tech-logo" src="https://cdn.simpleicons.org/javascript/333333" alt="" width="96" height="96"><span>JavaScript</span></li>
+                        <li><img class="tech-logo" src="https://cdn.simpleicons.org/pytorch/333333" alt="" width="96" height="96"><span>PyTorch</span></li>
+                        <li><img class="tech-logo" src="https://cdn.simpleicons.org/numpy/333333" alt="" width="96" height="96"><span>NumPy</span></li>
+                        <li><img class="tech-logo" src="https://cdn.simpleicons.org/jupyter/333333" alt="" width="96" height="96"><span>Jupyter</span></li>
+                        <li><img class="tech-logo" src="https://cdn.simpleicons.org/git/333333" alt="" width="96" height="96"><span>Git</span></li>
+                        <li><img class="tech-logo" src="https://cdn.simpleicons.org/github/333333" alt="" width="96" height="96"><span>GitHub</span></li>
+                        <li><img class="tech-logo" src="https://cdn.simpleicons.org/anaconda/333333" alt="" width="96" height="96"><span>Anaconda</span></li>
+                        <li><img class="tech-logo" src="https://cdn.simpleicons.org/linux/333333" alt="" width="96" height="96"><span>Linux</span></li>
+                    </ul>
+                </div>
+            </section>
 
-        <section class="archive-section tech-section" id="tech-stack">
-            <div class="section-heading" data-reveal>
-                <span class="section-index">04</span>
-                <h2 class="section-title" data-i18n="stack.title">TECH STACK</h2>
-            </div>
-            <div class="stack-grid">
-                <article data-reveal><span>01</span><h3 data-i18n="stack.1.title">Languages</h3><ul class="stack-tags"><li data-i18n="stack.1.1">Python</li><li data-i18n="stack.1.2">Java</li><li data-i18n="stack.1.3">JavaScript</li><li data-i18n="stack.1.5">HTML/CSS</li><li data-i18n="stack.1.4">C</li><li data-i18n="stack.1.6">SQL</li></ul></article>
-                <article data-reveal><span>02</span><h3 data-i18n="stack.2.title">AI &amp; LLM</h3><ul class="stack-tags"><li data-i18n="stack.2.1">LLMs</li><li data-i18n="stack.2.2">AI Agents</li><li data-i18n="stack.2.3">RAG</li><li data-i18n="stack.2.4">VLMs</li><li data-i18n="stack.2.5">Fine-tuning</li><li data-i18n="stack.2.6">PyTorch</li></ul></article>
-                <article data-reveal><span>03</span><h3 data-i18n="stack.3.title">Intelligent Agents</h3><ul class="stack-tags"><li data-i18n="stack.3.1">Embodied AI</li><li data-i18n="stack.3.2">Autonomous Agents</li><li data-i18n="stack.3.3">Human-Agent Interaction</li><li data-i18n="stack.3.4">MineRL</li></ul></article>
-                <article data-reveal><span>04</span><h3 data-i18n="stack.4.title">Development Tools</h3><ul class="stack-tags"><li data-i18n="stack.4.1">Git</li><li data-i18n="stack.4.2">GitHub</li><li data-i18n="stack.4.3">Linux</li><li data-i18n="stack.4.4">Conda</li><li data-i18n="stack.4.5">Cursor</li><li data-i18n="stack.4.6">Codex</li></ul></article>
-            </div>
-        </section>
+            <section class="contact-section page-width" id="contact" data-reveal>
+                <h2 data-i18n="contact.title">LET’S CONNECT</h2>
+                <p data-i18n="contact.copy">Turning a few worthwhile ideas into things that can actually run.</p>
+                <div class="contact-links">
+                    <a class="solid-button" href="https://github.com/Pawvelle" target="_blank" rel="noopener">GitHub ↗</a>
+                    <a class="outline-button" href="mailto:hello@pawvelle.dev"><span data-i18n="contact.email">Email</span> ↗</a>
+                </div>
+            </section>
+        </main>
 
-        <section class="contact-section" id="contact" data-reveal>
-            <span class="contact-square" aria-hidden="true"></span>
-            <h2 data-i18n="contact.title">LET’S CONNECT</h2>
-            <p data-i18n="contact.copy">Turning a few worthwhile ideas<br>into things that can actually run.</p>
-            <div class="contact-links"><a href="https://github.com/Pawvelle" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a><a href="mailto:hello@pawvelle.dev"><span data-i18n="contact.email">Email</span> <span aria-hidden="true">↗</span></a></div>
-        </section>
-    </main>
+        <footer class="site-footer">
+            <div class="page-width footer-inner">
+                <div>
+                    <span class="footer-brand">Pawvelle</span>
+                    <p data-i18n="footer.brand.desc">An archive of code, projects, and ongoing building.</p>
+                </div>
+                <nav aria-label="Footer navigation">
+                    <a href="#selected-work" data-i18n="nav.work">Projects</a>
+                    <a href="#timeline" data-i18n="nav.timeline">Timeline</a>
+                    <a href="#tech-stack" data-i18n="nav.stack">Tech Stack</a>
+                </nav>
+                <span>© 2026 Pawvelle</span>
+            </div>
+        </footer>
+    </div>
 
-    <footer class="site-footer">
-        <div class="container footer-grid">
-            <div class="footer-col footer-brand">
-                <span class="wordmark">Pawvelle<span class="brand-dot" aria-hidden="true"></span></span>
-                <p data-i18n="footer.brand.desc">An archive of code, projects, and ongoing building.</p>
-            </div>
-            <div class="footer-col">
-                <span class="footer-h" data-i18n="footer.explore">Explore</span>
-                <a href="#selected-work" data-i18n="footer.link.work">Work</a>
-                <a href="#timeline" data-i18n="footer.link.timeline">Timeline</a>
-                <a href="#tech-stack" data-i18n="footer.link.stack">Tech Stack</a>
-            </div>
-            <div class="footer-col">
-                <span class="footer-h" data-i18n="footer.links">Links</span>
-                <a href="https://github.com/Pawvelle" target="_blank" rel="noopener">GitHub ↗</a>
-                <a href="mailto:hello@pawvelle.dev" data-i18n="footer.link.email">Email</a>
-            </div>
-        </div>
-        <div class="container footer-base">
-            <span>© 2026 Pawvelle</span>
-            <span class="footer-square" aria-hidden="true"></span>
-        </div>
-    </footer>
-
-    <script src="assets/js/main.js"></script>
+    <script src="assets/js/main.js?v=20260802-projects-grid"></script>
 </body>
 </html>
