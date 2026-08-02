@@ -238,16 +238,25 @@ startSplashIntro();
 applyTheme(detectTheme());
 applyLang(currentLang);
 
+function releasePointerFocus(event) {
+    // Mouse/touch clicks leave focus on the control. A later keypress then flips
+    // the page into keyboard modality, so :focus-visible paints a ring around
+    // the still-focused toggle. Keyboard activation (detail === 0) keeps focus.
+    if (event.detail !== 0) event.currentTarget.blur();
+}
+
 themeToggles.forEach((button) => {
-    button.addEventListener("click", () => {
+    button.addEventListener("click", (event) => {
         applyTheme(activeTheme() === "dark" ? "light" : "dark", true);
+        releasePointerFocus(event);
     });
 });
 
 langToggles.forEach((button) => {
-    button.addEventListener("click", () => {
+    button.addEventListener("click", (event) => {
         currentLang = currentLang === "zh" ? "en" : "zh";
         applyLang(currentLang);
+        releasePointerFocus(event);
     });
 });
 
