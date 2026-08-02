@@ -521,7 +521,7 @@ a:focus-visible {
 .hero-keyboard {
     --keyboard-max-width: 760px;
     --keyboard-position-x: 48px;
-    --keyboard-position-y: -40px;
+    --keyboard-position-y: -46px;
     position: relative;
     width: 100%;
     max-width: var(--keyboard-max-width);
