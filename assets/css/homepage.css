@@ -498,6 +498,13 @@ a:focus-visible {
     padding-block: 96px;
 }
 
+.intro-section,
+.tech-section,
+.timeline-section,
+.projects-section {
+    scroll-margin-top: -40px;
+}
+
 .section-title,
 .contact-section h2 {
     margin: 0;
