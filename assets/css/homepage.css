@@ -274,7 +274,16 @@ a:focus-visible {
     line-height: 1;
 }
 
-.utility-button:hover {
+/* Touch devices keep :hover sticky after tap, which leaves the circular
+   background on these controls until another tap. Limit hover to fine pointers
+   and use :active for brief press feedback everywhere. */
+@media (hover: hover) and (pointer: fine) {
+    .utility-button:hover {
+        background: var(--surface-strong);
+    }
+}
+
+.utility-button:active {
     background: var(--surface-strong);
 }
 

@@ -280,7 +280,8 @@ window.addEventListener("pageshow", () => {
     if (document.body.classList.contains("splash-open")) resetEntryScroll();
 });
 
-window.addEventListener("beforeunload", resetEntryScroll);
+// Do not reset scroll on beforeunload: mailto:/external-protocol navigations can
+// fire it, which yanked the contact section back to the top of the page.
 
 (function setupReveals() {
     const targets = document.querySelectorAll("[data-reveal]");
