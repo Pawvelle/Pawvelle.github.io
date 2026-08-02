@@ -531,6 +531,10 @@ a:focus-visible {
     transform: translate(var(--keyboard-position-x), var(--keyboard-position-y));
     user-select: none;
     -webkit-user-select: none;
+    /* The container is focusable for keyboard input, which makes mobile browsers
+       paint a tinted rectangle over the whole canvas on tap. */
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
 }
 
 .hero-keyboard:focus-visible {
@@ -1139,7 +1143,8 @@ a.project-rail-card:hover .project-rail-body h3 {
     }
 
     .hero-keyboard {
-        --keyboard-max-width: 390px;
+        --keyboard-max-width: 420px;
+        --keyboard-position-y: -16px;
         aspect-ratio: 6 / 5;
     }
 
