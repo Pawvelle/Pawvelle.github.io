@@ -2,15 +2,16 @@ const I18N = {
     en: {
         "meta.desc": "Pawvelle — a personal archive of code, projects, and technical exploration.",
         "access.skip": "Skip to content",
+        "aria.intro": "Go to intro",
         "aria.primary": "Primary navigation",
         "aria.display": "Display controls",
-        "nav.intro": "Intro",
+        "nav.selected": "Selected Projects",
         "nav.stack": "Tech Stack",
         "nav.timeline": "Timeline",
         "nav.work": "Projects",
         "nav.contact": "Contact",
-        "intro.role": "CST Undergraduate | LLMs & Agent Development",
-        "intro.copy": "CST undergraduate focused on LLMs and agent development. This site documents the projects I’m building and how they grow from ideas into systems.",
+        "intro.role": "CST Undergraduate\nLLM & AI Agent Developer",
+        "intro.copy": "Building AI agents, exploring LLMs, and turning ideas into useful systems.",
         "intro.link.work": "View Projects",
         "intro.link.contact": "Get in Touch",
         "intro.scroll": "Scroll to explore",
@@ -24,7 +25,7 @@ const I18N = {
         "timeline.3.desc": "Contributed to project development and code organization, and received the Third Prize.",
         "timeline.4.title": "CRAIC Artificial Intelligence Innovation Competition (National Finals)",
         "timeline.4.desc": "Contributed to robot algorithm and neural network design, winning the National Second Prize.",
-        "selected.title": "Projects",
+        "selected.title": "Selected Projects",
         "selected.1.title": "Minecraft Agent",
         "selected.1.desc": "A locally running vision-language agent that explores perception, task planning, and action execution in Minecraft.",
         "selected.1.meta": "In Progress · 2026",
@@ -45,15 +46,16 @@ const I18N = {
     zh: {
         "meta.desc": "Pawvelle — 一个关于代码、项目与技术探索的个人档案。",
         "access.skip": "跳到主要内容",
+        "aria.intro": "返回简介",
         "aria.primary": "主导航",
         "aria.display": "显示设置",
-        "nav.intro": "简介",
+        "nav.selected": "精选项目",
         "nav.stack": "技术栈",
         "nav.timeline": "时间线",
         "nav.work": "项目",
         "nav.contact": "联系",
-        "intro.role": "计算机科学与技术本科生 | 大语言模型与智能体开发",
-        "intro.copy": "计算机科学与技术本科生，关注大语言模型与智能体开发。这里记录我正在构建的项目，以及它们从想法走向系统的过程。",
+        "intro.role": "计算机科学与技术本科生\n大语言模型与 AI 智能体开发者",
+        "intro.copy": "构建 AI 智能体，探索大语言模型，并将想法转化为实用系统",
         "intro.link.work": "查看项目",
         "intro.link.contact": "与我联系",
         "intro.scroll": "向下探索",
@@ -67,7 +69,7 @@ const I18N = {
         "timeline.3.desc": "参与项目开发与代码整理，获得三等奖。",
         "timeline.4.title": "CRAIC 人工智能创新赛国赛",
         "timeline.4.desc": "参与机器人算法与神经网络设计，获全国二等奖。",
-        "selected.title": "项目",
+        "selected.title": "精选项目",
         "selected.1.title": "Minecraft Agent",
         "selected.1.desc": "一个在本地运行的视觉语言智能体，尝试在 Minecraft 中完成环境感知、任务规划与动作执行。",
         "selected.1.meta": "开发中 · 2026",
@@ -209,7 +211,29 @@ function resetEntryScroll() {
     if (siteShell) siteShell.scrollTop = 0;
 }
 
+function startSplashIntro() {
+    if (!splash) return;
+
+    const signature = splash.querySelector(".signature-wordmark");
+    let hasStarted = false;
+
+    const reveal = () => {
+        if (hasStarted) return;
+        hasStarted = true;
+        window.requestAnimationFrame(() => splash.classList.add("is-ready"));
+    };
+
+    if (!signature || signature.complete) {
+        reveal();
+        return;
+    }
+
+    signature.addEventListener("load", reveal, { once: true });
+    signature.addEventListener("error", reveal, { once: true });
+}
+
 resetEntryScroll();
+startSplashIntro();
 
 applyTheme(detectTheme());
 applyLang(currentLang);
