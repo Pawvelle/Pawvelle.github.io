@@ -38,7 +38,7 @@ const I18N = {
         "contact.title": "LET’S CONNECT",
         "contact.copy": "Turning a few worthwhile ideas into things that can actually run.",
         "contact.email": "Email",
-        "footer.brand.desc": "An archive of code, projects, and ongoing building.",
+        "footer.brand.desc": "AI Agent Developer",
         "theme.to.dark": "Switch to dark mode",
         "theme.to.light": "Switch to light mode",
         "language.switch": "Switch language"
@@ -82,7 +82,7 @@ const I18N = {
         "contact.title": "保持联系",
         "contact.copy": "正在把一些值得继续做下去的想法，慢慢变成真正可运行的东西。",
         "contact.email": "邮箱",
-        "footer.brand.desc": "代码、项目与持续构建的档案。",
+        "footer.brand.desc": "AI Agent Developer",
         "theme.to.dark": "切换到深色模式",
         "theme.to.light": "切换到浅色模式",
         "language.switch": "切换语言"

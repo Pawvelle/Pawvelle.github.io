@@ -34,7 +34,7 @@ const CONFIG = Object.freeze({
         position: [9.8, 10.6, 11.2],
         targetOffset: [-0.25, 0.24, 0],
         desktopFill: 1.02,
-        compactFill: 0.92,
+        compactFill: 0.98,
         compactBreakpoint: 520
     },
     lighting: {

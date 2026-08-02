@@ -260,16 +260,18 @@ a:focus-visible {
 /* Shared controls */
 .utility-button {
     display: inline-grid;
-    min-width: 40px;
-    height: 40px;
-    padding: 0 10px;
+    width: 52px;
+    height: 52px;
+    min-width: 52px;
+    padding: 0;
     place-items: center;
     border: 0;
-    border-radius: 8px;
+    border-radius: 50%;
     background: transparent;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 400;
+    line-height: 1;
 }
 
 .utility-button:hover {
@@ -277,8 +279,8 @@ a:focus-visible {
 }
 
 .theme-icon {
-    width: 18px;
-    height: 18px;
+    width: 22px;
+    height: 22px;
     fill: none;
     stroke: currentColor;
     stroke-linecap: round;
@@ -440,7 +442,7 @@ a:focus-visible {
     grid-column: 3;
     justify-self: end;
     align-items: center;
-    gap: 2px;
+    gap: 4px;
 }
 
 .intro-section {
@@ -1092,9 +1094,16 @@ a.project-rail-card:hover .project-rail-body h3 {
     }
 
     .utility-button {
-        min-width: 38px;
-        height: 38px;
-        padding-inline: 8px;
+        width: 48px;
+        height: 48px;
+        min-width: 48px;
+        padding: 0;
+        font-size: 13px;
+    }
+
+    .theme-icon {
+        width: 21px;
+        height: 21px;
     }
 
     .solid-button,
@@ -1143,8 +1152,8 @@ a.project-rail-card:hover .project-rail-body h3 {
     }
 
     .hero-keyboard {
-        --keyboard-max-width: 420px;
-        --keyboard-position-y: -16px;
+        --keyboard-max-width: 460px;
+        --keyboard-position-y: -36px;
         aspect-ratio: 6 / 5;
     }
 
@@ -1189,11 +1198,12 @@ a.project-rail-card:hover .project-rail-body h3 {
     }
 
     .timeline-list {
-        gap: 12px;
+        gap: 20px;
+        padding-left: 28px;
     }
 
     .timeline-list::before {
-        display: none;
+        left: 6px;
     }
 
     .timeline-item,
@@ -1202,8 +1212,10 @@ a.project-rail-card:hover .project-rail-body h3 {
         margin-left: 0;
     }
 
-    .timeline-item::after {
-        display: none;
+    .timeline-item::after,
+    .timeline-item:nth-child(even)::after {
+        right: auto;
+        left: -29px;
     }
 
     .timeline-card {
