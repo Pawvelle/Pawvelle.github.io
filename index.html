@@ -42,7 +42,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;family=Poppins:wght@200;300;400;500;600&amp;display=swap">
-    <link rel="stylesheet" href="assets/css/homepage.css?v=20260802-intro-copy-v4">
+    <link rel="stylesheet" href="assets/css/homepage.css?v=20260802-pawvelle-keys-v6">
 </head>
 <body class="splash-open">
     <section class="splash" id="splash" aria-labelledby="splashName">
@@ -95,7 +95,9 @@
                         <a class="outline-button" href="#contact" data-i18n="intro.link.contact">Get in Touch</a>
                     </div>
                 </div>
-                <div class="intro-visual" aria-hidden="true"></div>
+                <div class="intro-visual">
+                    <div class="hero-keyboard" data-hero-keyboard role="group" aria-label="Interactive Pawvelle keyboard"></div>
+                </div>
                 <a class="scroll-cue" href="#selected-work">
                     <span data-i18n="intro.scroll">Scroll to explore</span>
                     <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m4 7 6 6 6-6"/></svg>
@@ -223,6 +225,14 @@
         </footer>
     </div>
 
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js"
+        }
+    }
+    </script>
     <script src="assets/js/main.js?v=20260802-intro-copy-v4"></script>
+    <script type="module" src="assets/js/keyboard3d.js?v=20260802-pawvelle-keys-v11"></script>
 </body>
 </html>
