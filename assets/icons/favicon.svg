@@ -1,8 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Pawvelle">
   <style>
-    .orbit { stroke: #1d1d1f; }
+    .orbit { stroke: #333333; }
+    .dot { fill: #333333; }
     @media (prefers-color-scheme: dark) {
-      .orbit { stroke: #f5f5f7; }
+      .orbit { stroke: #f3f3f3; }
+      .dot { fill: #ffffff; }
     }
   </style>
   <circle
@@ -15,5 +17,5 @@
     stroke-linecap="round"
     stroke-dasharray="116 22.23"
   />
-  <circle cx="51.05" cy="21" r="4" fill="#d8a7b1"/>
+  <circle class="dot" cx="51.05" cy="21" r="4"/>
 </svg>
