@@ -804,7 +804,14 @@ a:focus-visible {
     transition: transform 500ms ease;
 }
 
+.project-feature-card {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+}
+
 .project-feature:hover .project-feature-media img,
+a.project-feature-card:hover .project-feature-media img,
 a.project-rail-card:hover .project-rail-media img {
     transform: scale(1.035);
 }
