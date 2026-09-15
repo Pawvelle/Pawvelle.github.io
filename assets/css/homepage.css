@@ -877,8 +877,9 @@ a.project-rail-card:hover .project-rail-body h3 {
 
 /* Contact and footer */
 .contact-section {
+    position: relative;
     display: flex;
-    min-height: 816px;
+    min-height: max(640px, calc(100svh - var(--header-height)));
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -898,10 +899,47 @@ a.project-rail-card:hover .project-rail-body h3 {
     line-height: 28px;
 }
 
-.contact-links {
+.contact-actions {
     display: flex;
     gap: 16px;
     margin-top: 40px;
+}
+
+.contact-socials {
+    position: absolute;
+    right: var(--gutter);
+    bottom: 48px;
+    display: flex;
+    gap: 10px;
+}
+
+.contact-socials a {
+    display: grid;
+    width: 42px;
+    height: 42px;
+    place-items: center;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    background: var(--canvas);
+    transition: border-color 180ms ease, background-color 180ms ease, transform 180ms ease;
+}
+
+.contact-socials img {
+    display: block;
+    width: 19px;
+    height: 19px;
+}
+
+:root[data-theme="dark"] .contact-socials img {
+    filter: invert(1) brightness(1.2);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .contact-socials a:hover {
+        border-color: var(--ink);
+        background: var(--surface);
+        transform: translateY(-2px);
+    }
 }
 
 .site-footer {
@@ -1287,10 +1325,15 @@ a.project-rail-card:hover .project-rail-body h3 {
         line-height: 24px;
     }
 
-    .contact-links {
+    .contact-actions {
         margin-top: 32px;
         flex-wrap: wrap;
         justify-content: center;
+    }
+
+    .contact-socials {
+        position: static;
+        margin-top: 56px;
     }
 
     .footer-inner {
