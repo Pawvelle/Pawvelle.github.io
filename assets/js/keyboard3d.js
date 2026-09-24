@@ -6,16 +6,16 @@ const CONFIG = Object.freeze({
     geometry: {
         keyWidth: 1,
         keyDepth: 1.04,
-        keyHeight: 0.56,
-        keyCornerRadius: 0.125,
-        keyBevel: 0.065,
+        keyHeight: 0.61,
+        keyCornerRadius: 0.15,
+        keyBevel: 0.052,
         keyBottomScale: 1.04,
-        keyShoulderScale: 0.93,
-        keyTopScale: 0.84,
-        keyDishDepth: 0.008,
-        cornerSegments: 6,
-        baseHeight: 0.18,
-        baseBevel: 0.055,
+        keyShoulderScale: 0.94,
+        keyTopScale: 0.86,
+        keyDishDepth: 0.014,
+        cornerSegments: 12,
+        baseHeight: 0.125,
+        baseBevel: 0.028,
         baseCornerRadius: 0.105
     },
     layout: {
@@ -38,10 +38,10 @@ const CONFIG = Object.freeze({
         compactBreakpoint: 520
     },
     lighting: {
-        hemisphereIntensity: 1.45,
-        keyIntensity: 3.1,
-        fillIntensity: 0.72,
-        shadowOpacity: 0.15,
+        hemisphereIntensity: 1.4,
+        keyIntensity: 3.2,
+        fillIntensity: 0.85,
+        shadowOpacity: 0.16,
         exposure: 1.05
     },
     animation: {
@@ -96,7 +96,7 @@ function initKeyboardScene(containerElement) {
     renderer.setClearColor(0x000000, 0);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.shadowMap.type = THREE.VSMShadowMap;
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = CONFIG.lighting.exposure;
@@ -115,7 +115,7 @@ function initKeyboardScene(containerElement) {
     scene.add(hemisphereLight);
 
     const keyLight = new THREE.DirectionalLight(0xffffff, CONFIG.lighting.keyIntensity);
-    keyLight.position.set(-4.5, 9.5, 7.5);
+    keyLight.position.set(-5.5, 8.5, 6.5);
     keyLight.castShadow = true;
     keyLight.shadow.mapSize.set(2048, 2048);
     keyLight.shadow.camera.near = 1;
@@ -126,7 +126,8 @@ function initKeyboardScene(containerElement) {
     keyLight.shadow.camera.bottom = -7;
     keyLight.shadow.bias = -0.00035;
     keyLight.shadow.normalBias = 0.018;
-    keyLight.shadow.radius = 5;
+    keyLight.shadow.radius = 4;
+    keyLight.shadow.blurSamples = 8;
     scene.add(keyLight);
     scene.add(keyLight.target);
 
@@ -155,27 +156,27 @@ function initKeyboardScene(containerElement) {
 
     const keyMaterials = [
         new THREE.MeshStandardMaterial({
-            color: 0x373739,
-            roughness: 0.76,
+            color: 0x303237,
+            roughness: 0.48,
             metalness: 0
         }),
         new THREE.MeshStandardMaterial({
-            color: 0x28282a,
-            roughness: 0.84,
+            color: 0x303237,
+            roughness: 0.53,
             metalness: 0
         })
     ];
 
     const baseMaterials = [
         new THREE.MeshStandardMaterial({
-            color: 0xd2d2d2,
-            roughness: 0.75,
-            metalness: 0
+            color: 0xbfc2c6,
+            roughness: 0.34,
+            metalness: 0.48
         }),
         new THREE.MeshStandardMaterial({
-            color: 0x8c8c8c,
-            roughness: 0.82,
-            metalness: 0
+            color: 0x92969c,
+            roughness: 0.4,
+            metalness: 0.48
         })
     ];
 
@@ -638,13 +639,13 @@ function createKeycapGeometry() {
             radius: shape.keyCornerRadius
         },
         {
-            y: shape.keyHeight * 0.76,
+            y: shape.keyHeight - bevel * 1.8,
             halfWidth: halfWidth * shape.keyShoulderScale,
             halfDepth: halfDepth * shape.keyShoulderScale,
             radius: shape.keyCornerRadius * 0.9
         },
         {
-            y: shape.keyHeight - bevel * 0.55,
+            y: shape.keyHeight - bevel * 0.35,
             halfWidth: halfWidth * (shape.keyTopScale + 0.035),
             halfDepth: halfDepth * (shape.keyTopScale + 0.035),
             radius: shape.keyCornerRadius * 0.78
@@ -654,6 +655,12 @@ function createKeycapGeometry() {
             halfWidth: halfWidth * shape.keyTopScale,
             halfDepth: halfDepth * shape.keyTopScale,
             radius: shape.keyCornerRadius * 0.72
+        },
+        {
+            y: shape.keyHeight - shape.keyDishDepth * 0.6,
+            halfWidth: halfWidth * shape.keyTopScale * 0.72,
+            halfDepth: halfDepth * shape.keyTopScale * 0.72,
+            radius: shape.keyCornerRadius * 0.62
         }
     ];
 
@@ -805,11 +812,22 @@ function makeLabelTexture(letter, maxAnisotropy) {
     canvas.height = size;
     const context = canvas.getContext("2d");
     context.clearRect(0, 0, size, size);
-    context.fillStyle = "#ffffff";
-    context.textAlign = "center";
-    context.textBaseline = "middle";
-    context.font = "300 324px 'Poppins', 'Montserrat', -apple-system, sans-serif";
-    context.fillText(letter, size / 2, size / 2 + 8);
+    // Custom monoline legends: fixed proportions and optical centering on every
+    // platform, independent of web-font loading. Coordinates use a 100-unit grid.
+    const glyphs = {
+        P: "M 36 73 L 36 27 L 53 27 C 74 27 74 52 53 52 L 36 52",
+        A: "M 29 73 L 48 27 L 52 27 L 71 73 M 36 57 L 64 57",
+        W: "M 23 27 L 34 73 L 38 73 L 50 39 L 62 73 L 66 73 L 77 27",
+        V: "M 29 27 L 48 73 L 52 73 L 71 27",
+        E: "M 66 27 L 35 27 L 35 73 L 66 73 M 35 49 L 60 49",
+        L: "M 36 27 L 36 73 L 66 73"
+    };
+    context.scale(size / 100, size / 100);
+    context.strokeStyle = "#e2e3e1";
+    context.lineWidth = 3.5;
+    context.lineCap = "round";
+    context.lineJoin = "round";
+    context.stroke(new Path2D(glyphs[letter]));
 
     const texture = new THREE.CanvasTexture(canvas);
     texture.colorSpace = THREE.SRGBColorSpace;
