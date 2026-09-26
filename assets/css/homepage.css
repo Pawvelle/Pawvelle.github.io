@@ -12,7 +12,7 @@
     --gutter: 48px;
     --display: "Montserrat", "PingFang SC", "Microsoft YaHei", sans-serif;
     --body: "Poppins", "PingFang SC", "Microsoft YaHei", sans-serif;
-    --header-height: 92px;
+    --header-height: 76px;
     --ease: cubic-bezier(0.76, 0, 0.24, 1);
     --card-shadow: 0 1px 3px rgb(0 0 0 / 0.08);
     --card-shadow-hover: 0 16px 34px rgb(0 0 0 / 0.12);
@@ -1019,13 +1019,13 @@ a.project-rail-card:hover .project-rail-body h3 {
 
 @media (max-width: 900px) {
     :root {
-        --header-height: 116px;
+        --header-height: 104px;
         --gutter: 32px;
     }
 
     .header-inner {
         grid-template-columns: 1fr auto;
-        grid-template-rows: 60px 56px;
+        grid-template-rows: 56px 48px;
     }
 
     .header-tools {
