@@ -820,6 +820,67 @@ a.project-rail-card:hover .project-rail-media img {
     margin-top: 20px;
 }
 
+.minesymphony-cover {
+    background: #000;
+    isolation: isolate;
+    container-type: inline-size;
+}
+
+.minesymphony-subtitle {
+    position: absolute;
+    top: 63%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    color: rgb(255 255 255 / 68%);
+    font-family: var(--body);
+    font-size: clamp(8px, 1.5cqw, 24px);
+    font-weight: 300;
+    line-height: 1.5;
+    letter-spacing: .1em;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.project-feature:hover .minesymphony-cover img {
+    transform: none;
+}
+
+.minesymphony-particles {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.minesymphony-motion {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    padding: 9px;
+    border: 1px solid rgb(255 255 255 / 22%);
+    border-radius: 50%;
+    background: rgb(0 0 0 / 65%);
+    color: #eee;
+    cursor: pointer;
+    opacity: .65;
+    transition: opacity 180ms ease, border-color 180ms ease;
+}
+
+.minesymphony-motion[hidden] { display: none; }
+.minesymphony-motion:hover,
+.minesymphony-motion:focus-visible { opacity: 1; border-color: #fff; }
+.minesymphony-motion:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.minesymphony-motion svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.5; }
+.minesymphony-motion .motion-play,
+.minesymphony-motion.is-paused .motion-pause { display: none; }
+.minesymphony-motion.is-paused .motion-play { display: block; }
+
 .project-feature-body h3 {
     margin: 0;
     font-family: var(--body);

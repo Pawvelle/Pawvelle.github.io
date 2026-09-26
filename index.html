@@ -42,7 +42,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;family=Poppins:wght@200;300;400;500;600&amp;display=swap">
-    <link rel="stylesheet" href="assets/css/homepage.css?v=20260927-header-height-v1">
+    <link rel="stylesheet" href="assets/css/homepage.css?v=20260927-minesymphony-subtitle-v2">
 </head>
 <body class="splash-open">
     <section class="splash" id="splash" aria-labelledby="splashName">
@@ -111,8 +111,13 @@
                         <div class="project-feature-grid" id="projectFeatureGrid">
                             <article class="project-feature" data-reveal id="projectFeature">
                                 <div class="project-feature-card">
-                                    <div class="project-feature-media">
-                                        <img src="assets/images/projects/minecraft-agent.jpg" alt="MineSymphony" width="1280" height="720" loading="lazy">
+                                    <div class="project-feature-media minesymphony-cover" id="mineSymphonyCover">
+                                        <img src="assets/images/projects/minesymphony-wireframe.png" alt="MineSymphony — white wireframe Minecraft characters on floating block islands" width="1672" height="941" loading="lazy">
+                                        <canvas class="minesymphony-particles" aria-hidden="true"></canvas>
+                                        <p class="minesymphony-subtitle">Minecraft Multi-Agent Benchmark</p>
+                                        <button class="minesymphony-motion" type="button" aria-label="Pause cover animation" title="Pause cover animation" hidden>
+                                            <svg viewBox="0 0 16 16" aria-hidden="true"><path class="motion-pause" d="M5 4v8M11 4v8"/><path class="motion-play" d="m6 4 6 4-6 4Z"/></svg>
+                                        </button>
                                     </div>
                                     <div class="project-feature-body">
                                         <h3 data-i18n="selected.1.title">MineSymphony</h3>
@@ -255,6 +260,7 @@
     }
     </script>
     <script src="assets/js/main.js?v=20260916-content-v1"></script>
+    <script src="assets/js/minesymphony.js?v=20260927-starlight-water-v8"></script>
     <script type="module" src="assets/js/keyboard3d.js?v=20260925-sculpted-keycaps-v2"></script>
 </body>
 </html>
