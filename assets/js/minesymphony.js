@@ -19,27 +19,48 @@
     const image = cover.querySelector('img');
     const TAU = Math.PI * 2;
     const wrap = value => ((value % 1) + 1) % 1;
-    const random = (min, max) => min + Math.random() * (max - min);
+    // Stable sampling keeps the composition consistent across reloads.
+    let seed = 2719;
+    const random = (min, max) => {
+        seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+        return min + seed / 4294967296 * (max - min);
+    };
     const streams = Array.from({ length: 250 }, (_, i) => ({
-        lane: i % 7, phase: Math.random(), speed: random(.04, .078),
-        size: random(1, 2.6), direction: i % 3 === 0 ? -1 : 1,
+        lane: i % 7, phase: random(0, 1), speed: random(.04, .078),
+        size: random(1, 2.1), direction: i % 3 === 0 ? -1 : 1,
     }));
     const spray = Array.from({ length: 170 }, () => ({
-        phase: Math.random(), lane: Math.floor(random(0, 7)),
+        phase: random(0, 1), lane: Math.floor(random(0, 7)),
         offset: random(-1, 1), angle: random(0, TAU), speed: random(.035, .065),
         size: random(.45, 1.2),
     }));
-    // Three depths, evenly scattered with a few brighter foreground stars.
-    const dust = Array.from({ length: 540 }, (_, i) => {
-        const depth = i % 12 === 0 ? 2 : i % 3 === 0 ? 1 : 0;
-        return {
-            x: (i % 30 + Math.random()) / 30,
-            y: (Math.floor(i / 30) + Math.random()) / 18,
-            phase: random(0, TAU), twinkle: random(.35, .85), depth,
-            speed: random(.001, .003) * (depth + 1),
-            size: depth === 2 ? random(2, 3.1) : depth === 1 ? random(1, 1.6) : random(.55, 1.05),
-        };
-    });
+    // One projected voxel lattice supplies geometry, nodes and packet trajectories.
+    const lattice = [];
+    const nodes = [];
+    const project = (x, z, upper) => {
+        const depth = (z+1)/8;
+        return [.5 + x*(.052 + depth*.018),
+            upper ? .265-depth*.255 : .725+depth*.29];
+    };
+    for (const upper of [true, false]) {
+        for (let z = 0; z < 7; z++) {
+            for (let x = -7; x <= 7; x++) {
+                const p = project(x, z, upper);
+                const active = (x*7+z*3+28)%5 === 0;
+                nodes.push({ p, z, active, cube: active && (x+z+14)%3===0 });
+                if (x < 7) lattice.push({ a:p, b:project(x+1,z,upper), z, active });
+                if (z < 6) lattice.push({ a:p, b:project(x,z+1,upper), z,
+                    active: (x+z+14)%6===0 });
+            }
+        }
+    }
+    const pixels = Array.from({ length: 320 }, (_, i) => ({
+        x: random(.02,.98), y: random(.025,.975), phase:random(0,TAU),
+        depth:i%3, size:random(.65,1.5), speed:random(.001,.003),
+    }));
+    const packets = lattice.filter(edge => edge.active).map((edge, i) => ({
+        ...edge, phase:random(0,1), speed:random(.08,.16), direction:i%2 ? 1:-1,
+    }));
     const bloom = document.createElement('canvas');
     bloom.width = bloom.height = 48;
     const bloomContext = bloom.getContext('2d');
@@ -91,13 +112,85 @@
         context.fillStyle = '#fff';
     }
 
-    function drawStar(x, y, size, alpha, glow = false) {
+    function drawPixel(x, y, size, alpha, glow = false) {
         context.globalAlpha = alpha;
         if (glow) {
-            const diameter = size * 8;
+            const diameter = size * 5;
             context.drawImage(bloom, x-diameter/2, y-diameter/2, diameter, diameter);
         }
         context.fillRect(x-size/2, y-size/2, size, size);
+    }
+
+    function backgroundWeight(x, y) {
+        const edge = Math.min(1, x/.055, (1-x)/.055, y/.04, (1-y)/.04);
+        // A continuous fade around the headline and silhouettes avoids hard cutouts.
+        const center = Math.exp(-Math.pow((x-.5)/.27,6)-Math.pow((y-.53)/.20,6));
+        const figures = Math.exp(-Math.pow((y-.61)/.27,6)) *
+            (Math.exp(-Math.pow((x-.14)/.13,4))+Math.exp(-Math.pow((x-.86)/.13,4)));
+        return Math.max(0, edge)*(1-center*.97)*(1-Math.min(1,figures)*.88);
+    }
+
+    function drawBackground(scale) {
+        context.globalAlpha = 1;
+        context.lineWidth = Math.max(.55, scale*.65);
+        context.strokeStyle = '#fff';
+        // Two receding planes share the same voxel spacing and fade into the center.
+        for (const edge of lattice) {
+            const [x,y] = edge.a;
+            const weight = backgroundWeight((x+edge.b[0])/2,(y+edge.b[1])/2);
+            context.globalAlpha = weight*(edge.active ? .21 : .055)*( .65+edge.z*.065);
+            context.beginPath();
+            context.moveTo(x*width,y*height);
+            context.lineTo(edge.b[0]*width,edge.b[1]*height);
+            context.stroke();
+        }
+        for (const node of nodes) {
+            const [x,y] = node.p;
+            const weight = backgroundWeight(x,y);
+            drawPixel(x*width,y*height,Math.max(.8,scale*(node.active?2:1)),
+                weight*(node.active?.46:.15));
+            if (!node.cube) continue;
+            const u = scale*(4+node.z*.9);
+            const cx=x*width, cy=y*height;
+            context.globalAlpha=weight*.28;
+            context.beginPath();
+            context.moveTo(cx,cy-u*1.5);
+            context.lineTo(cx+u,cy-u);
+            context.lineTo(cx,cy-u*.5);
+            context.lineTo(cx-u,cy-u);
+            context.closePath();
+            context.moveTo(cx-u,cy-u);
+            context.lineTo(cx-u,cy);
+            context.lineTo(cx,cy+u*.5);
+            context.lineTo(cx+u,cy);
+            context.lineTo(cx+u,cy-u);
+            context.moveTo(cx,cy-u*.5);
+            context.lineTo(cx,cy+u*.5);
+            context.stroke();
+        }
+        // Square packets move on the grid itself, tying light and geometry together.
+        for (const packet of packets) {
+            const t=wrap(packet.phase+time*packet.speed*packet.direction);
+            for (let tail=3;tail>=0;tail--) {
+                const progress=t-tail*.035*packet.direction;
+                if(progress<0 || progress>1) continue;
+                const x=packet.a[0]+(packet.b[0]-packet.a[0])*progress;
+                const y=packet.a[1]+(packet.b[1]-packet.a[1])*progress;
+                const alpha=backgroundWeight(x,y)*Math.sin(Math.PI*progress)*
+                    (tail ? .18*(1-tail/4):.72);
+                drawPixel(x*width,y*height,Math.max(1,scale*(tail?1:2.1)),alpha,!tail);
+            }
+        }
+        // Three slow particle depths; larger pixels stay scarce and square-edged.
+        for (const pixel of pixels) {
+            const x=pixel.x+Math.sin(time*.12+pixel.phase)*.002*(pixel.depth+1);
+            const y=wrap(pixel.y-time*pixel.speed*(pixel.depth+1));
+            const pulse=.65+.35*Math.sin(time*.7+pixel.phase);
+            const alpha=backgroundWeight(x,y)*pulse*(.18+pixel.depth*.12);
+            drawPixel(x*width,y*height,Math.max(.65,scale*pixel.size*(1+pixel.depth*.5)),
+                alpha,pixel.depth===2 && pixel.size>1.35);
+        }
+        context.globalAlpha=1;
     }
 
     function drawTitle() {
@@ -117,7 +210,7 @@
         context.fillStyle = '#000';
         context.fillRect(dx, dy-12*fit, sw*fit, (sh+24)*fit);
         // Thin slices create a continuous, gentle but visibly moving water refraction.
-        const amplitude = Math.min(time/2, 1) * 4.3 * fit;
+        const amplitude = Math.min(time/2, 1) * 3.2 * fit;
         for (let column = 0; column < sw; column += 2) {
             const fraction = column/sw;
             const envelope = Math.sin(fraction*Math.PI);
@@ -127,7 +220,7 @@
             const stretch = 1 + .015*envelope*Math.sin(fraction*TAU*1.25-time*.5);
             const sliceWidth = Math.min(2, sw-column);
             const highlight = Math.pow(.5+.5*Math.sin(fraction*TAU-time*.7), 8);
-            context.globalAlpha = .8 + .2*highlight;
+            context.globalAlpha = .91 + .09*highlight;
             context.drawImage(image, sx+column, sy, sliceWidth, sh,
                 dx+column*fit, dy+shift-(stretch-1)*sh*fit/2,
                 sliceWidth*fit+.15, sh*fit*stretch);
@@ -145,16 +238,7 @@
         drawCharacters();
         context.fillStyle = '#fff';
         const scale = width / 1000;
-        for (const particle of dust) {
-            const x = wrap(particle.x + Math.sin(time*.1+particle.phase)*.003*(particle.depth+1))*width;
-            const y = wrap(particle.y-time*particle.speed)*height;
-            if (x > width*.27 && x < width*.735 && y > height*.425 && y < height*.58) continue;
-            if (x > width*.27 && x < width*.73 && y > height*.62 && y < height*.69) continue;
-            const shimmer = .5+.5*Math.sin(time*particle.twinkle+particle.phase);
-            const edgeFade = Math.min(1, y/(height*.03), (height-y)/(height*.03));
-            const alpha = (.23 + particle.depth*.13 + shimmer*.36)*edgeFade;
-            drawStar(x, y, Math.max(.5, particle.size*scale), alpha, particle.depth === 2);
-        }
+        drawBackground(scale);
         context.globalAlpha = 1;
         context.lineWidth = Math.max(.4, scale*.65);
         for (let lane = 0; lane < 7; lane++) {
@@ -175,7 +259,7 @@
                 const t = progress-tail*.003*particle.direction;
                 if (t < 0 || t > 1) continue;
                 const p = point(t, particle.lane);
-                drawStar(p.x, p.y, size, opacity*(tail ? .23*(1-tail/8) : .98), !tail && particle.size > 1.6);
+                drawPixel(p.x, p.y, size, opacity*(tail ? .23*(1-tail/8) : .98), !tail && particle.size > 1.6);
             }
         }
         // Finer particles peel away from the strands and return to the stream.
@@ -186,7 +270,7 @@
             const spread = particle.offset*envelope*height*.025;
             const x = p.x + Math.cos(time*.7+particle.angle)*envelope*width*.002;
             const y = p.y + spread + Math.sin(t*18-time+particle.angle)*height*.004;
-            drawStar(x, y, Math.max(.5, particle.size*scale), envelope*.35);
+            drawPixel(x, y, Math.max(.5, particle.size*scale), envelope*.35);
         }
         context.globalAlpha = 1;
         drawTitle();
