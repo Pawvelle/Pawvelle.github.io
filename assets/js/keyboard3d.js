@@ -616,6 +616,16 @@ function initKeyboardScene(containerElement) {
         window.addEventListener("resize", resize, { passive: true });
     }
 
+    // Keep the scene responsive while fonts load, then replace fallback glyphs
+    // in place. Ignore late font completion after the scene has been disposed.
+    document.fonts.load('600 320px "Syne"', "PAWVELLE").then(() => {
+        if (isDisposed) return;
+        labelTextures.forEach((texture, letter) => {
+            drawLabel(texture.image, letter);
+            texture.needsUpdate = true;
+        });
+    }).catch(() => {});
+
     resize();
     renderer.setAnimationLoop(renderFrame);
 }
@@ -810,24 +820,7 @@ function makeLabelTexture(letter, maxAnisotropy) {
     const canvas = document.createElement("canvas");
     canvas.width = size;
     canvas.height = size;
-    const context = canvas.getContext("2d");
-    context.clearRect(0, 0, size, size);
-    // Custom monoline legends: fixed proportions and optical centering on every
-    // platform, independent of web-font loading. Coordinates use a 100-unit grid.
-    const glyphs = {
-        P: "M 36 73 L 36 27 L 53 27 C 74 27 74 52 53 52 L 36 52",
-        A: "M 29 73 L 48 27 L 52 27 L 71 73 M 36 57 L 64 57",
-        W: "M 23 27 L 34 73 L 38 73 L 50 39 L 62 73 L 66 73 L 77 27",
-        V: "M 29 27 L 48 73 L 52 73 L 71 27",
-        E: "M 66 27 L 35 27 L 35 73 L 66 73 M 35 49 L 60 49",
-        L: "M 36 27 L 36 73 L 66 73"
-    };
-    context.scale(size / 100, size / 100);
-    context.strokeStyle = "#e2e3e1";
-    context.lineWidth = 3.5;
-    context.lineCap = "round";
-    context.lineJoin = "round";
-    context.stroke(new Path2D(glyphs[letter]));
+    drawLabel(canvas, letter);
 
     const texture = new THREE.CanvasTexture(canvas);
     texture.colorSpace = THREE.SRGBColorSpace;
@@ -836,6 +829,23 @@ function makeLabelTexture(letter, maxAnisotropy) {
     texture.magFilter = THREE.LinearFilter;
     texture.needsUpdate = true;
     return texture;
+}
+
+// Center the visible ink rather than the font's advance width: narrow letters
+// such as L then align with wide letters such as W on the same keycap plane.
+function drawLabel(canvas, letter) {
+    const context = canvas.getContext("2d");
+    const size = canvas.width;
+    context.clearRect(0, 0, size, size);
+    context.font = `600 ${size * 0.625}px "Syne", sans-serif`;
+    context.textAlign = "left";
+    context.textBaseline = "alphabetic";
+    context.fillStyle = "#e7e8e6";
+    const metrics = context.measureText(letter);
+    const inkWidth = metrics.actualBoundingBoxLeft + metrics.actualBoundingBoxRight;
+    const x = (size - inkWidth) / 2 + metrics.actualBoundingBoxLeft;
+    const y = (size + metrics.actualBoundingBoxAscent - metrics.actualBoundingBoxDescent) / 2;
+    context.fillText(letter, x, y);
 }
 
 function measureCameraPlaneExtents(bounds, camera) {

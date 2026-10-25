@@ -17,7 +17,7 @@ const I18N = {
         "intro.link.contact": "Get in Touch",
         "intro.scroll": "Scroll to explore",
         "stack.title": "Tech Stack",
-        "timeline.title": "TIMELINE",
+        "timeline.title": "Timeline",
         "timeline.1.title": "The 28th China Robot and Artificial Intelligence Competition (CRAIC)",
         "timeline.1.desc": "Contributed to robot system optimization, winning the Hubei Provincial Second Prize.",
         "timeline.2.title": "The 14th Hubei \"Challenge Cup\" Business Plan Competition",

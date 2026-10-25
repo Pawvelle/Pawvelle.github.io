@@ -10,8 +10,8 @@
     --inverse-ink: #ffffff;
     --page-width: 1376px;
     --gutter: 48px;
-    --display: "Montserrat", "PingFang SC", "Microsoft YaHei", sans-serif;
-    --body: "Poppins", "PingFang SC", "Microsoft YaHei", sans-serif;
+    --body: "Syne", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    --display: var(--body);
     --header-height: 76px;
     --ease: cubic-bezier(0.76, 0, 0.24, 1);
     --card-shadow: 0 1px 3px rgb(0 0 0 / 0.08);
@@ -55,6 +55,7 @@ body {
     background: var(--surface);
     color: var(--ink);
     font-family: var(--body);
+    font-variant-numeric: lining-nums;
     font-size: 16px;
     font-weight: 300;
     line-height: 1.5;
@@ -481,9 +482,11 @@ a:focus-visible {
     margin: 0;
     font-family: var(--display);
     font-size: 96px;
-    font-weight: 700;
-    line-height: 96px;
-    letter-spacing: normal;
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    transform: scaleY(1.12);
+    transform-origin: left center;
 }
 
 .intro-role {
@@ -1240,7 +1243,7 @@ a.project-rail-card:hover .project-rail-body h3 {
 
     .intro-name {
         font-size: 36px;
-        line-height: 36px;
+        line-height: 1.15;
     }
 
     .intro-role {
@@ -1440,4 +1443,10 @@ a.project-rail-card:hover .project-rail-body h3 {
         clip-path: none;
         transform: none;
     }
+}
+
+/* Keep dates aligned while retaining Syne. */
+.timeline-card time,
+.project-meta {
+    font-variant-numeric: lining-nums tabular-nums;
 }

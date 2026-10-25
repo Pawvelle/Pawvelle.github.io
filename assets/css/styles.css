@@ -21,8 +21,7 @@
     --header-height: 72px;
     --section-divider-gap: 96px;
 
-    --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
-        Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    --font: "Syne", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
 
     --space-1: 8px;
     --space-2: 12px;
@@ -69,11 +68,11 @@ body {
     background: var(--background);
     color: var(--text);
     font-family: var(--font);
+    font-variant-numeric: lining-nums;
     font-size: 16px;
     font-weight: 500;
     line-height: 1.55;
     letter-spacing: -0.015em;
-    font-feature-settings: "cv11", "ss01";
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     transition: background-color 240ms ease-out, color 240ms ease-out;
@@ -1954,4 +1953,10 @@ html[lang="en"] .section-title {
         opacity: 1;
         transform: none;
     }
+}
+
+/* Keep dates aligned while retaining Syne. */
+time,
+.tl-date {
+    font-variant-numeric: lining-nums tabular-nums;
 }
